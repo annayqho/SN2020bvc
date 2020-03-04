@@ -20,16 +20,16 @@ ddir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/host_sdss"
 
 # images have been resampled using SWARP,
 # because they were previously out of alignment
-gim = fits.open(ddir + "/frame-g-003813-4-0393.resamp.fits")
+gim = fits.open(ddir + "/frame-g-003813-4-0393.fits")
 g = gim[0].data # 0 to 0.1 looks good
 r = fits.open( # 0 to 0.2 looks good
-        ddir + "/frame-r-003813-4-0393.resamp.fits")[0].data
+        ddir + "/frame-r-003813-4-0393.fits")[0].data
 z = fits.open( # 0 to 0.6 looks good
-        ddir + "/frame-z-003813-4-0393.resamp.fits")[0].data
+        ddir + "/frame-z-003813-4-0393.fits")[0].data
 u = fits.open( 
-        ddir + "/frame-u-003813-4-0393.resamp.fits")[0].data
+        ddir + "/frame-u-003813-4-0393.fits")[0].data
 i = fits.open( 
-        ddir + "/frame-i-003813-4-0393.resamp.fits")[0].data
+        ddir + "/frame-i-003813-4-0393.fits")[0].data
 
 # Figure out pos from header
 head = gim[0].header
