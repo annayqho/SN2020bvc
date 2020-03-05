@@ -1,4 +1,8 @@
-""" Align images using SWARP """
+""" Align images using SWARP
+
+I ran this on gayatri,
+but I wasn't able to get this to work :(
+"""
 
 import os
 
