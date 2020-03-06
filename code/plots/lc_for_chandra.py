@@ -9,7 +9,16 @@ import matplotlib.pyplot as plt
 from astropy.time import Time
 from astropy.cosmology import Planck15
 
+EXT_G = 0.041
+EXT_R = 0.029
+EXT_I = 0.021
+
+def full():
+    """ a panel showing the full r, g, and i light curve from the P48 """
+
+
 dm = Planck15.distmod(z=0.033).value-Planck15.distmod(z=0.025235).value
+
 
 # SN 2006aj
 dat = ascii.read("lc_060218_swift.dat")
