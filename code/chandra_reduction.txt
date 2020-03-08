@@ -1,0 +1,61 @@
+These are the steps I took to reduce the Chandra data of SN2020bvc.
+
+source activate ciao-4.12
+
+cd
+/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/xray/acis/
+tar -xvf package*.tar
+
+cd
+/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/xray/acis/23171
+
+chandra_repro (all defaults)
+cd repro
+open *.evt2 (in ds9)
+
+edit-->region
+analysis --> smooth --> 2 arcsec
+circle of radius 1'' around the position of the source
+save as src.reg
+
+then an annlulus with inner circle radius 3'' and outer circle radius
+10''
+save as bkg.reg
+
+# I tried to copy over the src and bkg files
+
+# do the grouping using specextract
+punlearn specextract
+pset specextract infile="acisf23171_repro_evt2.fits[sky=region(src.reg)]"
+pset specextract outroot=SN2020bvc
+pset specextract bkgfile="acisf23172_repro_evt2.fits[sky=region(bkg.reg)]"
+pset specextract weight=no correctpsf=yes
+pset specextract grouptype=NUM_CTS binspec=1
+specextract
+
+# do the measurement using sherpa
+sherpa
+load_pha("SN2020bvc_grp.pi")
+notice(0.5, 8.0)
+plot_data()
+# can't subtract bkg for cash statistics
+subtract()
+
+set_source(xsphabs.abs1 * powlaw1d.p1)
+abs1.nH = 0.009 # units 10^22 
+p1.gamma = 2
+freeze(abs1.nH)
+freeze(p1.gamma)
+guess(p1)
+set_stat('chi2gehrels') #list_stats
+fit()
+
+# measure confidence interval
+fflux, cflux, vals = sample_flux(
+    xsphabs.abs1 * powlaw1d.p1, 0.5, 8, num=1000)
+
+# count rate
+data_cnt_rate = calc_data_sum()/get_exposure(id=1)
+
+
+plot_source()
