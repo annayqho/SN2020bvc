@@ -63,6 +63,16 @@ for ii,val in enumerate(dt[choose]):
             val, maglim[choose][ii]-EXT_G, 0, 0.25, 
             color=gcol, head_length=0.2, head_width=0.3, zorder=2)
 
+
+# upper limits from ATLAS
+val = 2458883.17-t0
+ax.scatter(val, 19.4, marker='.', c='k')
+ax.arrow(
+        val, 19.4, 0, 0.25, 
+        color='k', head_length=0.2, head_width=0.3, zorder=2)
+ax.text(val, 19.4, 'ATLAS $o$', fontsize=10,
+        verticalalignment='bottom', horizontalalignment='center')
+
 choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='i', mag < 99))
 ax.errorbar(dt[choose], mag[choose]-EXT_G, emag[choose], ms=msize, fmt='D', 
         mfc='white', mec=icol, label='P48 $i$', c=icol, zorder=0)
@@ -76,6 +86,13 @@ sps = [2458883.925137, 2458886.8544916, 58887.244648+2400000.5, 2458888.8626271,
 for sp in sps:
     ax.text(sp-t0, 21, 'S', fontsize=12)
 
+
+# compare to 2006aj
+dat = ascii.read("lc_060218_swift.dat")
+t = dat['t']
+mag = dat['mag']
+emag = dat['emag']
+plt.plot(t, mag-dm, linestyle='-', lw=1, color='k', label="2006aj (UVOT/B)")
 
 ax2 = ax.twinx()
 ax2.set_ylabel(
@@ -97,5 +114,5 @@ ax.tick_params(labelsize=14)
 ax.set_xlim(-1.5,30)
 ax.set_ylim(21.2,16)
 plt.tight_layout()
-plt.savefig("lc.png", dpi=200)
-#plt.show()
+#plt.savefig("lc.png", dpi=200)
+plt.show()
