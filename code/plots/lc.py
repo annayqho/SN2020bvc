@@ -49,6 +49,10 @@ choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='g', mag < 99))
 ax.errorbar(dt[choose], mag[choose]-EXT_G, emag[choose], ms=msize, fmt='s', 
         mfc=gcol, mec=gcol, label='P48 $g$', c=gcol, zorder=2)
 
+# add the ASAS-SN point
+#ax.scatter(2458884.12-t0, 17-EXT_G, s=msize, marker='s',
+#        facecolor='white', edgecolor=gcol, label='ASAS-SN $g$', zorder=2)
+
 # g-band upper limits
 choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='g', mag == 99, dt<5))
 ax.scatter(
@@ -94,4 +98,4 @@ ax.set_xlim(-1.5,30)
 ax.set_ylim(21.2,16)
 plt.tight_layout()
 plt.savefig("lc.png", dpi=200)
-
+#plt.show()

@@ -197,7 +197,8 @@ def plot_spec(ax, x, y, tel, epoch):
 
 if __name__=="__main__":
     fig,ax = plt.subplots(figsize=(6,10))
-    files, epochs, tels = get_files(0, 6)
+    #files, epochs, tels = get_files(0, 6)
+    files, epochs, tels = get_files(6, 12)
     nfiles = len(files)
     shift = [1, 1.3, 1.8, 2.3, 2.8, 3.3, 3.6, 4.0, 4.5, 5, 5.5, 6, 6.5]
     #bw_shift = [2.1, 3, 4, 6, 7.1]
@@ -234,11 +235,14 @@ if __name__=="__main__":
 # 
     plt.tick_params(axis='both', labelsize=14)
     plt.xlim(3660, 10140)
+    # for the first set
     plt.ylim(-6.3 -0.5)
+    # for the second set
+    plt.ylim(-5 -0.5)
     plt.xlabel(r"Rest Wavelength (\AA)", fontsize=16)
     plt.ylabel(r"Scaled $F_{\lambda}$ + const.", fontsize=16)
     plt.legend(fontsize=14)
     ax.get_yaxis().set_ticks([])
     plt.tight_layout()
     #plt.show()
-    plt.savefig("spec_sequence.png", dpi=500, bbox_inches='tight')
+    plt.savefig("spec_sequence_second.png", dpi=500, bbox_inches='tight')
