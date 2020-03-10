@@ -11,7 +11,7 @@ from astropy.table import Table
 from astropy.cosmology import Planck15
 
 # time of the last non-detection
-t0 = 58233.17615 # in MJD
+t0 = 2458883.17-2400000.5# in MJD
 
 
 DATA_DIR = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data"

@@ -19,9 +19,9 @@ from normalize import smooth_spec
 from measure_snr import get_snr
 
 
-z = 0.02520
+z = 0.025235
 SPEC_DIR = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/spec"
-t0 = 2458882.0568-2400000.5
+t0 = 2458883.17-2400000.5
 
 
 def get_res(tel):
@@ -197,8 +197,8 @@ def plot_spec(ax, x, y, tel, epoch):
 
 if __name__=="__main__":
     fig,ax = plt.subplots(figsize=(6,10))
-    #files, epochs, tels = get_files(0, 6)
-    files, epochs, tels = get_files(6, 12)
+    files, epochs, tels = get_files(0, 6)
+    #files, epochs, tels = get_files(6, 12)
     nfiles = len(files)
     shift = [1, 1.3, 1.8, 2.3, 2.8, 3.3, 3.6, 4.0, 4.5, 5, 5.5, 6, 6.5]
     #bw_shift = [2.1, 3, 4, 6, 7.1]
@@ -245,4 +245,5 @@ if __name__=="__main__":
     ax.get_yaxis().set_ticks([])
     plt.tight_layout()
     #plt.show()
-    plt.savefig("spec_sequence_second.png", dpi=500, bbox_inches='tight')
+    #plt.savefig("spec_sequence_second.png", dpi=500, bbox_inches='tight')
+    plt.savefig("spec_sequence_first.png", dpi=500, bbox_inches='tight')

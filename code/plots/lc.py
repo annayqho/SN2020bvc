@@ -15,8 +15,8 @@ EXT_I = 0.021
 rcol = '#e55c30'
 gcol = '#140b34'
 icol = 'k'
-z = 0.02520
-t0 = 2458882.0568
+z = 0.025235
+t0 = 2458883.17
 msize = 6
 
 """ a panel showing the full r, g, and i light curve from the P48 """
@@ -70,12 +70,13 @@ ax.scatter(val, 19.4, marker='.', c='k')
 ax.arrow(
         val, 19.4, 0, 0.25, 
         color='k', head_length=0.2, head_width=0.3, zorder=2)
-ax.text(val, 19.4, 'ATLAS $o$', fontsize=10,
-        verticalalignment='bottom', horizontalalignment='center')
+ax.text(-0.2, 19.4, 'ATLAS $o$', fontsize=10,
+        verticalalignment='center', horizontalalignment='right')
 
 choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='i', mag < 99))
 ax.errorbar(dt[choose], mag[choose]-EXT_G, emag[choose], ms=msize, fmt='D', 
         mfc='white', mec=icol, label='P48 $i$', c=icol, zorder=0)
+ax.text(val, 20, 'GRB 060218', rotation=270, fontsize=10)
 
 # Spectral epochs
 sps = [2458883.925137, 2458886.8544916, 58887.244648+2400000.5, 2458888.8626271,
@@ -88,11 +89,23 @@ for sp in sps:
 
 
 # compare to 2006aj
-dat = ascii.read("lc_060218_swift.dat")
-t = dat['t']
-mag = dat['mag']
-emag = dat['emag']
-plt.plot(t, mag-dm, linestyle='-', lw=1, color='k', label="2006aj (UVOT/B)")
+offset = 0
+dm = Planck15.distmod(z=0.033).value-Planck15.distmod(z=0.025235).value
+dat = ascii.read("../../data/lc_060218_full.txt")
+t = dat['time']
+mag = dat['magnitude']
+emag = dat['e_magnitude']
+band = dat['band']
+#choose = band == 'B'
+#plt.plot(t[choose]-t[choose][0]+1.3, mag[choose]-dm, linestyle='-', 
+#lw=0.5, color='k', label="2006aj (UVOT/B)")
+choose = band == 'V'
+plt.plot(t[choose][14:]-t[choose][0]+offset, mag[choose][14:]-dm, linestyle='--', 
+lw=0.5, color='k', label="2006aj (UVOT/V)")
+
+# epoch of 060218
+btime = 53784.149
+plt.axvline(x=btime-t[choose][0]+offset, c='k', lw=0.5, ls=':')
 
 ax2 = ax.twinx()
 ax2.set_ylabel(
@@ -108,11 +121,11 @@ ax2.invert_yaxis()
 ax.legend(loc='lower right', fontsize=14)
 ax.invert_yaxis()
 ax.set_ylabel(r"Apparent Mag", fontsize=14)
-ax.set_xlabel("Days since last ZTF non-detection", fontsize=16)
+ax.set_xlabel("Days since ATLAS non-detection", fontsize=16)
 ax.tick_params(labelsize=14)
 ax.tick_params(labelsize=14)
-ax.set_xlim(-1.5,30)
+ax.set_xlim(-2.5,30)
 ax.set_ylim(21.2,16)
 plt.tight_layout()
-#plt.savefig("lc.png", dpi=200)
-plt.show()
+plt.savefig("lc.png", dpi=200)
+#plt.show()
