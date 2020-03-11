@@ -17,7 +17,7 @@ t0 = 2458883.17
 bands = {}
 bands['V'] = 5468
 bands['B'] = 4392
-bands['u'] = 3465
+bands['U'] = 3465
 bands['UVW1'] = 2600
 bands['UVM2'] = 2246
 bands['UVW2'] = 1928
@@ -26,6 +26,7 @@ bands['g'] = 4722.7
 bands['r'] = 6339.6
 bands['i'] = 7886.1
 # lt: assume everything is the same except
+bands['u'] = 3513.7
 bands['z'] = 8972.9
 
 # extinction for each filter
@@ -51,9 +52,15 @@ def bb_func(nu,T,R):
     return fnu / 1E-23 / 1E-6
 
 
-dat = ascii.read("../data/marshal_lc.txt")
+dat = ascii.read("../../data/marshal_lc.txt")
+uvdat = ascii.read("../../data/UVOT_hostsub.ascii")
+uvt = uvdat['MJD']+2400000.5
+uvdt = uvt-t0
+uvfilt = uvdat['FILTER']
+uvflux = uvdat['AB_FNU_mJy']
+uveflux = uvdat['AB_FNU_mJy_ERRM']
 
-fig,axarr = plt.subplots(2,5,figsize=(8,3), sharex=True, sharey=True)
+fig,axarr = plt.subplots(2, 5, figsize=(8,3), sharex=True, sharey=True)
 
 t = dat['jdobs']
 dt = t-t0
@@ -72,11 +79,22 @@ dtbins = dt[use]
 for ii,dtbin in enumerate(dtbins):
     # choose the panel
     ax = axarr.flatten()[ii]
-    choose = np.abs(dt-dtbin)<0.05
     xvals = []
     yvals = []
     eyvals = []
-    #UVOT/LT
+
+    #UVOT
+    choose = np.abs(uvdt-dtbin)<0.05
+    for jj in np.arange(sum(choose)):
+        wl = bands[uvfilt[choose][jj]]
+        f = uvflux[choose][jj]*1E3
+        ef = uveflux[choose][jj]*1E3
+        xvals.append(wl)
+        yvals.append(f)
+        eyvals.append(ef)
+     
+    #LT
+    choose = np.logical_and(np.abs(dt-dtbin)<0.05, instr=='LT+IOO')
     for jj in np.arange(sum(choose)):
         wl = bands[filt[choose][jj]]
         f,ef = toflux(mag[choose][jj]-ext[filt[choose][jj]],emag[choose][jj])
