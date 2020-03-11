@@ -20,7 +20,7 @@ t0 = 2458883.17
 msize = 6
 
 """ a panel showing the full r, g, and i light curve from the P48 """
-fig,ax = plt.subplots(1,1, figsize=(10,4))
+fig,ax = plt.subplots(1,1, figsize=(10,5))
 dat = ascii.read("../../data/marshal_lc.txt")
 dt = dat['jdobs']-t0
 filt = dat['filter']
@@ -85,8 +85,13 @@ sps = [2458883.925137, 2458886.8544916, 58887.244648+2400000.5, 2458888.8626271,
       2458900.9285102, 2458908.9163794, 
       Time("2020-03-02T03:19:08.621", format='isot').jd]
 for sp in sps:
-    ax.text(sp-t0, 21, 'S', fontsize=12)
+    ax.text(sp-t0, 21.15, 'S', fontsize=10)
 
+
+# Blackbody epochs
+bb = np.array([1.36, 2.88, 3.81, 4.61, 6.27, 9.09, 10.86, 15.49, 26.51, 29.48])
+for b in bb:
+    ax.text(b, 15.9, 'B', fontsize=10)
 
 # compare to 2006aj
 offset = 0
@@ -124,8 +129,8 @@ ax.set_ylabel(r"Apparent Mag", fontsize=14)
 ax.set_xlabel("Days since ATLAS non-detection", fontsize=16)
 ax.tick_params(labelsize=14)
 ax.tick_params(labelsize=14)
-ax.set_xlim(-2.5,30)
-ax.set_ylim(21.2,16)
+ax.set_xlim(-2.5,31)
+ax.set_ylim(21.2,15.7)
 plt.tight_layout()
-plt.savefig("lc.png", dpi=200)
-#plt.show()
+#plt.savefig("lc.png", dpi=200)
+plt.show()
