@@ -1,4 +1,5 @@
 These are the steps I took to reduce the Chandra data of SN2020bvc.
+Running on my laptop:
 
 source activate ciao-4.12
 

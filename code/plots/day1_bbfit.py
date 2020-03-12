@@ -46,7 +46,7 @@ plt.text(
     horizontalalignment='right', verticalalignment='top')
 plt.text(
     0.95, 0.85, 
-    r"$T=%s \times 10^{3} $\,K, $R=%s\times10^{12}$ cm, $L=%s\times10^{42}\,$erg/sec" %(T,R,L),
+    r"$T=%s \times 10^{3} $\,K, $R=%s\times10^{14}$ cm, $L=%s\times10^{42}\,$erg/sec" %(T,R,L),
     horizontalalignment='right', verticalalignment='top', transform=ax.transAxes,
     fontsize=14)
 
