@@ -27,7 +27,7 @@ save as bkg.reg
 
 # do the grouping using specextract
 punlearn specextract
-pset specextract infile="acisf23171_repro_evt2.fits[sky=region(src.reg)]"
+pset specextract infile="acisf23172_repro_evt2.fits[sky=region(src.reg)]"
 pset specextract outroot=SN2020bvc
 pset specextract bkgfile="acisf23172_repro_evt2.fits[sky=region(bkg.reg)]"
 pset specextract weight=no correctpsf=yes
@@ -55,8 +55,16 @@ fit()
 fflux, cflux, vals = sample_flux(
     xsphabs.abs1 * powlaw1d.p1, 0.5, 8, num=1000)
 
+# Outside of Sherpa, in ciao-4.12 environment, you can just type
+srcflux
+Input event file (acisf23171_repro_evt2.fits): 
+Input source position: filename or RA,Dec (src.reg): 14:33:56.999,+40:14:38.14
+
 # count rate
 data_cnt_rate = calc_data_sum()/get_exposure(id=1)
 
 
 plot_source()
+
+
+Unabs Mod.Flux 7.22E-15 erg/cm2/s (3.28E-15,1.35E-14) 
