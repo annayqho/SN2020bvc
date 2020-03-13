@@ -28,13 +28,14 @@ plt.arrow(
         length_includes_head=True, head_length=5E41, head_width=0.1, color='k')
 
 # Shock-cooling model
-t0 = 1.36
-L0 = 4.97E42
+re = 2E12
+me = 0.01*2E33
+v = 0.2*3E10
 tplot = np.linspace(0.5,40,100)
-lplot_sc = L0 * (tplot/t0)**(-2)
+lplot_sc = (v*re*me/4) * (tplot*86400)**(-2)
 plt.plot(
         tplot, lplot_sc, lw=1, ls=':', c='#e55c30', 
-        label="$L\propto t^{-2}$ (SC)")
+        label="Post-shock cooling (SC)")
 
 # Radioactive-decay model
 tplot = np.linspace(0.5,40,100)
