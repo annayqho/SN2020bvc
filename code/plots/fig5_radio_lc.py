@@ -31,9 +31,13 @@ def plot_source(ax):
     # 3 GHz LC
     ax.errorbar(24, ujy_to_flux(110, 0.02507), yerr=ujy_to_flux(16, 0.02507),
             c=purp, fmt='s')
+    ax.errorbar(36, ujy_to_flux(120, 0.02507), yerr=ujy_to_flux(10, 0.02507),
+            c=purp, fmt='s')
 
     # 10 GHz LC
     ax.errorbar(13, ujy_to_flux(66, 0.02507), yerr=ujy_to_flux(5, 0.02507),
+            c=yell, fmt='^')
+    ax.errorbar(35, ujy_to_flux(51, 0.02507), yerr=ujy_to_flux(5, 0.02507),
             c=yell, fmt='^')
 
     # # 15 GHz LC
@@ -274,6 +278,6 @@ if __name__=="__main__":
     ax.plot([1,2],[3,4],c=orag,label="12-18 GHz", lw=2)
     ax.legend(loc='upper center', bbox_to_anchor=(0.0, 1.5), ncol=2)
 
-    plt.show()
-    #plt.savefig(
-    #    "radio_lc.png", dpi=500, bbox_inches='tight', pad_inches=0.1)
+    #plt.show()
+    plt.savefig(
+        "radio_lc.png", dpi=500, bbox_inches='tight', pad_inches=0.1)
