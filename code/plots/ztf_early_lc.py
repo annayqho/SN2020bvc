@@ -295,8 +295,9 @@ ax.set_xlim(-0.5,4)
 ax.set_ylim(-14.5,-18)
 
 ax = axarr[0,1]
-plot_19abqwtfu(ax)
-ax.set_ylim(-15.5,-16.5)
+ax.axis('off')
+# plot_19abqwtfu(ax)
+# ax.set_ylim(-15.5,-16.5)
  
 ax = axarr[1,0]
 plot_19abupned(ax)
