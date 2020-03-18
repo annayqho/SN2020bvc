@@ -39,6 +39,8 @@ def plot_980425(ax):
             mfc='k',mec='k',label=band,ms=5)
     ax.text(0.01, 0.9, "GRB\,980425/SN\,98bw (Rc)", transform=ax.transAxes,
             fontsize=11)
+    ax.text(0.01, 0.8, "$z=0.0085$ (40 Mpc)", transform=ax.transAxes,
+            fontsize=11)
 
 
 def plot_2006aj(ax):
@@ -52,7 +54,11 @@ def plot_2006aj(ax):
     ax.plot(
         t, mag-dm, linestyle='--', lw=1, color='k')
     ax.text(
-            1,0.1,"GRB\,060218/SN\,06aj (B)", 
+            1,0.9,"GRB\,060218/SN\,06aj (B)", 
+            fontsize=11,transform=ax.transAxes,
+            horizontalalignment='right')
+    ax.text(
+            1.0,0.8,"$z=0.033$ (150 Mpc)", 
             fontsize=11,transform=ax.transAxes,
             horizontalalignment='right')
 
@@ -71,8 +77,14 @@ def plot_171205A(ax):
     ax.errorbar(
             dt[choose], mag[choose], yerr=[-mag_l[choose], mag_u[choose]], 
             c='k', fmt='o')
+    ax.plot(
+            dt[choose], mag[choose], c='k', ls='--')
     ax.text(
             1,0.9,"GRB\,171205A/SN\,17iuk (B)", 
+            fontsize=11,transform=ax.transAxes,
+            horizontalalignment='right')
+    ax.text(
+            1,0.8,"$z=0.0368$ (170 Mpc)", 
             fontsize=11,transform=ax.transAxes,
             horizontalalignment='right')
 
@@ -87,32 +99,153 @@ def plot_18gep(ax):
     horizontalalignment='right')
 
 
-#start, let's make a nice plot of two light curves: SN1998bw and SN2006aj
-fig,axarr = plt.subplots(2,2,figsize=(7,4), sharex=True, sharey=False)
-ax = axarr[0,0]
-plot_980425(ax)
-ax.set_xlim(-0.5,4)
-ax.set_ylim(-16.8,-17.6)
+def plot_14gqr(ax):
+    """ Data from De 2018 """
+    dm = Planck15.distmod(z=0.063).value
+    dt = np.array([0.42, 0.56, 0.63, 1.27, 1.34, 2.32, 3.25, 5.26])
+    mag = np.array([19.95, 20.04, 20.12, 20.52, 20.47, 20.36, 20.17, 19.85])
+    emag = np.array([0.05, 0.04, 0.05, 0.11, 0.10, 0.04, 0.07, 0.02])
+    ax.errorbar(dt, mag-dm, emag, fmt='o', c='k')
+    ax.plot(dt, mag-dm, emag, ls='--', c='k')
+    ax.text(
+            0.95, 0.9, 'Type Ic iPTF\,14gqr (g)', 
+            fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
+    ax.text(0.95, 0.8, '$z=0.063$', fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
 
-ax = axarr[0,1]
-plot_2006aj(ax)
-ax.set_ylim(-16.2,-18.5)
 
-ax = axarr[1,0]
-plot_171205A(ax)
-ax.set_ylim(-15.5,-18)
+def plot_18xas(ax):
+    """ Data from Fremling 2019 """
+    dm = Planck15.distmod(z=0.058832).value
+    dt = np.array([0.42, 0.56, 0.63, 1.27, 1.34, 2.32, 3.25, 5.26])
+    mag = np.array([19.95, 20.04, 20.12, 20.52, 20.47, 20.36, 20.17, 19.85])
+    emag = np.array([0.05, 0.04, 0.05, 0.11, 0.10, 0.04, 0.07, 0.02])
+    ax.errorbar(dt, mag-dm, emag, fmt='o', c='k')
+    ax.plot(dt, mag-dm, emag, ls='--', c='k')
+    ax.text(
+            0.95, 0.9, 'Type IIb ZTF18aalrxas (g)', 
+            fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
+    ax.text(
+            0.95, 0.8, '$z=0.063$ (292 Mpc)', 
+            fontsize=11, transform=ax.transAxes,
+            horizontalalignment='right')
 
-ax = axarr[1,1]
-plot_18gep(ax)
-ax.set_ylim(-15.5,-20.5)
 
-for ax in axarr.flatten():
-    ax.tick_params(axis='both', labelsize=12)
+def plot_2011dh(ax):
+    """ Data from """
+    dm = Planck15.distmod(z=0.001638).value
+    dat = ascii.read("sn2011dh.txt")
+    t = dat['time']
+    filt = dat['band']
+    mag = dat['magnitude']
+    emag = dat['e_magnitude']
+    choose = filt == 'V'
+    dt = t[choose]-t[choose][0]
+    mag = mag[choose]
+    emag = emag[choose]
+    ax.errorbar(dt, mag-dm, emag, fmt='o', c='k')
+    ax.plot(dt, mag-dm, emag, ls='--', c='k')
+    ax.text(
+            0.95, 0.9, 'Type IIb SN2011dh (V)', 
+            fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
+    ax.text(0.95, 0.8, '$z=0.0016$ (7.3 Mpc)', fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
 
-fig.text(0.5, 0.04, '$\Delta$ t (days)', ha='center', fontsize=14)
-fig.text(0.04, 0.5, 'Abs Mag', va='center', rotation='vertical', fontsize=14)
-fig.subplots_adjust(
-        left=0.16, bottom=0.18, right=None, top=None, wspace=0.3, hspace=0)
-plt.savefig("early_lc_collage.png", dpi=300, bbox_inches='tight')
 
-#plt.show()
+def plot_2011dh(ax):
+    """ Data from """
+    dm = Planck15.distmod(z=0.001638).value
+    dat = ascii.read("sn2011dh.txt")
+    t = dat['time']
+    filt = dat['band']
+    mag = dat['magnitude']
+    emag = dat['e_magnitude']
+    choose = filt == 'V'
+    dt = t[choose]-t[choose][0]
+    mag = mag[choose]
+    emag = emag[choose]
+    ax.errorbar(dt, mag-dm, emag, fmt='o', c='k')
+    ax.plot(dt, mag-dm, emag, ls='--', c='k')
+    ax.text(
+            0.95, 0.9, 'Type IIb SN2011dh (V)', 
+            fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
+    ax.text(0.95, 0.8, '$z=0.0016$ (7.3 Mpc)', fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
+
+
+def plot_15dtg(ax):
+    """ Data from """
+    dm = Planck15.distmod(z=0.0524).value
+    t = np.array([333.931, 334.931, 335.931, 337.948, 337.960, 338.584])
+    mag = np.array([19.634, 19.720, 19.943, 20.383, 20.412, 20.288])
+    emag = np.array([0.162, 0.029, 0.027, 0.082, 0.278, 0.109])
+    dt = (t-t[0]-0.4)/(1.0524)
+    ax.errorbar(dt, mag-dm, emag, fmt='o', c='k')
+    ax.plot(dt, mag-dm, emag, ls='--', c='k')
+    ax.text(
+            0.95, 0.9, 'Type Ic iPTF15dtg (V)', 
+            fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
+    ax.text(0.95, 0.8, '$z=0.0524$ (241 Mpc)', fontsize=11, transform=ax.transAxes,
+    horizontalalignment='right')
+
+
+def top_panel():
+    """ GRB-SNe """
+    fig,axarr = plt.subplots(1,3,figsize=(11,3), sharex=True, sharey=False)
+    ax = axarr[0]
+    plot_980425(ax)
+    ax.set_xlim(-0.5,4)
+    ax.set_ylim(-16.8,-17.6)
+
+    ax = axarr[1]
+    plot_2006aj(ax)
+    ax.set_ylim(-16.2,-18.5)
+
+    ax = axarr[2]
+    plot_171205A(ax)
+    ax.set_ylim(-15.5,-18)
+
+    #ax = axarr[1,1]
+    #plot_18gep(ax)
+    #ax.set_ylim(-15.5,-20.5)
+
+    for ax in axarr:
+        ax.tick_params(axis='both', labelsize=12)
+
+    axarr[1].set_xlabel('Days after GRB', fontsize=14)
+    axarr[0].set_ylabel('Abs Mag', fontsize=14)
+    #plt.tight_layout()
+    plt.savefig("early_lc_collage.png", dpi=300, bbox_inches='tight')
+
+def bottom_panel():
+    """ 'ordinary' SNe """
+    fig,axarr = plt.subplots(1,3,figsize=(10,3), sharex=True, sharey=False)
+    ax = axarr[0]
+    plot_14gqr(ax)
+    ax.set_xlim(-0.5,4)
+    ax.set_ylim(-16.6,-17.5)
+    
+    ax = axarr[1]
+    plot_2011dh(ax)
+    ax.set_ylim(-14,-16)
+
+    ax = axarr[2]
+    plot_15dtg(ax)
+    ax.set_ylim(-16,-17.5)
+
+    for ax in axarr:
+        ax.tick_params(axis='both', labelsize=12)
+
+    axarr[1].set_xlabel('Days', fontsize=14)
+    axarr[0].set_ylabel('Abs Mag', fontsize=14)
+    plt.tight_layout()
+    plt.savefig("early_lc_collage_sn.png", dpi=300, bbox_inches='tight')
+    #plt.show()
+
+if __name__=="__main__":
+    bottom_panel()

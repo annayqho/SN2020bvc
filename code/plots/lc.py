@@ -115,7 +115,7 @@ plt.axvline(x=btime-t[choose][0]+offset, c='k', lw=0.5, ls=':')
 ax2 = ax.twinx()
 ax2.set_ylabel(
         "Absolute Mag",
-        fontsize=16, rotation=270, labelpad=15.0)
+        fontsize=14, rotation=270, labelpad=15.0)
 y_f = lambda y_i: y_i - Planck15.distmod(z=z).value
 ymin, ymax = ax.get_ylim()
 ax2.set_ylim((y_f(ymin), y_f(ymax)))
