@@ -96,6 +96,9 @@ def lumtnu(ax):
     ax.arrow(
             tnu, lpeak, -tnu/4, 0, color='k', 
             head_length=tnu/10, head_width=lpeak/8)
+    ax.arrow(
+            tnu, lpeak, 0, lpeak/4, color='k', 
+            head_length=lpeak/7, head_width=tnu/7)
     ax.text(
             tnu, lpeak/1.2, "SN2020bvc", fontsize=medsize,
             verticalalignment='top',

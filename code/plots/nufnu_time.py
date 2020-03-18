@@ -245,7 +245,7 @@ def sn2003L(ax, col, legend):
             'SN2003L', 'SN', col, legend)
     ax.text(dt[choose][-1]/1.05, lum[-1], 'SN2003L', fontsize=11,
             verticalalignment='center',
-            horizontalalignment='left')
+            horizontalalignment='center')
     
 
 def sn1979c(ax, col, legend):
@@ -606,7 +606,7 @@ if __name__=="__main__":
 
     #ax.scatter(
     #        0,0,c='k',marker='*',s=100,label="Fast-Lum. Opt. Transient")
-    ax.legend(fontsize=12, loc='lower left', ncol=2, columnspacing=1)
+    ax.legend(fontsize=12, loc='lower left', ncol=3, columnspacing=1)
 
     #ax.axhspan(1E34,1E37,edgecolor='k', fc='white', lw=3)
     #ax.axhline(y=1E37, c='k', ls='--')
@@ -617,5 +617,5 @@ if __name__=="__main__":
 
 
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("lum_evolution.png", dpi=500)
+    #plt.show()
+    plt.savefig("lum_evolution.png", dpi=500)
