@@ -83,8 +83,11 @@ plt.scatter(
         x, y, edgecolor='k', facecolor='k', marker='D', lw=0.5, s=50)
 
 # Plot the Chandra data
-plot_xray(1E40)
-plt.text(2E17,3E39,r'$\nu^{-1}$', fontsize=smallsize)
+# geometric mean of the frequencies
+x = np.sqrt(1.21E17*1.69E18)
+y = 1E40
+plt.scatter(x, y, edgecolor='k', facecolor='k', marker='D', lw=0.5, s=50)
+#plt.text(2E17,3E39,r'$\nu^{-1}$', fontsize=smallsize)
 
 # Power-law with index 0.22...
 nuplot = np.linspace(1E10, 1E18)
