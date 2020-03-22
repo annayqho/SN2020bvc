@@ -131,7 +131,8 @@ for ii,dtbin in enumerate(dtbins):
         radii[jj] = popt[1]
         xplot = np.linspace(2000,8000)
         yplot = bb_func(3E10/(xplot*1E-8), popt[0], popt[1])
-        ax.plot(xplot,yplot,lw=0.1,alpha=0.1)
+        #ax.plot(xplot,yplot,lw=0.1,alpha=0.1)
+        plot(xplot,yplot,lw=0.1,alpha=0.1)
     lums = 4*np.pi*radii**2 * (5.67E-5)*temps**4
     T = np.mean(temps)
     eT = np.std(temps)
@@ -155,9 +156,11 @@ axarr[0,0].set_ylim(10, 5000)
 axarr[0,0].set_yscale('log')
 axarr[0,0].set_xscale('log')
 plt.subplots_adjust(wspace=0,hspace=0)
-fig.text(0.5,0.04,"Wavelength (AA)", ha='center',fontsize=14)
+#fig.text(0.5,0.04,"Wavelength (AA)", ha='center',fontsize=14)
 fig.text(0.04,0.5,r'Flux ($\mu$Jy)',fontsize=14,verticalalignment='center',
         horizontalalignment='center',rotation='vertical')
+axarr[1,2].set_xlabel(r'Wavelength (AA)',fontsize=14)
+#plt.tight_layout()
 
 #plt.show()
 plt.savefig("bbfits.png", dpi=300, bbox_inches='tight', pad_inches=0.1)

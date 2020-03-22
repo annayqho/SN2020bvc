@@ -14,6 +14,34 @@ sys.path.append("/Users/annaho/Dropbox/Projects/Research/ZTF_fast_transient_sear
 from forced_phot.run_forced_phot import get_forced_phot
 
 
+def plot_2006aj(ax):
+    """ Plot SN2006aj early (t < 4 days) light curve """
+    dat = ascii.read("../../data/lc_060218_swift.dat")
+    t = dat['t']
+    dm = Planck15.distmod(z=0.033).value
+    mag = dat['mag']
+    emag = dat['emag']
+    ax.plot(
+        t, mag-dm, linestyle='-', lw=1, color='grey')
+
+
+def plot_980425(ax):
+    """ Plot GRB 980425 early (t < 4 days) light curve """
+    dm = Planck15.distmod(z=0.0085).value
+    dat = ascii.read(
+        "../../data/lc_980425.txt", format="fixed_width", delimiter="&")
+    jd_raw = np.array(dat['JD'])
+    delta = jd_raw[0] - 17/24 # first obs is 17 hrs after burst
+    jd = jd_raw - delta
+    band = 'Rc'
+    lc = dat[band]
+    bad = np.array(['nodata' in val for val in lc])
+    mag = np.array([float(val.split("$\\pm$")[0]) for val in lc[~bad]])
+    mag_err = np.array(
+            [float(val.split("$\\pm$")[1]) for val in lc[~bad]])
+    t = jd[~bad]
+    ax.plot(t,mag-dm,c='blue', linestyle='-')
+
 def plot_19aaxfcpq(ax):
     mw_ext_g = 0.043 # g-band
     mw_ext_r = 0.030 # r-band
@@ -288,11 +316,13 @@ def plot_19ablesob(ax):
 
 
 #start, let's make a nice plot of two light curves: SN1998bw and SN2006aj
-fig,axarr = plt.subplots(3,2,figsize=(7,6), sharex=True, sharey=False)
+fig,axarr = plt.subplots(3,2,figsize=(7,6), sharex=True, sharey=True)
 ax = axarr[0,0]
 plot_19aaxfcpq(ax)
 ax.set_xlim(-0.5,4)
-ax.set_ylim(-14.5,-18)
+ax.set_ylim(-14.5,-18.5)
+plot_2006aj(ax)
+plot_980425(ax)
 
 ax = axarr[0,1]
 ax.axis('off')
@@ -301,19 +331,15 @@ ax.axis('off')
  
 ax = axarr[1,0]
 plot_19abupned(ax)
-ax.set_ylim(-15.5,-17.7)
  
 ax = axarr[1,1]
 plot_20aaiqiti(ax)
-ax.set_ylim(-14,-16.5)
 
 ax = axarr[2,0]
 plot_19abqshry(ax)
-ax.set_ylim(-14.8,-16.5)
 
 ax = axarr[2,1]
 plot_19ablesob(ax)
-ax.set_ylim(-15.5,-18.5)
 
 for ax in axarr.flatten():
     ax.tick_params(axis='both', labelsize=12)
@@ -322,6 +348,6 @@ fig.text(0.5, 0.04, '$\Delta$ t (days)', ha='center', fontsize=14)
 fig.text(0.04, 0.5, 'Abs Mag', va='center', rotation='vertical', fontsize=14)
 fig.subplots_adjust(
         left=0.16, bottom=0.13, right=None, top=None, wspace=0.3, hspace=0)
-plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
+#plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
 
-#plt.show()
+plt.show()

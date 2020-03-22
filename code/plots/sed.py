@@ -94,12 +94,9 @@ nuplot = np.linspace(1E10, 1E18)
 # for nu^{-0.78}:
 #lplot = (1E37) * (nuplot/1E10)**(0.22)
 # for nu^{-0.5} = -(p-1)/2 where p=2
-lplot = (1E37) * (nuplot/1E10)**(0.5)
+lplot = (1E37) * (nuplot/1E10)**(0.4)
 plt.plot(nuplot,lplot,lw=0.5,ls='--',c='k')
-plt.text(5E11,2E38,r'$L_\nu \propto \nu^{-0.5}$',fontsize=14)
-lplot = (1E37) * (nuplot/1E10)**(0.25)
-plt.plot(nuplot,lplot,lw=0.5,ls='--',c='k')
-plt.text(1E14,4E37,r'$L_\nu \propto \nu^{-0.75}$',fontsize=14)
+plt.text(1E14,4E37,r'$L_\nu \propto \nu^{-0.6}$',fontsize=14)
 
 # Model for Epoch 2 is a power-law:
 # norm = 9E-4 # photons/keV/cm2/s at 1 keV
