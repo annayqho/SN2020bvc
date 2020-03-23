@@ -40,7 +40,7 @@ def plot_980425(ax):
     mag_err = np.array(
             [float(val.split("$\\pm$")[1]) for val in lc[~bad]])
     t = jd[~bad]
-    ax.plot(t,mag-dm,c='blue', linestyle='-')
+    ax.plot(t,mag-dm,c='k', linestyle='--')
 
 def plot_19aaxfcpq(ax):
     mw_ext_g = 0.043 # g-band
@@ -72,8 +72,8 @@ def plot_19aaxfcpq(ax):
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec='red', mfc='white', fmt='s', zorder=0)
-    ax.text(0.01, 0.9, "ZTF19aaxfcpq (g\&r)", transform=ax.transAxes,
-            fontsize=11)
+    ax.text(0.9, 0.1, "ZTF19aaxfcpq (g\&r)", transform=ax.transAxes,
+            fontsize=11, horizontalalignment='right')
 
     # The LT point
     ax.errorbar(
@@ -316,7 +316,7 @@ def plot_19ablesob(ax):
 
 
 #start, let's make a nice plot of two light curves: SN1998bw and SN2006aj
-fig,axarr = plt.subplots(3,2,figsize=(7,6), sharex=True, sharey=True)
+fig,axarr = plt.subplots(3,2,figsize=(7,6), sharex=True, sharey=False)
 ax = axarr[0,0]
 plot_19aaxfcpq(ax)
 ax.set_xlim(-0.5,4)
@@ -331,15 +331,19 @@ ax.axis('off')
  
 ax = axarr[1,0]
 plot_19abupned(ax)
+ax.set_ylim(-15.5,-17.7)
  
 ax = axarr[1,1]
 plot_20aaiqiti(ax)
+ax.set_ylim(-14,-16.5)
 
 ax = axarr[2,0]
 plot_19abqshry(ax)
+ax.set_ylim(-14.8,-16.5)
 
 ax = axarr[2,1]
 plot_19ablesob(ax)
+ax.set_ylim(-15.5,-19)
 
 for ax in axarr.flatten():
     ax.tick_params(axis='both', labelsize=12)
@@ -348,6 +352,6 @@ fig.text(0.5, 0.04, '$\Delta$ t (days)', ha='center', fontsize=14)
 fig.text(0.04, 0.5, 'Abs Mag', va='center', rotation='vertical', fontsize=14)
 fig.subplots_adjust(
         left=0.16, bottom=0.13, right=None, top=None, wspace=0.3, hspace=0)
-#plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
+plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
 
-plt.show()
+#plt.show()
