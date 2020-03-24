@@ -4,7 +4,31 @@ import numpy as np
 from math import floor, log10
 from astropy.time import Time
 from astropy.cosmology import Planck15
+from astropy.io import ascii
 import sys
+import extinction
+
+# a mapping from filter to central wavelength
+bands = {}
+bands['V'] = 5468
+bands['B'] = 4392
+bands['U'] = 3465
+bands['UVW1'] = 2600
+bands['UVM2'] = 2246
+bands['UVW2'] = 1928
+# p48
+bands['g'] = 4722.7
+bands['r'] = 6339.6
+bands['i'] = 7886.1
+# lt: assume everything is the same except
+bands['u'] = 3513.7
+bands['z'] = 8972.9
+
+# extinction for each filter
+ext = {}
+for band in bands.keys():
+    ext[band] = extinction.fitzpatrick99(
+        np.array([bands[band]]), 0.034, 3.1)[0]
 
 def round_sig(x, sig=2):
     print(x)
@@ -21,10 +45,13 @@ def ndec(num):
 d = Planck15.luminosity_distance(z=0.025201).cgs.value
 
 headings = np.array(
-        ['Date (JD)', '$\Delta t$', 'Instrument', 'Filter', 
-         'AB Mag', 'Error in AB Mag'])
+        ['Date', '$\Delta t$', 'Inst.', 'Filt.', 
+         'Mag'])
+units = np.array(
+        ['(MJD)', '(d)', '', '', '(AB)'])
 label = "uvot-phot"
-caption = "Optical and ultraviolet photometry for SN\,2020bvc"
+caption = "Optical and ultraviolet photometry for SN\,2020bvc,\
+corrected for Milky Way extinction."
 
 # Print the table headers
 ncol = len(headings)
@@ -38,6 +65,11 @@ for col in np.arange(ncol-1):
     colheadstr += "\colhead{%s} & " %headings[col]
 colheadstr += "\colhead{%s}" %headings[-1]
 
+unitstr = ""
+for col in np.arange(ncol-1):
+    unitstr += "\colhead{%s} & " %units[col]
+unitstr += "\colhead{%s}" %units[-1]
+
 rowstr = ""
 for col in np.arange(ncol-1):
     rowstr += "%s & "
@@ -48,32 +80,53 @@ outputf.write("\\startlongtable \n")
 outputf.write("\\begin{deluxetable}{%s} \n" %colstr)
 outputf.write("\\tablecaption{%s\label{tab:%s}} \n" %(caption,label))
 outputf.write("\\tablewidth{0pt} \n")
-outputf.write("\\tablehead{ %s } \n" %colheadstr)
+outputf.write("\\tablehead{ %s \\\ %s} \n" %(colheadstr, unitstr))
 #outputf.write("\\rotate \n")
 outputf.write("\\tabletypesize{\scriptsize} \n")
 outputf.write("\startdata \n")
 
+# time of the last ATLAS non-detection
+t0 = 2458883.17
+
 dat = ascii.read("../../data/marshal_lc.txt")
 uvdat = ascii.read("../../data/UVOT_hostsub.ascii")
-uvt = uvdat['MJD']+2400000.5
-uvdt = uvt-t0
-uvfilt = uvdat['FILTER']
-uvflux = uvdat['AB_FNU_mJy']
-uveflux = uvdat['AB_FNU_mJy_ERRM']
+uvmjd = uvdat['MJD']
+uvjd = uvdat['MJD']+2400000.5
+uvdt = uvjd-t0
+choose = uvdt > 0
+uvmjd = uvmjd[choose]
+uvdt = uvdt[choose]
+uvfilt = uvdat['FILTER'][choose]
+uvflux = uvdat['AB_FNU_mJy'][choose]
+uveflux = uvdat['AB_FNU_mJy_ERRM'][choose]
 
-t = dat['jdobs']
-dt = t-t0
-mag = dat['magpsf']
-emag = dat['sigmamagpsf']
+# Use only ZTF, LT, and P60 photometry from this file
 instr = dat['instrument']
-filt = dat['filter']
+choose = np.logical_and(instr!='ASASSN-P+Paczynski', instr!='Swift+UVOT')
+t = dat['jdobs'][choose]
+mjd = Time(t, format='jd').mjd
+dt = t-t0
+mag = dat['magpsf'][choose]
+emag = dat['sigmamagpsf'][choose]
+filt = dat['filter'][choose]
+instr = instr[choose]
 
-# mjd = np.append(mjd.value, Time(dt_uv + t0.value, format='mjd').value)
-# dt = np.append(dt, dt_uv)
-# filt = np.append(filt, filt_uv)
-# mag = np.append(mag, -2.5*np.log10(fnu_mjy_uv*1E-3/3631))
-# emag = np.append(emag, efnu_mjy_uv/fnu_mjy_uv)
-# tel = np.append(tel, np.array(['UVOT']*len(dt_uv)))
+# Add the UVOT data
+mjd = np.append(mjd, uvmjd)
+dt = np.append(dt, uvdt)
+filt = np.append(filt, uvfilt)
+mag = np.append(mag, -2.5*np.log10(uvflux*1E-3/3631))
+emag = np.append(emag, uveflux/uvflux)
+instr = np.append(instr, np.array(['Swift+UVOT']*len(uvdt)))
+
+# Now, reorder according to dt
+order = np.argsort(dt)
+mjd = mjd[order]
+dt = dt[order]
+filt = filt[order]
+mag = mag[order]
+emag = emag[order]
+instr = instr[order]
 
 for ii in np.arange(len(dt)):
     # Convert the flux into a fluxstr
@@ -81,14 +134,15 @@ for ii in np.arange(len(dt)):
         # If not an upper limit, print row
         mjd_str = round_sig(mjd[ii], 11)
         dt_str = np.round(dt[ii], 2)
-        mag_str = str('{:.2f}'.format(round_sig(mag[ii], 4)))
+        mag_corr = mag[ii]-ext[filt[ii]]
+        mag_str = str('{:.2f}'.format(round_sig(mag_corr, 4)))
         emag_str = "%.2f" %np.round(emag[ii],2)
         if emag_str == "0.00":
             emag_str = "0.01"
         print(emag_str)
         row = rowstr %(
-                mjd_str, dt_str, tel[ii], filt[ii], 
-                mag_str, emag_str)
+                mjd_str, dt_str, instr[ii], "$%s$" %filt[ii], 
+                "$%s \pm %s$"%(mag_str, emag_str))
         outputf.write(row)
 
 outputf.write("\enddata \n")

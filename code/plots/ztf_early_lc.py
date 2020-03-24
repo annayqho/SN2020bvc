@@ -22,7 +22,7 @@ def plot_2006aj(ax):
     mag = dat['mag']
     emag = dat['emag']
     ax.plot(
-        t, mag-dm, linestyle='-', lw=1, color='grey')
+        t-0.2, mag-dm, linestyle='-', lw=1, color='grey')
 
 
 def plot_980425(ax):
@@ -41,6 +41,7 @@ def plot_980425(ax):
             [float(val.split("$\\pm$")[1]) for val in lc[~bad]])
     t = jd[~bad]
     ax.plot(t,mag-dm,c='k', linestyle='--')
+
 
 def plot_19aaxfcpq(ax):
     mw_ext_g = 0.043 # g-band
@@ -72,15 +73,19 @@ def plot_19aaxfcpq(ax):
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec='red', mfc='white', fmt='s', zorder=0)
-    ax.text(0.9, 0.1, "ZTF19aaxfcpq (g\&r)", transform=ax.transAxes,
+    ax.text(0.99, 0.01, "ZTF19aaxfcpq ($z=0.038$)", transform=ax.transAxes,
             fontsize=11, horizontalalignment='right')
+    ax.text(3.5, -18.1, "S", fontsize=11, horizontalalignment='center')
 
     # The LT point
+    lt_t = 2458639.4464-t0
+    lt_m = -18.1
     ax.errorbar(
-            2458639.4464-t0,19.27-mw_ext_g-dm,yerr=0.02, c='k', fmt='o')
+            lt_t,19.27-mw_ext_g-dm,yerr=0.02, c='k', fmt='o')
     ax.errorbar(
-            2458639.4464-t0, 19.38-mw_ext_r-dm, yerr=0.02, 
+            lt_t, 19.38-mw_ext_r-dm, yerr=0.02, 
             mec='red', mfc='white', fmt='s', zorder=0)
+    ax.text(lt_t, lt_m, "S", fontsize=11, horizontalalignment='center')
 
     # the last g-band upper limit
     x = 2458637.7621-t0
@@ -160,7 +165,7 @@ def plot_19abupned(ax):
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec='red', mfc='white', fmt='s', zorder=0, c='red')
-    ax.text(0.01, 0.9, "%s (r\&g)" %name, transform=ax.transAxes,
+    ax.text(0.01, 0.9, "%s ($z=0.05$)" %name, transform=ax.transAxes,
             fontsize=11)
 
     # the last g-band upper limit
@@ -200,7 +205,7 @@ def plot_20aaiqiti(ax):
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec='red', mfc='white', fmt='s', zorder=0, c='red')
-    ax.text(0.01, 0.9, "%s (r\&g)" %name, transform=ax.transAxes,
+    ax.text(0.01, 0.9, "%s ($z=%s$)" %(name,z), transform=ax.transAxes,
             fontsize=11)
 
     # the last g-band upper limit
@@ -244,7 +249,7 @@ def plot_19abqshry(ax):
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec='red', mfc='white', fmt='s', zorder=0, c='red')
-    ax.text(0.01, 0.9, "%s (r\&g)" %name, transform=ax.transAxes,
+    ax.text(0.01, 0.9, "%s ($z=0.031$)" %name, transform=ax.transAxes,
             fontsize=11)
 
     # The P60 points
@@ -290,7 +295,7 @@ def plot_19ablesob(ax):
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec='red', mfc='white', fmt='s', zorder=0, c='red')
-    ax.text(0.01, 0.9, "%s (r\&g)" %name, transform=ax.transAxes,
+    ax.text(0.01, 0.9, "%s ($z=0.056$)" %name, transform=ax.transAxes,
             fontsize=11)
 
     # MSIP points
@@ -322,7 +327,6 @@ plot_19aaxfcpq(ax)
 ax.set_xlim(-0.5,4)
 ax.set_ylim(-14.5,-18.5)
 plot_2006aj(ax)
-plot_980425(ax)
 
 ax = axarr[0,1]
 ax.axis('off')
@@ -344,6 +348,7 @@ ax.set_ylim(-14.8,-16.5)
 ax = axarr[2,1]
 plot_19ablesob(ax)
 ax.set_ylim(-15.5,-19)
+plot_2006aj(ax)
 
 for ax in axarr.flatten():
     ax.tick_params(axis='both', labelsize=12)
