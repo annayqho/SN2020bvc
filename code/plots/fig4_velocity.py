@@ -372,5 +372,5 @@ if __name__=="__main__":
             verticalalignment='center')
     fig.subplots_adjust(wspace=0.1, hspace=0.2)
 
-    plt.show()
-    #plt.savefig("vel.png", dpi=500)
+    #plt.show()
+    plt.savefig("vel.png", dpi=500)
