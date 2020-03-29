@@ -375,23 +375,6 @@ def grb030329(ax, col, legend):
             horizontalalignment='left')
     
 
-def grb111209a(ax, col, legend):
-    """ 
-    Hancock+ 2012, GCN 12804
-    """
-    z = 0.677
-    d = Planck15.luminosity_distance(z=z).cgs.value
-
-    t = np.array([5.1])/(1+z)
-    f = np.array([0.97])
-    nu = np.array([9E9]*len(f))
-
-    lum = plot_line(ax, d, t, nu*f, 'GRB111209A', 'GRB', col, legend)
-    ax.text(t[0]/1.05, lum[0], 'GRB111209A', fontsize=11,
-            verticalalignment='bottom',
-            horizontalalignment='center')
-
-
 def grb130427A(ax, col, legend):
     """ Perley et al
     They have data from CARMA/PdBI at 90 GHz (3mm)
@@ -490,7 +473,7 @@ def sn2020bvc(ax, col, legend):
     ax.errorbar(t,lum,fmt='*',c=col,ms=10)
     ax.plot(t,lum,c=col,lw=5)
     #lum = plot_line(ax, d, t, nu*flux, 'SN2020bvc', 'Rel. SN', col, legend)
-    ax.text(t[1]*1.05, lum[1], '2020bvc', fontsize=14,
+    ax.text(t[1]*1.05, lum[1], r'\textbf{2020bvc}', fontsize=16, 
             verticalalignment='bottom',
             horizontalalignment='left')
 

@@ -15,7 +15,7 @@ EXT_I = 0.021
 rcol = '#e55c30'
 gcol = '#140b34'
 icol = 'k'
-z = 0.025235
+z = 0.025201
 t0 = 2458883.17
 msize = 6
 
@@ -105,8 +105,12 @@ band = dat['band']
 #plt.plot(t[choose]-t[choose][0]+1.3, mag[choose]-dm, linestyle='-', 
 #lw=0.5, color='k', label="2006aj (UVOT/B)")
 choose = band == 'V'
-plt.plot(t[choose][14:]-t[choose][0]+offset, mag[choose][14:]-dm, linestyle='--', 
-lw=0.5, color='k', label="2006aj (UVOT/V)")
+plt.scatter(
+        t[choose][14:]-t[choose][0]+offset, mag[choose][14:]-dm, 
+        color='grey', s=3, zorder=0, label=None)
+plt.plot(
+        t[choose][14:]-t[choose][0]+offset, mag[choose][14:]-dm, 
+        linestyle='--', lw=0.5, color='grey', label="2006aj (UVOT/V)", zorder=0)
 
 # epoch of 060218
 btime = 53784.149
@@ -114,7 +118,7 @@ plt.axvline(x=btime-t[choose][0]+offset, c='k', lw=0.5, ls=':')
 
 ax2 = ax.twinx()
 ax2.set_ylabel(
-        "Absolute Mag",
+        "Absolute Mag ($z=0.025201$)",
         fontsize=14, rotation=270, labelpad=15.0)
 y_f = lambda y_i: y_i - Planck15.distmod(z=z).value
 ymin, ymax = ax.get_ylim()
