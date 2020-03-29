@@ -445,7 +445,8 @@ def sn2003bg(ax, col, legend):
 
 
 def sn2009bb(ax, col, legend):
-    """ expl date Mar 19 """
+    """ expl date Mar 19 
+    Soderberg 2010 """
     nu = 8.46E9
     d = 1.237517263280789e+26
     t_apr = 11 + np.array([5.2, 8.2, 13.2, 15.1, 23.2, 29.1])
@@ -480,10 +481,7 @@ def sn2020bvc(ax, col, legend):
 
 def sn1998bw(ax, col, legend):
     """ SN 1998bw
-    
-    This is a bit complicated because there are two peaks in the light curve,
-    but I am using a frequency that has a main peak rather than a frequecy
-    with two clear distinct peaks...
+    from Kulkarni et al. 1998
     """
     d = 1.17E26 # cm
     nu = 150E9
@@ -492,6 +490,13 @@ def sn1998bw(ax, col, legend):
     nu = 2.3E9
     t = np.array([11.7, 14.6, 15.7, 16.5, 17.8, 19.7, 21.6, 23.6, 25.9, 26.8, 28.8, 30.0, 32.9, 34.7, 36.8, 38.8, 40.0, 45.7, 51.7, 57.7, 64.7, 67.7, 80.5])
     f = np.array([19.7, 22.3, 23.5, 23.9, 25.1, 25.3, 20.9, 22.9, 28.0, 28.7, 31.1, 31.3, 27.3, 33.5, 31.8, 31, 31.3, 26.8, 23.1, 18.5, 15.6, 15.6, 9.6])
+    nu = 10E9
+    t = np.array([3, 4, 9.9, 11.7, 14.6, 15.7, 16.5, 17.8, 19.7, 21.6, 23.6, 
+        25.9, 26.8, 28.8, 30.0, 32.9, 34.7, 36.8, 38.8, 40.0, 45.7, 51.7, 57.7,
+        64.7, 67.7, 80.5])
+    f = np.array([13, 13, 48, 49.4, 37.6, 34.3, 31.4, 26.2, 21.6, 18.8, 17.6, 
+        20.9, 21.7, 22, 22.1, 21.3, 20.2, 18.4, 16.1, 16.6, 13.2, 10.5, 8.1, 
+        7.7, 7.2, 4.1])
     lum = plot_line(ax, d, t, nu*f, 'SN1998bw', 'Rel. SN', col, legend)
     ax.text(t[0]/1.05, lum[0], '1998bw', fontsize=11,
             verticalalignment='center',
@@ -500,10 +505,7 @@ def sn1998bw(ax, col, legend):
 
 def sn2006aj(ax, col, legend):
     """ SN 2006aj
-    
-    This is a bit complicated because there are two peaks in the light curve,
-    but I am using a frequency that has a main peak rather than a frequecy
-    with two clear distinct peaks...
+    Soderberg 2006
     """
     d = Planck15.luminosity_distance(z=0.033).cgs.value
     nu = 8.46E9
@@ -566,7 +568,6 @@ if __name__=="__main__":
 
     grb030329(ax, '#f98e09', legend=True)
     grb130427A(ax, '#f98e09', None)
-    grb111209a(ax, '#f98e09', None)
 
     sn2009bb(ax, '#bc3754', legend=True)
     sn1998bw(ax, '#bc3754', None)
