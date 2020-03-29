@@ -341,10 +341,10 @@ if __name__=="__main__":
         plot_2010bh(ax, background=True)
         plot_2009bb(ax, background=True)
         plot_2012ap(ax, background=True)
-        plot_17cw(ax, background=True)
+        #plot_17cw(ax, background=True)
         # plot_18gep()
         # plot_16asu()
-        # grb171205a()
+        grb171205a()
         # plot_2003lw()
         # plot_12gzk()
 
@@ -371,5 +371,5 @@ if __name__=="__main__":
             verticalalignment='center')
     fig.subplots_adjust(wspace=0.1, hspace=0.2)
 
-    #plt.show()
-    plt.savefig("vel.png", dpi=500)
+    plt.show()
+    #plt.savefig("vel.png", dpi=500)

@@ -14,6 +14,7 @@ import sys
 sys.path.append("/Users/annaho/Dropbox/Projects/Research/AT2018cow/code")
 sys.path.append("/Users/annaho/Dropbox/Projects/Research/IcBL/data/radio_compilations/Zauderer2011")
 from astropy.cosmology import Planck15
+from astropy.io import ascii
 from get_radio import *
 from scale_fluxes import sma_lc
 from read_table import *
@@ -298,6 +299,7 @@ def sn1993J(ax, col, legend):
     nu, dt, f, ef, islim = read_1993J_high_freq()
     choose = np.logical_and(~islim, nu==freq)
 
+
 def sn2011dh(ax, col, legend):
     """ SN 2011dh
     Horesh et al. 2013
@@ -415,6 +417,24 @@ def sn2007bg(ax, col, legend):
     ax.text(t[0]/1.05, lum[0], 'SN2007bg', fontsize=11,
             verticalalignment='bottom',
             horizontalalignment='right', zorder=0)
+
+
+def ptf11qcj(ax, col, legend):
+    """ Corsi et al. 2014
+    """
+    nu = 5E9
+    t0 = 55842
+    dat = ascii.read("../../data/ptf11qcj.txt")
+    t = dat['col1']-t0
+    nu_all = dat['col3']
+    choose = nu_all == 5
+    f = dat['col4']
+    d = Planck15.luminosity_distance(z=0.0287).cgs.value
+
+    lum = plot_line(ax, d, t[choose], nu*f[choose], 'SN2007bg', 'SN', col, legend)
+    ax.text(t[choose][15], lum[15]*1.5, 'PTF11qcj', fontsize=11,
+            verticalalignment='bottom',
+            horizontalalignment='center', zorder=0)
 
 
 def sn2003bg(ax, col, legend):
@@ -565,6 +585,7 @@ if __name__=="__main__":
     sn2011dh(ax, 'lightblue', None)
     sn2007bg(ax, 'lightblue', None)
     sn2003bg(ax, 'lightblue', None)
+    ptf11qcj(ax, 'lightblue', None)
 
     grb030329(ax, '#f98e09', legend=True)
     grb130427A(ax, '#f98e09', None)
