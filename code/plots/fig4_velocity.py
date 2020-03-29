@@ -231,15 +231,18 @@ def plot_2003lw():
             label="LLGRB-SNe")
 
 
-def grb171205a():
+def grb171205a(ax, background):
     # For GRB171205A, the g-band max is about 12 days after the GRB
     dat = np.loadtxt(
             DATA_DIR + "/grb171205a_vel.txt", dtype=float, delimiter=',')
     dt = dat[:,0]
-    vel = dat[:,1]/1E3
-    #plt.scatter(dt, vel, marker='o', c='grey', alpha=0.5)
-    plt.plot(dt, vel, ls='-', c='#f6d746', lw=3, alpha=0.5, label="LLGRB-SN")
-    plt.text(dt[0], vel[0], 'SN2017iuk', fontsize=12)
+    v = dat[:,1]/1E3
+    col = 'lightgrey'
+    if background is False:
+        col = GRBSN_col
+        ax.text(0.1, 0.8, "GRB171205A", fontsize=12, transform=ax.transAxes)
+    ax.plot(
+            dt, v, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
 
 
 def plot_12gzk():
@@ -331,7 +334,7 @@ def plot_population():
 
 if __name__=="__main__":
     fig,axarr = plt.subplots(
-            3, 2, figsize=(6,6), sharex=False, sharey=True)
+            3, 2, figsize=(6,6), sharex=True, sharey=True)
 
     for ii,ax in enumerate(axarr.reshape(-1)):
         plot_20bvc(ax)
@@ -344,7 +347,7 @@ if __name__=="__main__":
         #plot_17cw(ax, background=True)
         # plot_18gep()
         # plot_16asu()
-        grb171205a()
+        grb171205a(ax, background=True)
         # plot_2003lw()
         # plot_12gzk()
 
@@ -361,9 +364,7 @@ if __name__=="__main__":
     plot_2006aj(axarr[2,0], background=False)
     plot_2009bb(axarr[0,1], background=False)
     plot_2012ap(axarr[1,1], background=False)
-    plot_17cw(axarr[2,1], background=False)
-    axarr[2,1].set_xlim(0, 60)
-    axarr[2,1].set_xticks([0, 20, 40, 60])
+    grb171205a(axarr[2,1], background=False)
     fig.text(0.5, 0.04, r"$\Delta t$ (days)", ha='center', fontsize=16)
     fig.text(
             0.04, 0.5, r'Fe II Velocity ($10^3$ km/s)',
