@@ -339,44 +339,27 @@ def plot_population():
 
 
 if __name__=="__main__":
-    fig,axarr = plt.subplots(
-            3, 2, figsize=(6,6), sharex=True, sharey=True)
+    fig,ax = plt.subplots(1, 1, figsize=(10,6))
 
-    for ii,ax in enumerate(axarr.reshape(-1)):
-        plot_20bvc(ax)
-        #plot_18aaqjovh(ax)
-        plot_1998bw(ax, background=True)
-        plot_2006aj(ax, background=True)
-        plot_2010bh(ax, background=True)
-        plot_2009bb(ax, background=True)
-        plot_2012ap(ax, background=True)
-        #plot_17cw(ax, background=True)
-        plot_18gep(ax,background=True)
-        # plot_16asu()
-        grb171205a(ax, background=True)
-        # plot_2003lw()
-        # plot_12gzk()
+    plot_20bvc(ax)
 
-        ax.yaxis.set_tick_params(labelsize=14)
-        ax.xaxis.set_tick_params(labelsize=14)
-        ax.set_yscale('log')
-        ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-        ax.set_xlim(0, 50)
-        ax.set_xticks([0,10,20,30,40,50])
-        ax.set_ylim(10, 100)
+    ax.yaxis.set_tick_params(labelsize=14)
+    ax.xaxis.set_tick_params(labelsize=14)
+    ax.set_yscale('log')
+    ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    ax.set_xlim(0, 50)
+    ax.set_xticks([0,10,20,30,40,50])
+    ax.set_ylim(10, 100)
 
-    plot_1998bw(axarr[0,0], background=False)
-    plot_2010bh(axarr[1,0], background=False)
-    plot_2006aj(axarr[2,0], background=False)
-    plot_2009bb(axarr[0,1], background=False)
-    plot_18gep(axarr[1,1], background=False)
-    grb171205a(axarr[2,1], background=False)
-    fig.text(0.5, 0.04, r"$\Delta t$ (days)", ha='center', fontsize=16)
-    fig.text(
-            0.04, 0.5, r'Fe II Velocity ($10^3$ km/s)',
-            fontsize=16, rotation='vertical', horizontalalignment='center',
-            verticalalignment='center')
-    fig.subplots_adjust(wspace=0.1, hspace=0.2)
+    plot_1998bw(ax, background=False)
+    plot_2010bh(ax, background=False)
+    plot_2006aj(ax, background=False)
+    plot_2009bb(ax, background=False)
+    plot_18gep(ax, background=False)
+    grb171205a(ax, background=False)
+
+    ax.set_xlabel(r"$\Delta t$ (days)", fontsize=16)
+    ax.set_ylabel(r'Fe II Velocity ($10^3$ km/s)', fontsize=16)
 
     plt.show()
     #plt.savefig("vel.png", dpi=500)
