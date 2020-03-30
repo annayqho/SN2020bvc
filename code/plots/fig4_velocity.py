@@ -26,12 +26,16 @@ FASTSN_alpha = 0.5
 
 
 def plot_20bvc(ax):
-    dt = np.array([5.7, 6.8, 10, 10.8, 12.8, 13.6, 18.9, 26.9])
-    vel = np.array([2.77,2.32,2.35,2.28,2.25,1.90,1.95,1.98])
-    evel = np.array([0.53, 0.74, 0.46, 0.63, 0.4, 0.39, 0.46, 0.57])
+    dt = np.array([4.6, 5.7, 8.8, 9.7, 11.7, 12.5, 17.7, 25.8, 47.9])
+    vel = np.array([2.77,2.32,2.35,2.28,2.25,1.90,1.95,1.98,1.44])
+    evel = np.array([0.53, 0.74, 0.46, 0.63, 0.4, 0.39, 0.46, 0.57, 0.45])
     ax.errorbar(dt, vel*10, yerr=evel*10,
             fmt='s', c='k', label="SN2020bvc", 
             zorder=10, ms=5, lw=1)
+    # from minimum of the Ca II absorption feature
+    ax.scatter(3.7, 60, marker='s', edgecolor='k', facecolor='white')
+    ax.plot(np.hstack((3.7,dt)), np.hstack((60,vel*10)), c='k', zorder=5, lw=2)
+
 
 def plot_18aaqjovh(ax,background=True):
     """ """
@@ -47,7 +51,7 @@ def plot_18aaqjovh(ax,background=True):
         ax.text(0.1, 0.8, "ZTF18aaqjovh", fontsize=12, transform=ax.transAxes)
 
 
-def plot_18gep():
+def plot_18gep(ax,background=True):
     """ V-band max is 3 days after t_0 """
     # From early spectra
     dt_early = np.array([1, 2, 4.2])
@@ -59,13 +63,16 @@ def plot_18gep():
     evel = np.array([1000, 4000, 2000, 1000, 2000])/1E3
     el = np.array(['O', 'Fe', 'Fe', 'Fe', 'Fe'])
 
-    plt.plot(
-        np.hstack((dt_early, dt)), np.hstack((vel_early, vel)), 
-        c=FASTSN_col, lw=FASTSN_lw, alpha=FASTSN_alpha, zorder=5,
-        label="Fast Ic-BL")
-    plt.text(dt_early[1]*1.1, vel_early[1], '18gep',
-            horizontalalignment='left', fontsize=12,
-            verticalalignment='bottom')
+    dt = np.hstack((dt_early, dt))
+    vel = np.hstack((vel_early, vel))
+
+    col = 'lightgrey'
+    if background is False:
+        col = GRBSN_col
+        ax.text(0.1, 0.8, "SN2018gep", fontsize=12, transform=ax.transAxes)
+    ax.plot(
+            dt, vel, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
+
 
 
 def plot_16asu():
@@ -269,7 +276,6 @@ def plot_12gzk():
             verticalalignment='bottom')
 
 
-
 def plot_population():
     """ Modjaz et al. 2016 """
     inputf = pyfits.open(DATA_DIR + "/asu.fit")
@@ -345,7 +351,7 @@ if __name__=="__main__":
         plot_2009bb(ax, background=True)
         plot_2012ap(ax, background=True)
         #plot_17cw(ax, background=True)
-        # plot_18gep()
+        plot_18gep(ax,background=True)
         # plot_16asu()
         grb171205a(ax, background=True)
         # plot_2003lw()
@@ -355,15 +361,15 @@ if __name__=="__main__":
         ax.xaxis.set_tick_params(labelsize=14)
         ax.set_yscale('log')
         ax.yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
-        ax.set_xlim(0, 33)
-        ax.set_xticks([0,10,20,30])
+        ax.set_xlim(0, 50)
+        ax.set_xticks([0,10,20,30,40,50])
         ax.set_ylim(10, 100)
 
     plot_1998bw(axarr[0,0], background=False)
     plot_2010bh(axarr[1,0], background=False)
     plot_2006aj(axarr[2,0], background=False)
     plot_2009bb(axarr[0,1], background=False)
-    plot_2012ap(axarr[1,1], background=False)
+    plot_18gep(axarr[1,1], background=False)
     grb171205a(axarr[2,1], background=False)
     fig.text(0.5, 0.04, r"$\Delta t$ (days)", ha='center', fontsize=16)
     fig.text(
@@ -372,5 +378,5 @@ if __name__=="__main__":
             verticalalignment='center')
     fig.subplots_adjust(wspace=0.1, hspace=0.2)
 
-    #plt.show()
-    plt.savefig("vel.png", dpi=500)
+    plt.show()
+    #plt.savefig("vel.png", dpi=500)
