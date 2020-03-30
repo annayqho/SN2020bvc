@@ -31,10 +31,12 @@ def plot_20bvc(ax):
     evel = np.array([0.53, 0.74, 0.46, 0.63, 0.4, 0.39, 0.46, 0.57, 0.45])
     ax.errorbar(dt, vel*10, yerr=evel*10,
             fmt='s', c='k', label="SN2020bvc", 
-            zorder=10, ms=5, lw=1)
+            zorder=10, ms=10, lw=1)
     # from minimum of the Ca II absorption feature
-    ax.scatter(3.7, 60, marker='s', edgecolor='k', facecolor='white')
-    ax.plot(np.hstack((3.7,dt)), np.hstack((60,vel*10)), c='k', zorder=5, lw=2)
+    ax.scatter(3.7, 60, marker='s', edgecolor='k', facecolor='white', s=100, zorder=10)
+    ax.plot(np.hstack((3.7,dt)), np.hstack((60,vel*10)), c='k', zorder=5, lw=4)
+    ax.text(6, 62, r'\textbf{SN2020bvc}', fontsize=16, 
+            horizontalalignment='center', verticalalignment='bottom')
 
 
 def plot_18aaqjovh(ax,background=True):
@@ -69,9 +71,10 @@ def plot_18gep(ax,background=True):
     col = 'lightgrey'
     if background is False:
         col = GRBSN_col
-        ax.text(0.1, 0.8, "SN2018gep", fontsize=12, transform=ax.transAxes)
     ax.plot(
             dt, vel, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
+    ax.text(dt[0]*1.5, vel[0], "18gep", fontsize=12, 
+            horizontalalignment='center', verticalalignment='bottom')
 
 
 
@@ -105,7 +108,6 @@ def plot_1998bw(ax, background=False):
     col = 'lightgrey'
     if background is False:
         col = GRBSN_col
-        ax.text(0.1, 0.8, "SN1998bw", fontsize=12, transform=ax.transAxes)
 
     name = 'sn1998bw'
     choose = names==name
@@ -115,6 +117,8 @@ def plot_1998bw(ax, background=False):
     offset = 2450945.7-2450929.41
     dt = phase+offset
     ax.plot(dt, vel/1E3, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
+    ax.text(dt[14], vel[14]/1.05E3, "SN1998bw", fontsize=12, 
+        horizontalalignment='center', verticalalignment='top')
 
 
 def plot_2006aj(ax, background=False):
@@ -126,7 +130,6 @@ def plot_2006aj(ax, background=False):
     col = 'lightgrey'
     if background is False:
         col = GRBSN_col
-        ax.text(0.1, 0.8, "SN2006aj", fontsize=12, transform=ax.transAxes)
     name = 'sn2006aj'
     choose = names==name
     phase = dat[:,1][choose].astype(float)
@@ -136,6 +139,8 @@ def plot_2006aj(ax, background=False):
     dt = phase+offset
     ax.plot(
             dt, vel/1E3, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
+    ax.text(dt[0], vel[0]/1E3, "06aj", fontsize=12,
+            horizontalalignment='right', verticalalignment='bottom')
 
 
 def plot_2010bh(ax, background):
@@ -147,7 +152,6 @@ def plot_2010bh(ax, background):
     col = 'lightgrey'
     if background is False:
         col = GRBSN_col
-        ax.text(0.1, 0.8, "SN2010bh", fontsize=12, transform=ax.transAxes)
     name = 'sn2010bh'
     choose = names==name
     phase = dat[:,1][choose].astype(float)
@@ -157,6 +161,7 @@ def plot_2010bh(ax, background):
     dt = phase+offset
     ax.plot(
             dt, vel/1E3, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
+    ax.text(dt[3], vel[3]/1E3, "10bh", fontsize=12)
 
 
 def plot_2009bb(ax, background):
@@ -165,7 +170,6 @@ def plot_2009bb(ax, background):
     col = 'lightgrey'
     if background is False:
         col = GRBSN_col
-        ax.text(0.1, 0.8, "SN2009bb", fontsize=12, transform=ax.transAxes)
     name = 'sn2009bb'
     # explosion epoch: March 19
     # maximum light: Apr 1 (Soderberg 2009)
@@ -177,6 +181,8 @@ def plot_2009bb(ax, background):
     dt = phase+offset
     ax.plot(
             dt, vel/1E3, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
+    ax.text(dt[3], vel[3]/1.05E3, "SN2009bb", fontsize=12, 
+            horizontalalignment='center', verticalalignment='top')
 
 
 def plot_2012ap(ax, background):
@@ -247,7 +253,8 @@ def grb171205a(ax, background):
     col = 'lightgrey'
     if background is False:
         col = GRBSN_col
-        ax.text(0.1, 0.8, "GRB171205A", fontsize=12, transform=ax.transAxes)
+        ax.text(dt[0], v[0], "17iuk", fontsize=12, 
+                horizontalalignment='left', verticalalignment='bottom')
     ax.plot(
             dt, v, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
 
@@ -361,5 +368,6 @@ if __name__=="__main__":
     ax.set_xlabel(r"$\Delta t$ (days)", fontsize=16)
     ax.set_ylabel(r'Fe II Velocity ($10^3$ km/s)', fontsize=16)
 
-    plt.show()
-    #plt.savefig("vel.png", dpi=500)
+    #plt.show()
+    plt.tight_layout()
+    plt.savefig("vel.png", dpi=500)
