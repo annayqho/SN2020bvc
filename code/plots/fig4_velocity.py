@@ -33,9 +33,14 @@ def plot_20bvc(ax):
             fmt='s', c='k', label="SN2020bvc", 
             zorder=10, ms=10, lw=1)
     # from minimum of the Ca II absorption feature
-    ax.scatter(3.7, 60, marker='s', edgecolor='k', facecolor='white', s=100, zorder=10)
-    ax.plot(np.hstack((3.7,dt)), np.hstack((60,vel*10)), c='k', zorder=5, lw=4)
-    ax.text(6, 62, r'\textbf{SN2020bvc}', fontsize=16, 
+    xadd = 3.7
+    yadd = 51
+    eyadd = 1.3
+    ax.errorbar(xadd, yadd, yerr=eyadd,
+            fmt='s', mec='k', mfc='white', label="SN2020bvc", 
+            zorder=10, ms=10, lw=1)
+    ax.plot(np.hstack((xadd,dt)), np.hstack((yadd,vel*10)), c='k', zorder=5, lw=4)
+    ax.text(6, 53, r'\textbf{SN2020bvc}', fontsize=16, 
             horizontalalignment='center', verticalalignment='bottom')
 
 
@@ -368,6 +373,6 @@ if __name__=="__main__":
     ax.set_xlabel(r"$\Delta t$ (days)", fontsize=16)
     ax.set_ylabel(r'Fe II Velocity ($10^3$ km/s)', fontsize=16)
 
-    #plt.show()
     plt.tight_layout()
+    #plt.show()
     plt.savefig("vel.png", dpi=500)

@@ -106,7 +106,7 @@ band = dat['band']
 #lw=0.5, color='k', label="2006aj (UVOT/B)")
 choose = band == 'V'
 plt.scatter(
-        t[choose][14:]-t[choose][0]+offset, mag[choose][14:]-dm, 
+        t[choose]-t[choose][0]+offset, mag[choose]-dm, 
         color='grey', s=3, zorder=0, label=None)
 plt.plot(
         t[choose][14:]-t[choose][0]+offset, mag[choose][14:]-dm, 
@@ -136,5 +136,5 @@ ax.tick_params(labelsize=14)
 ax.set_xlim(-2.5,31)
 ax.set_ylim(21.2,15.7)
 plt.tight_layout()
-plt.savefig("lc.png", dpi=200)
-#plt.show()
+#plt.savefig("lc.png", dpi=200)
+plt.show()

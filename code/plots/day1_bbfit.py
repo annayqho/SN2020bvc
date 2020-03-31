@@ -8,6 +8,7 @@ rc("text", usetex=True)
 import matplotlib.pyplot as plt
 from astropy.time import Time
 from astropy.cosmology import Planck15
+from astropy.io import fits as pyfits
 from scipy.optimize import curve_fit
 
 fig,ax = plt.subplots(1,1,figsize=(7,4))
@@ -69,19 +70,25 @@ T = '13.2'
 R = '5.1'
 L = '5.6'
 
-plt.plot(wl, f_lam/1E-15, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
+plt.plot(wl/1.0252, f_lam/1E-15, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
 plt.plot(xplt,yplt/1E-15,lw=1,alpha=1,c='k')
 plt.text(
     0.95, 0.95, "$\Delta t=0.67\,$d", fontsize=14, transform=ax.transAxes,
     horizontalalignment='right', verticalalignment='top')
 plt.text(
     0.95, 0.85, 
-    r"$T=%s \times 10^{3} $\,K, $R=%s\times10^{14}$ cm, $L=%s\times10^{42}\,$erg/sec" %(T,R,L),
+    r"$T=%s \times 10^{3} $\,K, $R=%s\times10^{14}$ cm, $L=%s\times10^{42}\,$erg/s" %(T,R,L),
     horizontalalignment='right', verticalalignment='top', transform=ax.transAxes,
     fontsize=14)
 
+# Now plot the earliest spectrum of SN2017iuk, from Izzo+2019
+dat = pyfits.open("../../data/171205A_731_SF1.fits")[0].data
+wl = np.linspace(3200,5600,len(dat))
+plt.plot(wl/1.0368, 2*dat/1E-15, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
+
+
 plt.ylabel(r"Flux ($10^{-15}$ erg\,s$^{-1}$\,cm$^{-2}\,$\AA$^{-1}$)", fontsize=16)
-plt.xlabel("Wavelength (Angstrom)", fontsize=16)
+plt.xlabel("Rest Wavelength ($\AA$)", fontsize=16)
 plt.tick_params(axis='both', labelsize=16)
 plt.tight_layout()
 #plt.show()
