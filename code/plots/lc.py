@@ -95,7 +95,7 @@ for b in bb:
 
 # compare to 2006aj
 offset = 0
-dm = Planck15.distmod(z=0.033).value-Planck15.distmod(z=0.025235).value
+dm = Planck15.distmod(z=0.0335).value-Planck15.distmod(z=0.025235).value
 dat = ascii.read("../../data/lc_060218_full.txt")
 t = dat['time']
 mag = dat['magnitude']
@@ -136,10 +136,15 @@ m_plot = np.array([18.14, 18.07, 17.87, 17.68, 17.74, 17.56, 17.54, 17.47, 17.43
 plt.scatter(dt_plot, m_plot-dm, color='k', s=1, zorder=0, label=None)
 plt.plot(dt_plot, m_plot-dm, linestyle='-', lw=0.5, color='k', label="2006aj $B$", zorder=0, alpha=1)
 
+# Now I need my own early B-band magnitudes
+dat = ascii.read("../../data/lc_060218_swift.dat")
+dt_plot = dat['t']
+m_plot = dat['mag']
+plt.scatter(dt_plot, m_plot-dm-0.5, color='k', s=1, zorder=0, label=None)
+plt.plot(dt_plot, m_plot-dm-0.5, linestyle='-', lw=0.5, color='k', label=None, zorder=0, alpha=1)
+
 # epoch of 060218
 plt.axvline(x=0, c='k', lw=0.5, ls=':')
-#btime = 53784.149
-#plt.axvline(x=btime-t[choose][0]+offset, c='k', lw=0.5, ls=':')
 
 ax2 = ax.twinx()
 ax2.set_ylabel(
@@ -161,5 +166,5 @@ ax.tick_params(labelsize=14)
 ax.set_xlim(-2.5,31)
 ax.set_ylim(21.2,15.7)
 plt.tight_layout()
-#plt.savefig("lc.png", dpi=200)
-plt.show()
+plt.savefig("lc.png", dpi=200)
+#plt.show()
