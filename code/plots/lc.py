@@ -104,17 +104,42 @@ band = dat['band']
 #choose = band == 'B'
 #plt.plot(t[choose]-t[choose][0]+1.3, mag[choose]-dm, linestyle='-', 
 #lw=0.5, color='k', label="2006aj (UVOT/B)")
-choose = band == 'V'
-plt.scatter(
-        t[choose]-t[choose][0]+offset, mag[choose]-dm, 
-        color='grey', s=3, zorder=0, label=None)
-plt.plot(
-        t[choose][14:]-t[choose][0]+offset, mag[choose][14:]-dm, 
-        linestyle='--', lw=0.5, color='grey', label="2006aj (UVOT/V)", zorder=0)
+
+# choose = band == 'V'
+# # Discard t < 0.1, mag < 17.5
+# dt_plot = t[choose]-t[choose][0]+offset
+# m_plot = mag[choose]-dm
+# discard = np.logical_and(dt_plot<0.1, m_plot<17.5)
+# plt.scatter(dt_plot[~discard], m_plot[~discard], color='grey', 
+#         s=3, zorder=0, label=None)
+# plt.plot(dt_plot[~discard], m_plot[~discard], linestyle='-', lw=2, 
+#         color='grey', label="2006aj (UVOT/V)", zorder=0, alpha=0.5)
+# 
+# V-band LC from the Ferrero+06 paper
+dt_plot = np.array([2.7, 2.9, 4.0, 4.9, 5.0, 6.0, 6.7, 6.9, 7.9, 8.7, 
+    8.9, 8.9, 9.9, 10.9, 11.9, 12.7, 12.9, 13.9, 14.9, 15.9, 
+    16.7, 17.9, 17.9, 18.9, 18.9, 19.9, 19.9, 21.8, 22.9, 23.9, 
+    24.9, 25.9])
+# These V-band magnitudes are corrected for host-galaxy flux, 
+# extinction, host-galaxy extinction
+m_plot = np.array([17.86, 17.83, 17.54, 17.41, 17.37, 17.28, 17.19, 17.16, 17.08, 17.05, 
+    17.02, 17.03, 17.02, 17.02, 17.04, 17.07, 17.08, 17.14, 17.18, 17.27, 
+    17.26, 17.46, 17.47, 17.54, 17.54, 17.65, 17.61, 17.80, 17.89, 17.99, 
+    18.12, 18.14])
+plt.scatter(dt_plot, m_plot-dm, color='k', s=1, zorder=0, label=None)
+plt.plot(dt_plot, m_plot-dm, linestyle='--', lw=0.5, color='k', label="2006aj $V$", zorder=0, alpha=1)
+# These are B-band, also from the Ferrero paper
+dt_plot = np.array([2.7, 2.9, 4.0, 4.9, 6.0, 6.9, 7.9, 8.9, 9.9, 10.9, 
+    11.9, 12.9, 13.9, 14.9, 15.9, 17.7, 17.9, 18.8, 19.9, 21.8, 22.9, 23.8])
+m_plot = np.array([18.14, 18.07, 17.87, 17.68, 17.74, 17.56, 17.54, 17.47, 17.43, 17.49, 
+    17.57, 17.66, 17.81, 17.95, 18.11, 18.56, 18.64, 18.73, 18.95, 19.16, 19.43, 19.43])
+plt.scatter(dt_plot, m_plot-dm, color='k', s=1, zorder=0, label=None)
+plt.plot(dt_plot, m_plot-dm, linestyle='-', lw=0.5, color='k', label="2006aj $B$", zorder=0, alpha=1)
 
 # epoch of 060218
-btime = 53784.149
-plt.axvline(x=btime-t[choose][0]+offset, c='k', lw=0.5, ls=':')
+plt.axvline(x=0, c='k', lw=0.5, ls=':')
+#btime = 53784.149
+#plt.axvline(x=btime-t[choose][0]+offset, c='k', lw=0.5, ls=':')
 
 ax2 = ax.twinx()
 ax2.set_ylabel(
