@@ -1,0 +1,108 @@
+""" I ran this on transient:/scr3/ah/icbl_velocities """
+
+My .cshrc file has the line setenv IDL_STARTUP /home/ah/.idl_startup
+from the data directory on my laptop,
+scp ../data/spec/ZTF20aalxlis_20200* ah@transient.caltech.edu:/scr3/ah/icbl_velocities
+
+idl
+
+Clip galaxy emission lines. For this, you need to be using vncviewer.
+For some reason, the ssh -XY doesn’t work.
+wombat (type ‘help’ for help and a guide to commands)
+rpl to load file
+p to plot
+b to blotch out bad pixels interactively
+win: eliminate flux values beyond a given range
+use mouse to select regions and delete emission lines
+to save the new spectrum, use wpl
+pline: plot spectrum with galaxy emission lines
+
+.com SNspecFFTsmooth
+Then follow the lines from make_input_16asu.pro, one by one in the console
+
+How much does it matter which template I use?
+
+Then run the actual fitting code on my laptop,
+in ~/Github/SESNspectraLib
+
+Here are the commands I used:
+
+Feb 8, LT
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200208_LT_v1_clipped.sav IcTemplates/meanspecIc_-2.sav Fe
+# Returned v = 15265 km/s, sigma=5121 km/s, template is 10553.3, chisq=1.4
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200208_LT_v1_clipped.sav IcTemplates/meanspecIc_-4.sav Fe
+# Returned v = 15037 km/s, sigma=5148 km/s, template is 10866.8, chisq=1.4
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200208_LT_v1_clipped.sav IcTemplates/meanspecIc_-8.sav Fe
+# Returned v = 13638 km/s, sigma=4994 km/s, template is 10230.7, chisq=1.3
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200208_LT_v1_clipped.sav IcTemplates/meanspecIc_2.sav Fe
+# Returned v = 17337 km/s, sigma=6389 km/s, template is 8418.3, chisq=1.5
+
+Feb 9, SEDM
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200209_P60_v1.sav IcTemplates/meanspecIc_-10.sav
+# HUGE chisq, 385697...
+can't get a decent chi sq, so I think I should ignore this one.
+
+Feb 12, P200
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200212_P200_v1_clipped.sav IcTemplates/meanspecIc_-10.sav 
+# chisq = 11.9...doesn't look very good
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200212_P200_v1_clipped.sav IcTemplates/meanspecIc_-2.sav 
+# the width looks OK, but the trough is so much deeper...chisq = 12.7
+# v = 9993 km/s, sigma = 3223 km/s
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200212_P200_v1_clipped.sav IcTemplates/meanspecIc_-4.sav
+# v not displayed, chisq=12.3
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200212_P200_v1_clipped.sav IcTemplates/meanspecIc_-6.sav Fe
+# v = 8203 km/s, sigma=2962 km/s, chisq = 10.9
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200212_P200_v1_clipped.sav IcTemplates/meanspecIc_-8.sav Fe
+# v = chisq = 9.8, v = 8057, sigma = 3233 -- looks better
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200212_P200_v1_clipped.sav IcTemplates/meanspecIc_0.sav Fe
+# chisq = 13.7, v = not displayed...doesn't look as good
+
+Feb 13, SEDM
+python Ic_conv_Icbl_MCMC.py ZTF20aalxlis_20200213_P60_v1.sav IcTemplates/meanspecIc_-8.sav Fe
+# huge chi sq
+phase -10
+# also a huge chi sq
+# I think I'm going to give up on this one
+phase -2
+# also a huge chi sq
+# giving up and moving on...
+
+Feb 15, SEDM
+-10 returns NaN
+-8 returns a HUGE chi sq
+-6 returns a HUGE chi sq
+-4 returns NaN
+-2 returns a HUGE chi sq
+0 returns NaN
+2 returns a HUGE chi sq
+I give up on this one.
+
+Feb 16, NOT
+-10 returns v=6075, sigma=4214, chisq=29.4
+-8 returns v=5373, sigma=4611, chisq=24.1
+-6 returns v=5480, chisq=27.1
+-4 returns v=7240, sigma=2454, chisq=11.1, looks decent
+-2 returns v=7356, chisq=28.8
+0 returns v=9560, sigma=1764, chisq=18.7
+4 returns v=11132, sigma=3846, chisq=12.9
+6 returns v=11745, sigma=3402, chisq=29.2
+
+# March 1, NOT
+all of the templates return NaN
+
+# March 17, LT
+0 returns NaN
+2 returns v=5579, sigma=1949, chisq=8.6
+4 returns NaN
+6 returns NaN
+8 returns v=7572, sigma=2699, chisq=7.1
+10 returns v=9645, sigma=3191, chisq=4.8
+12 returns v=8677, sigma=2810, chisq=5.3
+
+# March 22, Keck
+2 returns v=1955, sigma=6412, chisq=10
+8 returns v=8142...doesn't look very good, chisq=25.4
+10 returns v=10542, sigma=3961, chisq=13.1 looks better
+12 returns v=9799, sigma=3905, chisq=10.7
+14 returns v=10597, sigma=3803, chisq=11.4
+16 returns v=11330, sigma=3921, chisq=10.7

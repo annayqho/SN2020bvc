@@ -70,15 +70,11 @@ def download_spec():
 
 
 def get_files(sind, eind):
-    """ 
-    start_ind: starting index
-    end_ind: end index
-    """
+    """ start_ind: starting index; end_ind: end index """
     files = np.array(glob.glob(SPEC_DIR + "/*.ascii"))
     dt = np.zeros(len(files))
     tels = []
     cols = np.array([""]*len(dt), dtype='U10')
-
     # Read in files, pull out the corresponding dates, and sort by date
     for ii,f in enumerate(files):
         tel = f.split("_")[2]
@@ -87,10 +83,11 @@ def get_files(sind, eind):
         if tel == 'LT': 
             for line in alldat:
                 if 'DATE-OBS' in line:
-                    obsdate = line[13:36]
+                    obsdate = line.split(" ")[2].rstrip().strip('\'')
+                    print(obsdate)
+                    print(Time(obsdate, format='isot'))
                     t = Time(obsdate, format='isot').mjd
                     print("LT")
-                    print(t)
                     print(t-t0)
                     dt[ii] = t-t0
             cols[ii] = 'magenta'
@@ -100,7 +97,6 @@ def get_files(sind, eind):
                     obsdate = line[11:]
                     t = Time(obsdate, format='isot').mjd
                     print("P200")
-                    print(t)
                     print(t-t0)
                     dt[ii] = t-t0
             cols[ii] = 'lightblue'
@@ -110,7 +106,6 @@ def get_files(sind, eind):
                     obsdate = line[13:32]
                     t = Time(obsdate, format='isot').mjd
                     print("Keck")
-                    print(t)
                     print(t-t0)
                     dt[ii] = t-t0
             cols[ii] = 'red'
@@ -119,7 +114,6 @@ def get_files(sind, eind):
                 if '#' in line:
                     t = float(line[1:])
                     print("NOT")
-                    print(t)
                     print(t-t0)
                     dt[ii] = t-t0
             cols[ii] = 'green'
@@ -129,7 +123,6 @@ def get_files(sind, eind):
                     obsdate = line[7:]
                     t = Time(obsdate, format='isot').mjd
                     print("P60")
-                    print(t)
                     dt[ii] = t-t0
                     print(t-t0)
             cols[ii] = 'black'
@@ -198,7 +191,7 @@ def plot_spec(ax, x, y, tel, epoch):
 if __name__=="__main__":
     fig,ax = plt.subplots(figsize=(6,10))
     #files, epochs, tels = get_files(0, 6)
-    files, epochs, tels = get_files(6, 12)
+    files, epochs, tels = get_files(6, 13)
     nfiles = len(files)
     shift = [1, 1.3, 1.8, 2.3, 2.8, 3.3, 3.6, 4.0, 4.5, 5, 5.5, 6, 6.5]
     #bw_shift = [2.1, 3, 4, 6, 7.1]
@@ -238,7 +231,7 @@ if __name__=="__main__":
     # for the first set
     #plt.ylim(-6.3 -0.5)
     # for the second set
-    plt.ylim(-5 -0.5)
+    plt.ylim(-6.5 -0.5)
     plt.xlabel(r"Rest Wavelength (\AA)", fontsize=16)
     plt.ylabel(r"Scaled $F_{\lambda}$ + const.", fontsize=16)
     plt.legend(fontsize=14)
