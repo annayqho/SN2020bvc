@@ -33,18 +33,16 @@ def plot_20bvc(ax):
     vel = np.array([2.58, 1.83, 1.90, 1.72, 1.79])
     evel = np.array([0.51, 0.32, 0.25, 0.32, 0.39])
     ax.errorbar(dt, vel*10, yerr=evel*10,
-            fmt='s', c='k', label="SN2020bvc", 
+            fmt='s', c='k', label=None, 
             zorder=10, ms=10, lw=1)
     # from minimum of the Ca II absorption feature
     xadd = 3.7
     yadd = 51
     eyadd = 1.3
     ax.errorbar(xadd, yadd, yerr=eyadd,
-            fmt='s', mec='k', mfc='white', label="SN2020bvc", 
-            zorder=10, ms=10, lw=1)
-    ax.plot(np.hstack((xadd,dt)), np.hstack((yadd,vel*10)), c='k', zorder=5, lw=4)
-    ax.text(6, 53, r'\textbf{SN2020bvc}', fontsize=16, 
-            horizontalalignment='center', verticalalignment='bottom')
+            fmt='s', mec='k', mfc='white', 
+            zorder=10, ms=10, lw=1, label=None)
+    ax.plot(np.hstack((xadd,dt)), np.hstack((yadd,vel*10)), c='k', zorder=5, lw=4, label="20bvc")
 
 
 def plot_18aaqjovh(ax,background=True):
@@ -80,9 +78,7 @@ def plot_18gep(ax,background=True):
     if background is False:
         col = GRBSN_col
     ax.plot(
-            dt, vel, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
-    ax.text(dt[0]*1.5, vel[0], "18gep", fontsize=12, 
-            horizontalalignment='center', verticalalignment='bottom')
+            dt, vel, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha, label="18gep")
 
 
 
@@ -124,9 +120,7 @@ def plot_1998bw(ax, background=False):
     evel = dat[:,3][choose].astype(float)
     offset = 2450945.7-2450929.41
     dt = phase+offset
-    ax.plot(dt, vel/1E3, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
-    ax.text(dt[14], vel[14]/1.05E3, "SN1998bw", fontsize=12, 
-        horizontalalignment='center', verticalalignment='top')
+    ax.plot(dt, vel/1E3, color='#e55c30', lw=1, label="98bw")
 
 
 def plot_2006aj(ax, background=False):
@@ -146,9 +140,7 @@ def plot_2006aj(ax, background=False):
     offset = 2453794.7-2453784.649
     dt = phase+offset
     ax.plot(
-            dt, vel/1E3, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
-    ax.text(dt[0], vel[0]/1E3, "06aj", fontsize=12,
-            horizontalalignment='right', verticalalignment='bottom')
+            dt, vel/1E3, linestyle='--', lw=1, color='k', label="06aj", zorder=0)
 
 
 def plot_2010bh(ax, background):
@@ -167,9 +159,8 @@ def plot_2010bh(ax, background):
     evel = dat[:,3][choose].astype(float)
     offset = 8 
     dt = phase+offset
-    ax.plot(
-            dt, vel/1E3, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
-    ax.text(dt[3], vel[3]/1E3, "10bh", fontsize=12)
+    ax.scatter(
+            dt, vel/1E3, edgecolor='grey', facecolor='white', marker='D', lw=0.5, label="10bh")
 
 
 def plot_2009bb(ax, background):
@@ -261,10 +252,8 @@ def grb171205a(ax, background):
     col = 'lightgrey'
     if background is False:
         col = GRBSN_col
-        ax.text(dt[0], v[0], "17iuk", fontsize=12, 
-                horizontalalignment='left', verticalalignment='bottom')
     ax.plot(
-            dt, v, c=col, lw=GRBSN_lw, alpha=GRBSN_alpha)
+            dt, v, c='#84206b', ls=':', label="17iuk")
 
 
 def plot_12gzk():
@@ -354,7 +343,7 @@ def plot_population():
 
 
 if __name__=="__main__":
-    fig,ax = plt.subplots(1, 1, figsize=(10,6))
+    fig,ax = plt.subplots(1, 1, figsize=(5,4))
 
     plot_20bvc(ax)
 
@@ -369,12 +358,11 @@ if __name__=="__main__":
     plot_1998bw(ax, background=False)
     plot_2010bh(ax, background=False)
     plot_2006aj(ax, background=False)
-    plot_2009bb(ax, background=False)
-    plot_18gep(ax, background=False)
     grb171205a(ax, background=False)
 
     ax.set_xlabel(r"$\Delta t$ (days)", fontsize=16)
     ax.set_ylabel(r'Fe II Velocity ($10^3$ km/s)', fontsize=16)
+    ax.legend(loc='upper right', fontsize=12)
 
     plt.tight_layout()
     #plt.show()
