@@ -87,10 +87,11 @@ if __name__=="__main__":
         0.95, 0.95, "$\Delta t=0.67\,$d", fontsize=14, transform=ax.transAxes,
         horizontalalignment='right', verticalalignment='top')
     plt.text(
-        0.95, 0.85, 
-        r"$T=%s \times 10^{3} $\,K, $R=%s\times10^{14}$ cm, $L=%s\times10^{42}\,$erg/s" %(T,R,L),
-        horizontalalignment='right', verticalalignment='top', transform=ax.transAxes,
-        fontsize=14)
+        0.23, 0.9, r"$T=20,000 $\,K", fontsize=14,
+        horizontalalignment='center', verticalalignment='top', transform=ax.transAxes)
+    plt.text(
+        0.9, 0.16, r"$T=13,200 $\,K", fontsize=14,
+        horizontalalignment='center', verticalalignment='top', transform=ax.transAxes)
 
     # Now plot the earliest spectrum of SN2017iuk, from Izzo+2019
     dat = pyfits.open("../../data/171205A_731_SF1.fits")[0].data
@@ -102,6 +103,6 @@ if __name__=="__main__":
     plt.xlabel("Rest Wavelength ($\AA$)", fontsize=16)
     plt.tick_params(axis='both', labelsize=16)
     plt.tight_layout()
-    plt.show()
+    #plt.show()
 
-    #plt.savefig("bb_first_epoch.png", dpi=200)
+    plt.savefig("bb_first_epoch.png", dpi=200)

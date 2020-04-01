@@ -66,5 +66,8 @@ data_cnt_rate = calc_data_sum()/get_exposure(id=1)
 
 plot_source()
 
-
+# For Epoch 1
 Unabs Mod.Flux 7.22E-15 erg/cm2/s (3.28E-15,1.35E-14) 
+
+# For Epoch 2
+Unabs Mod.Flux 7.18E-15 erg/cm2/s (3.23E-15,1.34E-14)  

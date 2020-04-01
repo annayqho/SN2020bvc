@@ -79,7 +79,7 @@ ax.errorbar(dt[choose], mag[choose]-EXT_G, emag[choose], ms=msize, fmt='D',
 ax.text(val, 20, 'GRB 060218', rotation=270, fontsize=10)
 
 # Spectral epochs
-sps = [2458883.925137, 2458886.8544916, 58887.244648+2400000.5, 2458888.8626271,
+sps = [2458883.925137, 2458886.8544916, 58887.244648+2400000.5, 2458888.862627,
       Time("2020-02-12T12:16:26.713", format='isot').jd, 2458892.8246301,
       2458894.8325712, Time("2020-02-16T03:18:40.973", format='isot').jd,
       2458900.9285102, 2458908.9163794, 
@@ -101,31 +101,18 @@ t = dat['time']
 mag = dat['magnitude']
 emag = dat['e_magnitude']
 band = dat['band']
-#choose = band == 'B'
-#plt.plot(t[choose]-t[choose][0]+1.3, mag[choose]-dm, linestyle='-', 
-#lw=0.5, color='k', label="2006aj (UVOT/B)")
 
-# choose = band == 'V'
-# # Discard t < 0.1, mag < 17.5
-# dt_plot = t[choose]-t[choose][0]+offset
-# m_plot = mag[choose]-dm
-# discard = np.logical_and(dt_plot<0.1, m_plot<17.5)
-# plt.scatter(dt_plot[~discard], m_plot[~discard], color='grey', 
-#         s=3, zorder=0, label=None)
-# plt.plot(dt_plot[~discard], m_plot[~discard], linestyle='-', lw=2, 
-#         color='grey', label="2006aj (UVOT/V)", zorder=0, alpha=0.5)
-# 
-# V-band LC from the Ferrero+06 paper
 dt_plot = np.array([2.7, 2.9, 4.0, 4.9, 5.0, 6.0, 6.7, 6.9, 7.9, 8.7, 
     8.9, 8.9, 9.9, 10.9, 11.9, 12.7, 12.9, 13.9, 14.9, 15.9, 
     16.7, 17.9, 17.9, 18.9, 18.9, 19.9, 19.9, 21.8, 22.9, 23.9, 
     24.9, 25.9])
 # These V-band magnitudes are corrected for host-galaxy flux, 
 # extinction, host-galaxy extinction
-m_plot = np.array([17.86, 17.83, 17.54, 17.41, 17.37, 17.28, 17.19, 17.16, 17.08, 17.05, 
-    17.02, 17.03, 17.02, 17.02, 17.04, 17.07, 17.08, 17.14, 17.18, 17.27, 
-    17.26, 17.46, 17.47, 17.54, 17.54, 17.65, 17.61, 17.80, 17.89, 17.99, 
-    18.12, 18.14])
+m_plot = np.array(
+        [17.86, 17.83, 17.54, 17.41, 17.37, 17.28, 17.19, 17.16, 17.08, 17.05, 
+        17.02, 17.03, 17.02, 17.02, 17.04, 17.07, 17.08, 17.14, 17.18, 17.27, 
+        17.26, 17.46, 17.47, 17.54, 17.54, 17.65, 17.61, 17.80, 17.89, 17.99, 
+        18.12, 18.14])
 plt.scatter(dt_plot, m_plot-dm, color='k', s=1, zorder=0, label=None)
 plt.plot(dt_plot, m_plot-dm, linestyle='--', lw=0.5, color='k', label="2006aj $V$", zorder=0, alpha=1)
 # These are B-band, also from the Ferrero paper
@@ -141,10 +128,10 @@ dat = ascii.read("../../data/lc_060218_swift.dat")
 dt_plot = dat['t']
 m_plot = dat['mag']
 plt.scatter(dt_plot, m_plot-dm-0.5, color='k', s=1, zorder=0, label=None)
-plt.plot(dt_plot, m_plot-dm-0.5, linestyle='-', lw=0.5, color='k', label=None, zorder=0, alpha=1)
+plt.plot(dt_plot, m_plot-dm-0.5, linestyle='-', lw=0.5, color='k', zorder=0, alpha=1, label="_none")
 
 # epoch of 060218
-plt.axvline(x=0, c='k', lw=0.5, ls=':')
+plt.axvline(x=0, c='k', lw=0.5, ls=':', label=None)
 
 ax2 = ax.twinx()
 ax2.set_ylabel(
@@ -166,5 +153,5 @@ ax.tick_params(labelsize=14)
 ax.set_xlim(-2.5,31)
 ax.set_ylim(21.2,15.7)
 plt.tight_layout()
-plt.savefig("lc.png", dpi=200)
-#plt.show()
+#plt.savefig("lc.png", dpi=200)
+plt.show()
