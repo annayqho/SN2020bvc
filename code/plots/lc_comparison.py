@@ -141,6 +141,25 @@ def sn2017iuk():
             dt[choose], mag[choose], c='#84206b', ls=':', label="17iuk $V$") 
     
 
+def sn2010bh():
+    dm = Planck15.distmod(z=0.059).value-Planck15.distmod(z=0.025235).value
+    print(dm)
+    dat = ascii.read(data_dir + "/sn2010bh.txt")
+    dt = dat['col2']-55271.53113425926
+    mag = dat['col3'].data-dm
+    filt = dat['col6'].data
+    print(filt)
+    ax = axarr[0]
+    choose = filt == 'B'
+    ax.scatter(
+            dt[choose], mag[choose], edgecolor='grey', facecolor='white', 
+            marker='D', lw=0.5, label="10bh $B$") 
+    ax = axarr[1]
+    choose = filt == 'R_c'
+    ax.scatter(
+            dt[choose], mag[choose], edgecolor='grey', facecolor='white', 
+            marker='D', lw=0.5, label="10bh $Rc$") 
+
 
 if __name__=="__main__":
     # Two panels: left is g, right is r
@@ -151,22 +170,10 @@ if __name__=="__main__":
     sn2006aj()
     sn1998bw()
     sn2017iuk()
+    sn2010bh()
 
     # Formatting, axis labeling
     axarr[0].set_ylabel(r"Apparent Mag ($z=0.025201$)", fontsize=14)
-
-    for ax in axarr:
-        ax2 = ax.twinx()
-        y_f = lambda y_i: y_i - Planck15.distmod(z=z).value
-        ymin, ymax = ax.get_ylim()
-        ax2.set_ylim((y_f(ymin), y_f(ymax)))
-        ax2.plot([],[])
-        ax2.tick_params(axis='both', labelsize=14)
-        ax2.invert_yaxis()
-
-    ax2.set_ylabel(
-            "Absolute Mag ($z=0.025201$)",
-            fontsize=14, rotation=270, labelpad=15.0)
 
     for ax in axarr:
         ax.invert_yaxis()
@@ -175,7 +182,7 @@ if __name__=="__main__":
         ax.tick_params(labelsize=14)
         ax.set_xlim(-2.5,31)
         ax.set_ylim(21.2,15.7)
-        ax.legend(loc='lower right', fontsize=14, ncol=2)
+        ax.legend(loc='lower right', fontsize=12, ncol=3)
     plt.tight_layout()
     plt.savefig("lc_comparison.png", dpi=200)
     #plt.show()
