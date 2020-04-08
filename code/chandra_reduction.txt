@@ -59,6 +59,7 @@ fflux, cflux, vals = sample_flux(
 srcflux
 Input event file (acisf23171_repro_evt2.fits): 
 Input source position: filename or RA,Dec (src.reg): 14:33:56.999,+40:14:38.14
+(and for acisf23172_repro_evt2.fits, the position is 14:33:57.035,+40:14:37.44
 
 # count rate
 data_cnt_rate = calc_data_sum()/get_exposure(id=1)
@@ -67,7 +68,9 @@ data_cnt_rate = calc_data_sum()/get_exposure(id=1)
 plot_source()
 
 # For Epoch 1
+count rate: 0.000592 c/s (0.000269,0.0011)  
 Unabs Mod.Flux 7.22E-15 erg/cm2/s (3.28E-15,1.35E-14) 
 
 # For Epoch 2
+count rate: 0.000588 c/s (0.000264,0.0011)
 Unabs Mod.Flux 7.18E-15 erg/cm2/s (3.23E-15,1.34E-14)  

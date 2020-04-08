@@ -7,7 +7,7 @@ import sys
 rc("font", family="serif")
 rc("text", usetex=True)
 sys.path.append("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/code")
-from arnett import lph
+from arnett import lph,lph_khatami
 
 
 fig,ax = plt.subplots(1,1,figsize=(6,4))
@@ -39,12 +39,12 @@ plt.plot(
 
 # Radioactive-decay model
 tplot = np.linspace(0.5,40,100)
-lplot_rd = np.array([lph(tval) for tval in tplot])
-plt.plot(tplot, lplot_rd, lw=1, ls='--', c='#e55c30',
+lplot_rd_kh = np.array([lph_khatami(tval) for tval in tplot])
+plt.plot(tplot, lplot_rd_kh, lw=1, ls='--', c='#e55c30',
         label="Radioactive decay (RD)")
 
 # Sum
-lplot = lplot_sc+lplot_rd
+lplot = lplot_sc+lplot_rd_kh
 plt.plot(tplot, lplot, lw=1, ls='-', c='k', label="SC+RD")
 
 plt.xlabel("Rest-frame days since last non-detection", fontsize=16)

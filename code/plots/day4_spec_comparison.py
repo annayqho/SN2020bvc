@@ -23,16 +23,16 @@ hz = 3E10/(wl*1E-8)
 f_nu = wl * f_lam / hz
 ef_nu = wl * ef_lam / hz
 
-plt.plot(wl/1.0252, f_lam/1E-15, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
+plt.plot(wl/1.0252, f_lam, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
 plt.text(
-    0.95, 0.95, "$\Delta t=3.7\,$d", fontsize=14, transform=ax.transAxes,
+    0.95, 0.95, "20bvc at $\Delta t=3.7\,$d", fontsize=14, transform=ax.transAxes,
     horizontalalignment='right', verticalalignment='top')
 
 # Indicate Ca II at v=60,000 km/s
 v = 51000
 caii = np.array([8498,8542,8662])*(1.0252-v/3E5)
-plt.scatter(caii, [0.3]*3, marker='|', c='k')
-plt.text(caii[0]/1.05, 0.32, 'CaII (51,000 km/s)', fontsize=12,
+plt.scatter(caii, np.array([0.3]*3)*1E-15, marker='|', c='k')
+plt.text(caii[0]/1.05, 0.32*1E-15, 'CaII (51,000 km/s)', fontsize=12,
         horizontalalignment='left', verticalalignment='bottom')
 
 
@@ -49,12 +49,13 @@ comp = ascii.read(datadir + "/sn2006aj-20060222-fast.flm")
 wl = comp['col1']
 f_lam = comp['col2'] # erg/cm2/s/AA, I think
 plt.plot(
-        wl/1.0335, f_lam, c='#f6c746',
+        wl/1.0335, f_lam*1E-15, c='#f6c746',
         drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
-plt.text(wl[-1]/1.0335, f_lam[-1], '06aj at 3.97d', fontsize=12)
+plt.text(wl[-1]/1.0335, f_lam[-1]*1E-15, '06aj (4d)', fontsize=12)
 
 
-plt.ylabel(r"Flux ($10^{-15}$ erg\,s$^{-1}$\,cm$^{-2}\,$\AA$^{-1}$)", fontsize=16)
+plt.yscale('log')
+plt.ylabel(r"Flux (erg\,s$^{-1}$\,cm$^{-2}\,$\AA$^{-1}$)", fontsize=16)
 plt.xlabel("Rest Wavelength ($\AA$)", fontsize=16)
 plt.tick_params(axis='both', labelsize=16)
 plt.tight_layout()

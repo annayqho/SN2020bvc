@@ -31,7 +31,11 @@ rgb = make_lupton_rgb(
 fig,ax = plt.subplots()
 
 ax.imshow(rgb, origin='lower')
-ax.scatter(imsize/2, imsize/2, c='white', marker='x', s=50)
+
+# mark the transient location
+ax.plot([imsize/2, imsize/2], [imsize/2, imsize/2-10], c='white')
+ax.plot([imsize/2, imsize/2+10], [imsize/2, imsize/2], c='white')
+
 ax.plot((imsize-10,imsize-10), (imsize-10,imsize-20), color='white', lw=2)
 ax.text(
         imsize-10, imsize-23, "S", color='white', fontsize=16,

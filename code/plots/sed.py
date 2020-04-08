@@ -19,7 +19,7 @@ from astropy.modeling.blackbody import blackbody_nu
 bigsize=16
 smallsize=14
 
-d = Planck15.luminosity_distance(z=0.02507).cgs.value
+d = Planck15.luminosity_distance(z=0.0252).cgs.value
 
 
 def mjy_to_lum(f):
@@ -76,11 +76,29 @@ x = np.logspace(np.log10(c/hi_wl), np.log10(c/low_wl))
 y = blackbody_nu(x, T)
 plt.plot(x, 4*np.pi**2*R**2*x*y, c='k')
 
-# Plot the radio point
+# Plot the 13d radio point
 x = 10E9
 y = x*mjy_to_lum(66E-3)
 plt.scatter(
         x, y, edgecolor='k', facecolor='k', marker='D', lw=0.5, s=50)
+
+# Plot the 17d radio point
+x = 6E9
+y = x*mjy_to_lum(84E-3)
+plt.scatter(
+        x, y, edgecolor='k', facecolor='white', marker='D', lw=0.5, s=50)
+
+# Plot the 24d radio point
+x = 3E9
+y = x*mjy_to_lum(113E-3)
+plt.scatter(
+        x, y, edgecolor='k', facecolor='white', marker='D', lw=0.5, s=50)
+
+# Plot the 28d radio point
+x = 15E9
+y = x*mjy_to_lum(33E-3)
+plt.scatter(
+        x, y, edgecolor='k', facecolor='white', marker='D', lw=0.5, s=50)
 
 # Plot the Chandra data
 # geometric mean of the frequencies
@@ -90,7 +108,7 @@ plt.scatter(x, y, edgecolor='k', facecolor='k', marker='D', lw=0.5, s=50)
 #plt.text(2E17,3E39,r'$\nu^{-1}$', fontsize=smallsize)
 
 # Power-law with index 0.22...
-nuplot = np.linspace(1E10, 1E18)
+nuplot = np.linspace(3E9, 1E18)
 # for nu^{-0.78}:
 #lplot = (1E37) * (nuplot/1E10)**(0.22)
 # for nu^{-0.5} = -(p-1)/2 where p=2
@@ -119,5 +137,5 @@ plt.yticks(fontsize=bigsize)
 plt.tight_layout()
 
 plt.savefig("sed.png", dpi=300)
-plt.close()
 #plt.show()
+plt.close()

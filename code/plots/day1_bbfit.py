@@ -51,8 +51,29 @@ def plot(xvals, yvals, eyvals, T):
     return xplt,yplt
 
 
+def sn17iuk():
+    # Now plot the earliest spectrum of SN2017iuk, from Izzo+2019
+    dat = pyfits.open("../../data/171205A_731_SF1.fits")[0].data
+    wl = np.linspace(3200,5600,len(dat))
+    plt.plot(wl/1.0368, dat, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
+    plt.text(wl[-1],dat[-1]/1.1, '17iuk (1.5hr)', 
+        fontsize=12, verticalalignment='top', horizontalalignment='center')
+
+
+def sn06aj():
+    datadir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/spec"
+    comp = ascii.read(datadir + "/sn2006aj-20060222-fast.flm")
+    wl = comp['col1']
+    f_lam = 1E-15 * comp['col2'] # erg/cm2/s/AA, I think
+    plt.plot(
+            wl/1.0335, f_lam, c='#f6c746',
+            drawstyle='steps-mid', lw=0.5, ls='-', zorder=0, label="_none")
+    plt.text(wl[-1]/1.0335, f_lam[-1], '06aj (4d)', fontsize=12)
+
+
+
 if __name__=="__main__":
-    fig,ax = plt.subplots(1,1,figsize=(7,4))
+    fig,ax = plt.subplots(1,1,figsize=(6,4))
 
     datadir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/spec"
     spec = np.loadtxt(datadir + "/ZTF20aalxlis_20200204_P60_v1.ascii")
@@ -69,40 +90,34 @@ if __name__=="__main__":
     eyvals = np.array(ef_nu)
 
     # Plot the spectrum
-    plt.plot(wl/1.0252, f_lam/1E-15, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
+    plt.plot(wl/1.0252, f_lam, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
 
     # Fit for bb=20,000K
     xplt, yplt = plot(xvals, yvals, eyvals, 20000) # highest reasonable temperature
-    plt.plot(xplt,yplt/1E-15,lw=0.5,alpha=1,c='k', ls='--')
+    plt.plot(xplt,yplt,lw=0.5,alpha=1,c='k', ls='--', label="$T=20,000$K")
 
     # Fit for bb=13,200
     xplt, yplt = plot(xvals, yvals, eyvals, 13200) # highest reasonable temperature
-    plt.plot(xplt,yplt/1E-15,lw=1,alpha=1,c='k', ls='-')
+    plt.plot(xplt,yplt,lw=1,alpha=1,c='k', ls='-', label="$T=13,200$K")
 
     T = '13.2'
     R = '5.1'
     L = '5.6'
 
     plt.text(
-        0.95, 0.95, "$\Delta t=0.67\,$d", fontsize=14, transform=ax.transAxes,
-        horizontalalignment='right', verticalalignment='top')
-    plt.text(
-        0.23, 0.9, r"$T=20,000 $\,K", fontsize=14,
-        horizontalalignment='center', verticalalignment='top', transform=ax.transAxes)
-    plt.text(
-        0.9, 0.16, r"$T=13,200 $\,K", fontsize=14,
-        horizontalalignment='center', verticalalignment='top', transform=ax.transAxes)
+        4833, 1.2E-15, "20bvc (0.7d)", fontsize=14, 
+        horizontalalignment='left', verticalalignment='top')
 
-    # Now plot the earliest spectrum of SN2017iuk, from Izzo+2019
-    dat = pyfits.open("../../data/171205A_731_SF1.fits")[0].data
-    wl = np.linspace(3200,5600,len(dat))
-    plt.plot(wl/1.0368, 2*dat/1E-15, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
+    # Comparison objects
+    sn17iuk()
+    sn06aj()
 
-
-    plt.ylabel(r"Flux ($10^{-15}$ erg\,s$^{-1}$\,cm$^{-2}\,$\AA$^{-1}$)", fontsize=16)
+    plt.ylabel(r"Flux (erg\,s$^{-1}$\,cm$^{-2}\,$\AA$^{-1}$)", fontsize=16)
     plt.xlabel("Rest Wavelength ($\AA$)", fontsize=16)
+    plt.yscale('log')
     plt.tick_params(axis='both', labelsize=16)
-    plt.tight_layout()
+    plt.legend(fontsize=12)
+    plt.tight_layout()  
     #plt.show()
 
     plt.savefig("bb_first_epoch.png", dpi=200)
