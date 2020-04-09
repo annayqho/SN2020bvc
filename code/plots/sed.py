@@ -76,6 +76,12 @@ x = np.logspace(np.log10(c/hi_wl), np.log10(c/low_wl))
 y = blackbody_nu(x, T)
 plt.plot(x, 4*np.pi**2*R**2*x*y, c='k')
 
+# Plot the inverse Compton spectrum
+gamma_m = 28
+x_ic = x*(4/3)*gamma_m**2
+plt.plot(x_ic, 4*np.pi**2*R**2*x*y/2E4, c='k', ls='--')
+plt.text(6E17, 2E38, '$L_\mathrm{IC}$', fontsize=12)
+
 # Plot the 13d radio point
 x = 10E9
 y = x*mjy_to_lum(66E-3)
@@ -126,7 +132,7 @@ plt.text(1E14,4E37,r'$L_\nu \propto \nu^{-0.6}$',fontsize=14)
 #plt.plot(nu, y, ls=':', c='k')
 
 plt.xlim(1E9, 5E18)
-plt.ylim(1E36, 5E43)
+plt.ylim(1E36, 1E43)
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel("Frequency [Hz]", fontsize=bigsize)
