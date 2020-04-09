@@ -2,6 +2,7 @@
 
 import numpy as np
 from astropy.io import ascii
+from astropy.io import fits 
 from matplotlib import rc
 rc("font", family="serif")
 rc("text", usetex=True)
@@ -52,12 +53,16 @@ def plot(xvals, yvals, eyvals, T):
 
 
 def sn17iuk():
-    # Now plot the earliest spectrum of SN2017iuk, from Izzo+2019
-    dat = pyfits.open("../../data/171205A_731_SF1.fits")[0].data
-    wl = np.linspace(3200,5600,len(dat))
-    plt.plot(wl/1.0368, dat, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
-    plt.text(wl[-1],dat[-1]/1.1, '17iuk (1.5hr)', 
-        fontsize=12, verticalalignment='top', horizontalalignment='center')
+    # Now plot the earliest spectra of SN2017iuk, from Izzo+2019
+    datadir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/spec"
+
+    comp = fits.open(
+            datadir + "/GTC_OSIRIS_GRB171205A/1D_GRB171205A_171206_R1000B.fits")[0].data
+    wl = np.arange(3629.598, 3629.598+len(comp)*2.071432195122, 2.071432195122)
+    plt.plot(
+            wl/1.0368, comp/2, c='#84206b', 
+            drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
+    plt.text(wl[-1]/1.03, comp[-1]/2, '17iuk/2 (0.95d)', fontsize=12)
 
 
 def sn06aj():
@@ -113,8 +118,10 @@ if __name__=="__main__":
     sn06aj()
 
     plt.ylabel(r"Flux (erg\,s$^{-1}$\,cm$^{-2}\,$\AA$^{-1}$)", fontsize=16)
-    plt.xlabel("Rest Wavelength ($\AA$)", fontsize=16)
+    plt.xlabel("Rest Wavelength (\AA)", fontsize=16)
     plt.yscale('log')
+    plt.ylim(3E-17, 3E-15)
+    plt.xlim(3300, 9000)
     plt.tick_params(axis='both', labelsize=16)
     plt.legend(fontsize=12)
     plt.tight_layout()  
