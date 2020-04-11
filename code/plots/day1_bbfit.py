@@ -67,14 +67,14 @@ def sn17iuk():
 
 def sn06aj():
     datadir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/spec"
-    comp = ascii.read(datadir + "/sn2006aj-20060222-fast.flm")
+    comp = ascii.read(datadir + "/SN2006aj_2006-02-20_00-00-00_BTA-6_SCORPIO_None.dat")
     wl = comp['col1']
-    f_lam = 1E-15 * comp['col2'] # erg/cm2/s/AA, I think
+    f_lam = comp['col2'] # erg/cm2/s/AA, I think
     plt.plot(
             wl/1.0335, f_lam, c='#f6c746',
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0, label="_none")
-    plt.text(wl[-1]/1.0335, f_lam[-1], '06aj (4d)', fontsize=12)
-
+    plt.text(wl[-1]/1.0335, f_lam[-1], '06aj (2d)', fontsize=12,
+            verticalalignment='top')
 
 
 if __name__=="__main__":

@@ -109,5 +109,5 @@ axarr[2].tick_params(axis='x', labelsize=16)
 axarr[2].set_xlabel(r'Rest-frame days after first light', fontsize=16)
 
 plt.tight_layout()
-#plt.show()
-plt.savefig("bb_evolution.png", dpi=300)
+plt.show()
+#plt.savefig("bb_evolution.png", dpi=300)

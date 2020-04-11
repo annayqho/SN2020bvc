@@ -71,7 +71,8 @@ def download_spec():
 
 def get_files(sind, eind):
     """ start_ind: starting index; end_ind: end index """
-    files = np.array(glob.glob(SPEC_DIR + "/*.ascii"))
+    files = np.array(glob.glob(SPEC_DIR + "/*clipped.ascii"))
+    print(files)
     dt = np.zeros(len(files))
     tels = []
     cols = np.array([""]*len(dt), dtype='U10')
@@ -190,8 +191,8 @@ def plot_spec(ax, x, y, tel, epoch):
 
 if __name__=="__main__":
     fig,ax = plt.subplots(figsize=(6,10))
-    files, epochs, tels = get_files(0, 6)
-    #files, epochs, tels = get_files(6, 13)
+    #files, epochs, tels = get_files(0, 6)
+    files, epochs, tels = get_files(6, 13)
     nfiles = len(files)
     shift = [1, 1.3, 1.8, 2.3, 2.8, 3.3, 3.6, 4.0, 4.5, 5, 5.5, 6, 6.5]
     #bw_shift = [2.1, 3, 4, 6, 7.1]
@@ -237,5 +238,5 @@ if __name__=="__main__":
     ax.get_yaxis().set_ticks([])
     plt.tight_layout()
     #plt.show()
-    #plt.savefig("spec_sequence_second.png", dpi=500, bbox_inches='tight')
-    plt.savefig("spec_sequence_first.png", dpi=500, bbox_inches='tight')
+    plt.savefig("spec_sequence_second.png", dpi=500, bbox_inches='tight')
+    #plt.savefig("spec_sequence_first.png", dpi=500, bbox_inches='tight')
