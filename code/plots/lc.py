@@ -22,7 +22,7 @@ msize = 6
 """ a panel showing the full r, g, and i light curve from the P48 """
 fig,ax = plt.subplots(1,1, figsize=(10,5))
 dat = ascii.read("../../data/marshal_lc.txt")
-dt = dat['jdobs']-t0
+dt = (dat['jdobs']-t0)/1.0252
 filt = dat['filter']
 mag = dat['magpsf']
 emag = dat['sigmamagpsf']
@@ -102,33 +102,31 @@ mag = dat['magnitude']
 emag = dat['e_magnitude']
 band = dat['band']
 
-dt_plot = np.array([2.7, 2.9, 4.0, 4.9, 5.0, 6.0, 6.7, 6.9, 7.9, 8.7, 
-    8.9, 8.9, 9.9, 10.9, 11.9, 12.7, 12.9, 13.9, 14.9, 15.9, 
-    16.7, 17.9, 17.9, 18.9, 18.9, 19.9, 19.9, 21.8, 22.9, 23.9, 
-    24.9, 25.9])
-# These V-band magnitudes are corrected for host-galaxy flux, 
-# extinction, host-galaxy extinction
-m_plot = np.array(
-        [17.86, 17.83, 17.54, 17.41, 17.37, 17.28, 17.19, 17.16, 17.08, 17.05, 
-        17.02, 17.03, 17.02, 17.02, 17.04, 17.07, 17.08, 17.14, 17.18, 17.27, 
-        17.26, 17.46, 17.47, 17.54, 17.54, 17.65, 17.61, 17.80, 17.89, 17.99, 
-        18.12, 18.14])
-plt.scatter(dt_plot, m_plot-dm, color='k', s=1, zorder=0, label=None)
-plt.plot(dt_plot, m_plot-dm, linestyle='--', lw=0.5, color='k', label="2006aj $V$", zorder=0, alpha=1)
 
 # from the open SN catalog
 dat = ascii.read("../../data/lc_060218_full.txt", delimiter=',')
 b_plot = dat['band']
 dt_plot = dat['time']-53784.149
+t_plot = dat['time']
 m_plot = dat['magnitude']
 choose = np.logical_and(b_plot == 'B', dat['upperlimit']=='F')
 # B-band extinction: 0.527
 plt.scatter(
-        dt_plot[choose], m_plot[choose]-dm-0.527, 
+        dt_plot[choose][::1]/1.033, m_plot[choose][::1]-dm-0.527, 
         color='k', s=1, zorder=0, label=None)
 plt.plot(
-        dt_plot[choose], m_plot[choose]-dm-0.527, 
-        linestyle='-', lw=0.5, color='k', zorder=0, alpha=1, label="_none")
+        dt_plot[choose][::1]/1.033, m_plot[choose][::1]-dm-0.527, 
+        linestyle='-', lw=0.5, color=gcol, zorder=0, alpha=1, label="2006aj $B$")
+
+
+choose = np.logical_and(b_plot == 'V', dat['upperlimit']=='F')
+print(t_plot[choose].data)
+plt.scatter(
+        dt_plot[choose][::1]/1.033, m_plot[choose][::1]-dm-0.399, 
+        c=rcol, s=1, zorder=0, label=None)
+plt.plot(
+        dt_plot[choose][::1]/1.033, m_plot[choose][::1]-dm-0.399, 
+        linestyle='--', lw=0.5, color=rcol, zorder=0, alpha=1, label="2006aj $V$")
 
 # epoch of 060218
 plt.axvline(x=0, c='k', lw=0.5, ls=':', label=None)
@@ -153,5 +151,5 @@ ax.tick_params(labelsize=14)
 ax.set_xlim(-2.5,31)
 ax.set_ylim(21.2,15.7)
 plt.tight_layout()
-#plt.savefig("lc.png", dpi=200)
-plt.show()
+plt.savefig("lc.png", dpi=200)
+#plt.show()

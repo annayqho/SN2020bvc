@@ -56,7 +56,7 @@ ax.plot((x,x2), (y,y), c='white', lw=2)
 ax.text((x2+x)/2, y/1.1, "5''", color='white', fontsize=16, 
         verticalalignment='top', horizontalalignment='center')
 
-#plt.show()
-plt.savefig(
-"host_2.png", dpi=500, bbox_inches = 'tight', pad_inches = 0)
+plt.show()
+#plt.savefig(
+#"host_2.png", dpi=500, bbox_inches = 'tight', pad_inches = 0)
 

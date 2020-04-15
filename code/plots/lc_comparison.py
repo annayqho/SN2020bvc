@@ -68,38 +68,23 @@ def sn2006aj():
     dm = Planck15.distmod(z=0.0335).value-Planck15.distmod(z=0.025235).value
     print(dm)
     dat = ascii.read("../../data/lc_060218_full.txt")
-    t = dat['time']
-    mag = dat['magnitude']
-    emag = dat['e_magnitude']
-    band = dat['band']
+    b_plot = dat['band']
+    dt_plot = dat['time']-53784.149
+    t_plot = dat['time']
+    m_plot = dat['magnitude']
 
     # g-ish band
     ax = axarr[0]
-    dt_plot = np.array([2.7, 2.9, 4.0, 4.9, 6.0, 6.9, 7.9, 8.9, 9.9, 10.9, 
-        11.9, 12.9, 13.9, 14.9, 15.9, 17.7, 17.9, 18.8, 19.9, 21.8, 22.9, 23.8])
-    m_plot = np.array([18.14, 18.07, 17.87, 17.68, 17.74, 17.56, 17.54, 17.47, 17.43, 17.49, 
-        17.57, 17.66, 17.81, 17.95, 18.11, 18.56, 18.64, 18.73, 18.95, 19.16, 19.43, 19.43])
-    ax.plot(dt_plot, m_plot-dm, linestyle='--', lw=1, color='k', label="06aj $B$", zorder=0, alpha=1)
-
-    dat = ascii.read("../../data/lc_060218_swift.dat")
-    dt_plot = dat['t']
-    m_plot = dat['mag']
-    ax.plot(dt_plot, m_plot-dm-0.5, linestyle='-', lw=1, color='k', zorder=0, alpha=1, label="_none")
+    choose = np.logical_and(b_plot == 'B', dat['upperlimit']=='F')
+    ax.plot(
+        dt_plot[choose]/1.033, m_plot[choose]-dm-0.527, linestyle='--', lw=1, 
+        color='k', label="06aj $B$", zorder=0, alpha=1)
 
     # r-ish band
     ax = axarr[1]
-    dt_plot = np.array([2.7, 2.9, 4.0, 4.9, 5.0, 6.0, 6.7, 6.9, 7.9, 8.7, 
-       8.9, 8.9, 9.9, 10.9, 11.9, 12.7, 12.9, 13.9, 14.9, 15.9, 
-       16.7, 17.9, 17.9, 18.9, 18.9, 19.9, 19.9, 21.8, 22.9, 23.9, 
-       24.9, 25.9])
-    #These V-band magnitudes are corrected for host-galaxy flux, 
-    #extinction, host-galaxy extinction
-    m_plot = np.array(
-           [17.86, 17.83, 17.54, 17.41, 17.37, 17.28, 17.19, 17.16, 17.08, 17.05, 
-           17.02, 17.03, 17.02, 17.02, 17.04, 17.07, 17.08, 17.14, 17.18, 17.27, 
-           17.26, 17.46, 17.47, 17.54, 17.54, 17.65, 17.61, 17.80, 17.89, 17.99, 
-           18.12, 18.14])
-    ax.plot(dt_plot, m_plot-dm, linestyle='--', lw=1, color='k', label="06aj $V$", zorder=0)
+    choose = np.logical_and(b_plot == 'V', dat['upperlimit']=='F')
+    ax.plot(dt_plot[choose]/1.033, m_plot[choose]-dm-0.399, linestyle='--', 
+        lw=1, color='k', label="06aj $V$", zorder=0)
 
 
 def sn1998bw():

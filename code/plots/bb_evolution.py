@@ -11,7 +11,8 @@ from astropy.cosmology import Planck15
 from astropy.table import Table
 
 fig,axarr = plt.subplots(3,1,figsize=(4,6), sharex=True)
-dt = np.array([0.67, 1.36, 2.88, 3.81, 4.61, 6.27, 9.09, 10.86, 15.49, 26.51, 29.48])
+dt = np.array(
+        [0.67, 1.36, 2.88, 3.81, 4.61, 6.27, 9.09, 10.86, 15.49, 26.51, 29.48])
 
 
 def llgrbs(ax):
@@ -32,7 +33,7 @@ def llgrbs(ax):
             dt, lum, edgecolor='grey', facecolor='white', 
             marker='D', lw=0.5, label='10bh')
 
-    dat = np.loadtxt(ddir + "/sn2006aj.dat", delimiter=',')
+    dat = np.loadtxt(ddir + "/sn2006aj_UBVRI_cano2013.dat", delimiter=',')
     dt = dat[:,0]
     lum = dat[:,1]
     ax.plot(dt, lum, c='k', ls='-', lw=1, alpha=1, label='06aj')
@@ -109,5 +110,5 @@ axarr[2].tick_params(axis='x', labelsize=16)
 axarr[2].set_xlabel(r'Rest-frame days after first light', fontsize=16)
 
 plt.tight_layout()
-#plt.show()
-plt.savefig("bb_evolution.png", dpi=1000)
+plt.show()
+#plt.savefig("bb_evolution.png", dpi=1000)

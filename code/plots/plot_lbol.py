@@ -29,13 +29,17 @@ plt.arrow(
 
 # Shock-cooling model
 re = 1E13
-ve = 0.3*3E10
+ve = 0.1*3E10
 te = re/ve
-Ee = 55E49
 tp = 0.6*86400
+Re = 4E12
+Me = 1E-2 * 2E33
+Ee = Me*ve**2
 
 tplot = np.linspace(0.01,40,1000)
 t = tplot*86400
+lplot_sc = ve*Re*Me/(4*t**2)
+
 lplot_sc = (te*Ee/(tp**2))*np.exp(-t*(t+2*te)/(2*tp**2))
 
 plt.plot(
@@ -61,5 +65,5 @@ plt.ylim(1E42,1E43)
 plt.xlim(0.5,40)
 plt.legend(loc='upper right',fontsize=12)
 plt.tight_layout()
-plt.show()
-#plt.savefig("bol_lc.png", dpi=300)
+#plt.show()
+plt.savefig("bol_lc.png", dpi=300)
