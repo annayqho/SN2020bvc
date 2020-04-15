@@ -30,6 +30,9 @@ rgb = make_lupton_rgb(
 
 fig,ax = plt.subplots()
 
+ax.text(0.95, 0.1, "Legacy Survey $grz$", fontsize=24, transform=ax.transAxes,
+        horizontalalignment='right', color='white')
+
 ax.imshow(rgb, origin='lower')
 
 # mark the transient location
@@ -55,5 +58,5 @@ ax.text((x2+x)/2, y/1.1, "5''", color='white', fontsize=16,
 
 #plt.show()
 plt.savefig(
-"host.png", dpi=500, bbox_inches = 'tight', pad_inches = 0)
+"host_2.png", dpi=500, bbox_inches = 'tight', pad_inches = 0)
 

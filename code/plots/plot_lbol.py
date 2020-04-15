@@ -28,17 +28,22 @@ plt.arrow(
         length_includes_head=True, head_length=5E41, head_width=0.1, color='k')
 
 # Shock-cooling model
-re = 2E12
-me = 0.01*2E33
-v = 0.2*3E10
-tplot = np.linspace(0.5,40,100)
-lplot_sc = (v*re*me/4) * (tplot*86400)**(-2)
+re = 1E13
+ve = 0.3*3E10
+te = re/ve
+Ee = 55E49
+tp = 0.6*86400
+
+tplot = np.linspace(0.01,40,1000)
+t = tplot*86400
+lplot_sc = (te*Ee/(tp**2))*np.exp(-t*(t+2*te)/(2*tp**2))
+
 plt.plot(
         tplot, lplot_sc, lw=1, ls=':', c='#e55c30', 
         label="Post-shock cooling (SC)")
 
 # Radioactive-decay model
-tplot = np.linspace(0.5,40,100)
+tplot = np.linspace(0.01,40,1000)
 lplot_rd_kh = np.array([lph_khatami(tval) for tval in tplot])
 plt.plot(tplot, lplot_rd_kh, lw=1, ls='--', c='#e55c30',
         label="Radioactive decay (RD)")
@@ -53,7 +58,8 @@ plt.tick_params(axis='both', labelsize=16)
 plt.xscale('log')
 plt.yscale('log')
 plt.ylim(1E42,1E43)
+plt.xlim(0.5,40)
 plt.legend(loc='upper right',fontsize=12)
 plt.tight_layout()
-#plt.show()
-plt.savefig("bol_lc.png", dpi=300)
+plt.show()
+#plt.savefig("bol_lc.png", dpi=300)

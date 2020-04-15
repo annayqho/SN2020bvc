@@ -73,12 +73,12 @@ def sn06aj():
     plt.plot(
             wl/1.0335, f_lam, c='#f6c746',
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0, label="_none")
-    plt.text(wl[-1]/1.0335, f_lam[-1], '06aj (2d)', fontsize=12,
+    plt.text(wl[-1]/1.0335, f_lam[-1], '06aj (2.6d)', fontsize=12,
             verticalalignment='top')
 
 
 if __name__=="__main__":
-    fig,ax = plt.subplots(1,1,figsize=(6,4))
+    fig,ax = plt.subplots(1,1,figsize=(7,4))
 
     datadir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/spec"
     spec = np.loadtxt(datadir + "/ZTF20aalxlis_20200204_P60_v1.ascii")
@@ -120,7 +120,7 @@ if __name__=="__main__":
     plt.ylabel(r"Flux (erg\,s$^{-1}$\,cm$^{-2}\,$\AA$^{-1}$)", fontsize=16)
     plt.xlabel("Rest Wavelength (\AA)", fontsize=16)
     plt.yscale('log')
-    plt.ylim(3E-17, 3E-15)
+    plt.ylim(4E-17, 3E-15)
     plt.xlim(3300, 9000)
     plt.tick_params(axis='both', labelsize=16)
     plt.legend(fontsize=12)

@@ -115,27 +115,27 @@ m_plot = np.array(
         18.12, 18.14])
 plt.scatter(dt_plot, m_plot-dm, color='k', s=1, zorder=0, label=None)
 plt.plot(dt_plot, m_plot-dm, linestyle='--', lw=0.5, color='k', label="2006aj $V$", zorder=0, alpha=1)
-# These are B-band, also from the Ferrero paper
-dt_plot = np.array([2.7, 2.9, 4.0, 4.9, 6.0, 6.9, 7.9, 8.9, 9.9, 10.9, 
-    11.9, 12.9, 13.9, 14.9, 15.9, 17.7, 17.9, 18.8, 19.9, 21.8, 22.9, 23.8])
-m_plot = np.array([18.14, 18.07, 17.87, 17.68, 17.74, 17.56, 17.54, 17.47, 17.43, 17.49, 
-    17.57, 17.66, 17.81, 17.95, 18.11, 18.56, 18.64, 18.73, 18.95, 19.16, 19.43, 19.43])
-plt.scatter(dt_plot, m_plot-dm, color='k', s=1, zorder=0, label=None)
-plt.plot(dt_plot, m_plot-dm, linestyle='-', lw=0.5, color='k', label="2006aj $B$", zorder=0, alpha=1)
 
-# Now I need my own early B-band magnitudes
-dat = ascii.read("../../data/lc_060218_swift.dat")
-dt_plot = dat['t']
-m_plot = dat['mag']
-plt.scatter(dt_plot, m_plot-dm-0.5, color='k', s=1, zorder=0, label=None)
-plt.plot(dt_plot, m_plot-dm-0.5, linestyle='-', lw=0.5, color='k', zorder=0, alpha=1, label="_none")
+# from the open SN catalog
+dat = ascii.read("../../data/lc_060218_full.txt", delimiter=',')
+b_plot = dat['band']
+dt_plot = dat['time']-53784.149
+m_plot = dat['magnitude']
+choose = np.logical_and(b_plot == 'B', dat['upperlimit']=='F')
+# B-band extinction: 0.527
+plt.scatter(
+        dt_plot[choose], m_plot[choose]-dm-0.527, 
+        color='k', s=1, zorder=0, label=None)
+plt.plot(
+        dt_plot[choose], m_plot[choose]-dm-0.527, 
+        linestyle='-', lw=0.5, color='k', zorder=0, alpha=1, label="_none")
 
 # epoch of 060218
 plt.axvline(x=0, c='k', lw=0.5, ls=':', label=None)
 
 ax2 = ax.twinx()
 ax2.set_ylabel(
-        "Absolute Mag ($z=0.025201$)",
+        "Absolute Mag",
         fontsize=14, rotation=270, labelpad=15.0)
 y_f = lambda y_i: y_i - Planck15.distmod(z=z).value
 ymin, ymax = ax.get_ylim()
@@ -146,12 +146,12 @@ ax2.invert_yaxis()
 
 ax.legend(loc=(0.82, 0.06), fontsize=14)
 ax.invert_yaxis()
-ax.set_ylabel(r"Apparent Mag", fontsize=14)
+ax.set_ylabel(r"Apparent Mag ($z=0.025201$)", fontsize=14)
 ax.set_xlabel("Days since ATLAS non-detection", fontsize=16)
 ax.tick_params(labelsize=14)
 ax.tick_params(labelsize=14)
 ax.set_xlim(-2.5,31)
 ax.set_ylim(21.2,15.7)
 plt.tight_layout()
-plt.savefig("lc.png", dpi=200)
-#plt.show()
+#plt.savefig("lc.png", dpi=200)
+plt.show()

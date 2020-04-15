@@ -15,35 +15,35 @@ dt = np.array([0.67, 1.36, 2.88, 3.81, 4.61, 6.27, 9.09, 10.86, 15.49, 26.51, 29
 
 
 def llgrbs(ax):
-    """ Plot bolometric LC of LLGRBs """
+    """ Plot bolometric LC of LLGRBs
+    These all come from Cano et al. 2017 (scraped from Fig 9),
+    except for the LC of SN2017iuk which comes from 
+    """
     ddir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/bol_lc"
-    dat = Table.read(ddir + "/sn1998bw.dat", format='ascii.fast_no_header')
-    dt = dat['col1']
-    lum = dat['col2']
-    #ax.scatter(dt, lum, marker='.', c=col)
-    ax.plot(dt, lum, c='k', ls='-', lw=1, alpha=0.5, label="Ic-BL")
-    ax.text(dt[-1], lum[-1], '98bw', fontsize=10)
+    dat = np.loadtxt(ddir + "/sn1998bw.dat", delimiter=',')
+    dt = dat[:,0]
+    lum = dat[:,1]
+    ax.plot(dt, lum, c='#e55c30', ls='-', lw=1, alpha=0.5, label="98bw")
 
-    dat = Table.read(ddir + "/sn2010bh.dat", format='ascii.fast_no_header')
-    dt = dat['col1']
-    lum = dat['col2']
-    #ax.scatter(dt, lum, marker='.', c=col)
-    ax.plot(dt, lum, c='k', ls='-', lw=1, alpha=0.5, label='_nolegend_')
-    ax.text(dt[14], lum[14]/1.1, '10bh', fontsize=10, verticalalignment='top')
+    dat = np.loadtxt(ddir + "/sn2010bh.dat", delimiter=',')
+    dt = dat[:,0]
+    lum = dat[:,1]
+    ax.scatter(
+            dt, lum, edgecolor='grey', facecolor='white', 
+            marker='D', lw=0.5, label='10bh')
 
-    dat = Table.read(ddir + "/sn2006aj.dat", format='ascii.fast_no_header')
-    dt = dat['col1']
-    order = np.argsort(dt)
-    dt = dt[order]
-    lum = dat['col2'][order]
-    ax.plot(dt, lum, c='k', ls='-', lw=1, alpha=0.5, label='_nolegend_')
-    ax.text(dt[-1], lum[-1], '06aj', fontsize=10)
+    dat = np.loadtxt(ddir + "/sn2006aj.dat", delimiter=',')
+    dt = dat[:,0]
+    lum = dat[:,1]
+    ax.plot(dt, lum, c='k', ls='-', lw=1, alpha=1, label='06aj')
 
     # 2017iuk
-    dt = [1.5/24, 0.975, 1.947, 7, 10.952, 14.936]
-    lum = [1.7E45, 4.2E42, 3.7E42, 2.4E42, 2.4E42, 1.7E42]
-    ax.plot(dt, lum, c='k', ls='-', lw=1, alpha=0.5, label='_nolegend_')
-    ax.text(dt[-1], lum[-1], '17iuk', fontsize=10, verticalalignment='top')
+    lsol = 4E33
+    dt = [0.003, 0.06, 0.17, 0.55, 1.04, 2.01, 7, 10.952, 14.936]
+    lum = [2.1E45, 4.6E42, 3.9E42, 2.7E42, 2.7E42, 1.8E42, 10**9*lsol, 10**9.23*lsol, 10**9.22*lsol]
+    ax.plot(dt, lum, c='#84206b', ls=':', lw=1, alpha=1, label='17iuk')
+
+    ax.legend(loc='upper right')
 
 
 # Luminosity panel
@@ -109,5 +109,5 @@ axarr[2].tick_params(axis='x', labelsize=16)
 axarr[2].set_xlabel(r'Rest-frame days after first light', fontsize=16)
 
 plt.tight_layout()
-plt.show()
-#plt.savefig("bb_evolution.png", dpi=300)
+#plt.show()
+plt.savefig("bb_evolution.png", dpi=1000)

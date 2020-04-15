@@ -24,7 +24,9 @@ hz = 3E10/(wl*1E-8)
 f_nu = wl * f_lam / hz
 ef_nu = wl * ef_lam / hz
 
-plt.plot(wl/1.0252, f_lam, c='k', drawstyle='steps-mid', lw=0.5, ls='-', alpha=1)
+plt.plot(
+        wl/1.0252, f_lam, c='k', drawstyle='steps-mid', 
+        lw=0.5, ls='-', alpha=1)
 plt.text(
     0.95, 0.95, "20bvc at $\Delta t=3.7\,$d", fontsize=14, transform=ax.transAxes,
     horizontalalignment='right', verticalalignment='top')
@@ -37,7 +39,8 @@ plt.text(caii[0]/1.05, 0.32*1E-15, 'CaII (51,000 km/s)', fontsize=12,
         horizontalalignment='left', verticalalignment='bottom')
 
 # Add a spectrum of 17iuk for comparison
-comp = fits.open(datadir + "/GTC_OSIRIS_GRB171205A/1D_GRB171205A_171207_R1000B.fits")[0].data
+comp = fits.open(
+        datadir + "/GTC_OSIRIS_GRB171205A/1D_GRB171205A_171207_R1000B.fits")[0].data
 wl = np.arange(3629.598, 3629.598+len(comp)*2.071432195122, 2.071432195122)
 plt.plot(
         wl/1.0368, comp, c='#84206b',
@@ -59,13 +62,15 @@ plt.text(caii[0], 5.7E-17, 'CaII (105,000 km/s)', fontsize=12,
         horizontalalignment='left', verticalalignment='bottom')
 
 # Add a 4d spectrum of 06aj for comparison
-comp = ascii.read(datadir + "/sn2006aj-20060222-fast.flm")
+comp = ascii.read(
+        datadir + "/SN2006aj_2006-02-21_00-00-00_BTA-6_SCORPIO_None.dat")
 wl = comp['col1']
 f_lam = comp['col2'] # erg/cm2/s/AA, I think
 plt.plot(
-        wl/1.0335, f_lam*1E-15, c='#f6c746',
+        wl/1.0335, f_lam, c='#f6c746',
         drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
-plt.text(wl[-1]/1.0335, f_lam[-1]*1E-15, '06aj (4d)', fontsize=12)
+plt.text(wl[-1]/1.0335, f_lam[-1], '06aj (3.6d)', fontsize=12,
+        verticalalignment='top')
 
 
 plt.yscale('log')
