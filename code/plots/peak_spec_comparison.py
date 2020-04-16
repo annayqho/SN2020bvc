@@ -15,7 +15,7 @@ fig,ax = plt.subplots(1,1,figsize=(7,5))
 
 
 datadir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/spec"
-spec = np.loadtxt(datadir + "/ZTF20aalxlis_20200216_NOT_v1.ascii")
+spec = np.loadtxt(datadir + "/ZTF20aalxlis_20200216_NOT_v1_clipped.ascii")
 wl = spec[:,0]
 f_lam = spec[:,1] # erg/cm2/s/AA, I think
 hz = 3E10/(wl*1E-8)
@@ -69,7 +69,7 @@ plt.text(wl[-1]/1.03, 0.4 + comp[-1]*5/1E-15, '17iuk (13d)', fontsize=12)
 
 
 # Plot the peak-light spectrum of SN2006aj for comparison
-comp = ascii.read(datadir + "/sn2006aj-20060303-mmt.flm")
+comp = ascii.read(datadir + "/sn2006aj-20060303-mmt_clipped.flm")
 wl = comp['col1']
 f_lam = comp['col2'] # erg/cm2/s/AA, I think
 plt.plot(

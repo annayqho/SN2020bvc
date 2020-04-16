@@ -53,7 +53,12 @@ def plot_line(ax, d, t, nufnu, name, label, col, legend=False, zorder=1):
             marker='o'
             s=nsize
             fcol = col # fill color
-            label = 'SN'
+            label = 'CC SN'
+        if label=='Ic-BL SN':
+            marker='o'
+            s=nsize
+            fcol = col # fill color
+            label = 'Ic-BL SN'
         elif label=='GRB':
             marker='o'
             fcol = 'white' # unfilled
@@ -63,7 +68,7 @@ def plot_line(ax, d, t, nufnu, name, label, col, legend=False, zorder=1):
             marker='s'
             fcol = col 
             s=nsize
-            label = 'Rel. SN'
+            label = 'GRB-SN'
         elif label=='TDE':
             marker='s'
             fcol = 'white' #unfilled
@@ -71,11 +76,11 @@ def plot_line(ax, d, t, nufnu, name, label, col, legend=False, zorder=1):
             label='TDE'
     ax.scatter(
             t, lum, facecolor=fcol, edgecolor=col, 
-            marker=marker, s=s, zorder=zorder)
+            marker=marker, s=s, zorder=zorder, label="_none")
     if legend:
         ax.plot(t, lum, c=col, ls='-', label=label, zorder=zorder)
     else:
-        ax.plot(t, lum, c=col, ls='-', label=None, zorder=zorder)
+        ax.plot(t, lum, c=col, ls='-', label="__none", zorder=zorder)
     return lum
 
 
@@ -270,9 +275,9 @@ def sn1979c(ax, col, legend):
              9.6,11.2,13.2,11.1,9.1,8.5,9.1,8.8,10.1,9.7,9.1,8.9,
              7.0,7.7])
     lum = plot_line(ax, d, t, nu*flux, 'SN1979c', 'SN', col, legend)
-    #ax.text(t[0]/1.05, lum[0], 'SN1979C', fontsize=11,
-    #        verticalalignment='center',
-    #        horizontalalignment='right')
+    ax.text(t[0]/1.05, lum[0], 'SN1979C', fontsize=11,
+            verticalalignment='center',
+            horizontalalignment='right')
     
 
 def sn1993J(ax, col, legend):
@@ -291,9 +296,9 @@ def sn1993J(ax, col, legend):
     lum = plot_line(
             ax, d, dt[choose], freq*f[choose], 
             'SN1993J', 'SN', col, legend)
-    #ax.text(dt[choose][0]/1.05, lum[0], 'SN1993J', fontsize=11,
-    #        verticalalignment='center',
-    #        horizontalalignment='right')
+    ax.text(dt[choose][0]/1.05, lum[0], 'SN1993J', fontsize=11,
+            verticalalignment='center',
+            horizontalalignment='right')
 
     freq = 99.4E9
     nu, dt, f, ef, islim = read_1993J_high_freq()
@@ -337,9 +342,9 @@ def sn2011dh(ax, col, legend):
     lum = plot_line(
             ax, d, dt_all, nu_all*f_all, 
             'SN2011dh', 'SN', col, legend)
-    #ax.text(dt[choose][0]/1.05, lum[0], 'SN2011dh', fontsize=11,
-    #        verticalalignment='center',
-    #        horizontalalignment='right')
+    ax.text(dt[choose][0]/1.05, lum[0], 'SN2011dh', fontsize=11,
+            verticalalignment='center',
+            horizontalalignment='right')
 
 
 def grb030329(ax, col, legend):
@@ -413,7 +418,7 @@ def sn2007bg(ax, col, legend):
             [480, 753, 804, 728, 1257, 1490, 1390, 1325, 1131, 957, 
                 621, 316, 379, 404, 783, 1669, 2097, 2200, 
                 2852, 3344, 3897, 3891, 3842, 3641, 3408]) * 1E-3
-    lum = plot_line(ax, d, t, nu*f, 'SN2007bg', 'SN', col, legend)
+    lum = plot_line(ax, d, t, nu*f, 'SN2007bg', 'Ic-BL SN', col, legend)
     ax.text(t[0]/1.05, lum[0], 'SN2007bg', fontsize=11,
             verticalalignment='bottom',
             horizontalalignment='right', zorder=0)
@@ -431,7 +436,7 @@ def ptf11qcj(ax, col, legend):
     f = dat['col4']
     d = Planck15.luminosity_distance(z=0.0287).cgs.value
 
-    lum = plot_line(ax, d, t[choose], nu*f[choose], 'SN2007bg', 'SN', col, legend)
+    lum = plot_line(ax, d, t[choose], nu*f[choose], 'PTF11qcj', 'Ic-BL SN', col, legend)
     ax.text(t[choose][15], lum[15]*1.5, 'PTF11qcj', fontsize=11,
             verticalalignment='bottom',
             horizontalalignment='center', zorder=0)
@@ -459,9 +464,9 @@ def sn2003bg(ax, col, legend):
                 14.61, 14.49, 14.16, 13.25, 13.08, 10.04, 8.92,
                 6.23, 6.18, 4.62, 3.93, 4.69, 4.48])
     lum = plot_line(ax, d, t, nu*f, 'SN2003bg', 'SN', col, legend, zorder=0)
-    #ax.text(t[0]/1.05, lum[0], 'SN2003bg', fontsize=11,
-    #        verticalalignment='center',
-    #        horizontalalignment='right')
+    ax.text(t[0]/1.05, lum[0], 'SN2003bg', fontsize=11,
+            verticalalignment='center',
+            horizontalalignment='right')
 
 
 def sn2009bb(ax, col, legend):
@@ -478,7 +483,7 @@ def sn2009bb(ax, col, legend):
     flux = np.array([24.681, 17.568, 16.349, 13.812, 8.881,
         7.714, 8.482, 6.824, 6.327, 3.294, 4.204, 3.203, 2.392,
         1.903, 1.032, 1.084])
-    lum = plot_line(ax, d, t, nu*flux, 'SN2009bb', 'Rel. SN', col, legend)
+    lum = plot_line(ax, d, t, nu*flux, 'SN2009bb', 'Ic-BL SN', col, legend)
     ax.text(t[0]/1.05, lum[0], '2009bb', fontsize=11,
             verticalalignment='center',
             horizontalalignment='right')
@@ -579,21 +584,21 @@ if __name__=="__main__":
     # OK so I want to use four colors. I think it's nice to have two light ones
     # and two dark ones.
 
-    sn2003L(ax, 'lightblue', legend=True)
-    sn1979c(ax, 'lightblue', None)
+    sn2003L(ax, 'lightblue', legend=True) # Ib
+    sn1979c(ax, 'lightblue', None) # II
     sn1993J(ax, 'lightblue', None)
     sn2011dh(ax, 'lightblue', None)
-    sn2007bg(ax, 'lightblue', None)
+    sn2007bg(ax, 'darkblue', legend=True)
     sn2003bg(ax, 'lightblue', None)
-    ptf11qcj(ax, 'lightblue', None)
+    ptf11qcj(ax, 'darkblue', None)
+    sn2009bb(ax, 'darkblue', None)
 
     grb030329(ax, '#f98e09', legend=True)
     grb130427A(ax, '#f98e09', None)
 
-    sn2009bb(ax, '#bc3754', legend=True)
-    sn1998bw(ax, '#bc3754', None)
+    sn1998bw(ax, '#bc3754', legend=True)
     sn2006aj(ax, '#bc3754', None)
-    sn2020bvc(ax, 'k', None)
+    sn2020bvc(ax, 'darkblue', None)
     sn2017iuk(ax, '#bc3754', None)
 
     #at2018cow(ax, 'k', legend=True)
@@ -611,7 +616,7 @@ if __name__=="__main__":
 
     #ax.scatter(
     #        0,0,c='k',marker='*',s=100,label="Fast-Lum. Opt. Transient")
-    ax.legend(fontsize=12, loc='lower left', ncol=3, columnspacing=1)
+    ax.legend(fontsize=12, loc='upper right', ncol=2, columnspacing=1)
 
     #ax.axhspan(1E34,1E37,edgecolor='k', fc='white', lw=3)
     #ax.axhline(y=1E37, c='k', ls='--')

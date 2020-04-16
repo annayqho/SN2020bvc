@@ -86,31 +86,35 @@ plt.text(6E17, 2E38, '$L_\mathrm{IC}$', fontsize=12)
 x = 10E9
 y = x*mjy_to_lum(66E-3)
 plt.scatter(
-        x, y, edgecolor='k', facecolor='k', marker='D', lw=0.5, s=50)
+        x, y, edgecolor='k', facecolor='k', marker='D', lw=0.5, s=50, zorder=5)
 
 # Plot the 17d radio point
 x = 6E9
 y = x*mjy_to_lum(84E-3)
 plt.scatter(
-        x, y, edgecolor='k', facecolor='white', marker='D', lw=0.5, s=50)
+        x, y, edgecolor='k', facecolor='white', 
+        marker='D', lw=0.5, s=50, zorder=5)
 
 # Plot the 24d radio point
 x = 3E9
 y = x*mjy_to_lum(113E-3)
 plt.scatter(
-        x, y, edgecolor='k', facecolor='white', marker='D', lw=0.5, s=50)
+        x, y, edgecolor='k', facecolor='white', 
+        marker='D', lw=0.5, s=50, zorder=5)
 
 # Plot the 28d radio point
 x = 15E9
 y = x*mjy_to_lum(33E-3)
 plt.scatter(
-        x, y, edgecolor='k', facecolor='white', marker='D', lw=0.5, s=50)
+        x, y, edgecolor='k', facecolor='white', marker='D', lw=0.5, s=50,
+        zorder=5)
 
 # Plot the Chandra data
 # geometric mean of the frequencies
 x = np.sqrt(1.21E17*1.69E18)
 y = 1E40
-plt.scatter(x, y, edgecolor='k', facecolor='k', marker='D', lw=0.5, s=50)
+plt.scatter(x, y, edgecolor='k', facecolor='k', marker='D', lw=0.5, s=50,
+        zorder=5)
 #plt.text(2E17,3E39,r'$\nu^{-1}$', fontsize=smallsize)
 
 # Power-law with index 0.22...
@@ -119,8 +123,8 @@ nuplot = np.linspace(3E9, 1E18)
 #lplot = (1E37) * (nuplot/1E10)**(0.22)
 # for nu^{-0.5} = -(p-1)/2 where p=2
 lplot = (1E37) * (nuplot/1E10)**(0.4)
-plt.plot(nuplot,lplot,lw=1,ls=':',c='k')
-plt.text(1E14,4E37,r'$L_\nu \propto \nu^{-0.6}$',fontsize=14)
+plt.plot(nuplot,lplot,lw=2,ls=':',c='grey', zorder=0)
+plt.text(1E14,1E38,r'$L_\nu \propto \nu^{-0.6}$',fontsize=14)
 
 # Model for Epoch 2 is a power-law:
 # norm = 9E-4 # photons/keV/cm2/s at 1 keV
