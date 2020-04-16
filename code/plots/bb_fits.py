@@ -101,6 +101,7 @@ for ii,dtbin in enumerate(dtbins):
         xvals.append(wl)
         yvals.append(f)
         eyvals.append(ef)
+
     #P48
     for ztffilt in ['r','g','i']:
         choose = np.logical_and(instr=='P48+ZTF', filt==ztffilt)        
@@ -109,15 +110,17 @@ for ii,dtbin in enumerate(dtbins):
         xvals.append(bands[ztffilt])
         yvals.append(f)
         eyvals.append(ef)
+
+    xvals = np.array(xvals)
+    yvals = np.array(yvals)
+    eyvals = np.array(eyvals)
+
     ax.errorbar(xvals, yvals, yerr=eyvals, c='k', fmt='.')
     txt = "$\Delta$t=" + str(np.round(dtbin,2))
     ax.text(0.9, 0.9, txt, transform=ax.transAxes,
             horizontalalignment='right', verticalalignment='top')
 
     # Fit a blackbody 1000 times
-    xvals = np.array(xvals)
-    yvals = np.array(yvals)
-    eyvals = np.array(eyvals)
     nsim = 1000
     temps = np.zeros(nsim)
     radii = np.zeros(nsim)
@@ -145,6 +148,8 @@ for ii,dtbin in enumerate(dtbins):
     print("%s +/- %s" %(R/1E14, eR/1E14))
     print("%s +/- %s" %(L/1E42, eL/1E42))
 
+    # Calculate the chi squared of the final fit
+
     # Plot the blackbody
     #xplot = np.linspace(2000,8000)
     #yplot = bb_func(3E10/(xplot*1E-8), T, R)
@@ -161,5 +166,5 @@ fig.text(0.04,0.5,r'Flux ($\mu$Jy)',fontsize=14,verticalalignment='center',
 axarr[1,2].set_xlabel(r'Wavelength (\AA)',fontsize=14)
 #plt.tight_layout()
 
-#plt.show()
-plt.savefig("bbfits.png", dpi=300, bbox_inches='tight', pad_inches=0.1)
+plt.show()
+#plt.savefig("bbfits.png", dpi=300, bbox_inches='tight', pad_inches=0.1)

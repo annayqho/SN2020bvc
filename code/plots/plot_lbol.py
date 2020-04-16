@@ -29,6 +29,7 @@ plt.arrow(
 
 # Shock-cooling model
 re = 1E13
+re = 1E14
 ve = 0.1*3E10
 te = re/ve
 tp = 0.6*86400
@@ -38,9 +39,9 @@ Ee = Me*ve**2
 
 tplot = np.linspace(0.01,40,1000)
 t = tplot*86400
-lplot_sc = ve*Re*Me/(4*t**2)
+#lplot_sc = ve*Re*Me/(4*t**2)
 
-#lplot_sc = (te*Ee/(tp**2))*np.exp(-t*(t+2*te)/(2*tp**2))
+lplot_sc = (te*Ee/(tp**2))*np.exp(-t*(t+2*te)/(2*tp**2))
 
 plt.plot(
         tplot, lplot_sc, lw=1, ls=':', c='#e55c30', 

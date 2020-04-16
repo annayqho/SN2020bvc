@@ -20,16 +20,12 @@ ddir = "/Users/annaho/Dropbox/Projects/Research/IcBL/data/xray_compilations"
 dcm = Planck15.luminosity_distance(z=0.02507).cgs.value
 
 def plot_source(ax):
-    dt = np.array([2.5, 14.3, 26.6])
-    f = np.array([1.9E-13, 1.1E-14, 7.5E-15])
-    l = 4 * np.pi * dcm**2 * f
-    ax.errorbar(dt[0], l[0], yerr=(1.4E-13)*4*np.pi*dcm**2, c=dark, marker='s')
-    ax.errorbar(dt[1], l[1], 
-        yerr=[[l[1]-(0.8E-14)*4*np.pi*dcm**2, l[1]+(0.9E-14)*4*np.pi*dcm**2]], 
-        c=dark, marker='s')
-    ax.errorbar(dt[2], l[2], 
-            yerr=[[l[2]-4.9E-15*4*np.pi*dcm**2, l[2]+7.2E-15*4*np.pi*dcm**2]], 
-            c=dark, marker='s')
+    dt = np.array([3, 13, 25])
+    l = np.array([1.4E41, 1.1E40, 1.1E40])
+    el = np.array([[0.5E41, 3.1E41],[0.4E40, 2.1E40], [0.4E40, 2.1E40]])
+
+    for ii,dt_val in enumerate(dt):
+        ax.errorbar(dt[ii], l[ii], yerr=[el[ii]], c=dark, marker='s')
     ax.plot(dt,l,c='k',lw=2)
 
 
@@ -190,7 +186,8 @@ if __name__=="__main__":
     plot_17cw(axarr[2,1], background=False)
     plot_98bw(axarr[0,0], background=False)
     plot_09bb(axarr[0,1], background=False)
-    fig.text(0.5, 0.04, r"$\Delta t$ (days)", ha='center', fontsize=12) 
+    axarr[2,0].set_xlabel(r"$\Delta t$ (days)", fontsize=12) 
+    axarr[2,1].set_xlabel(r"$\Delta t$ (days)", fontsize=12) 
     fig.text(
             0.04, 0.5, r'0.3--10 keV X-ray Luminosity (erg/s)', 
             fontsize=12, rotation='vertical', horizontalalignment='center',
