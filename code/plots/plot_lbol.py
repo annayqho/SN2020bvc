@@ -40,7 +40,7 @@ tplot = np.linspace(0.01,40,1000)
 t = tplot*86400
 lplot_sc = ve*Re*Me/(4*t**2)
 
-lplot_sc = (te*Ee/(tp**2))*np.exp(-t*(t+2*te)/(2*tp**2))
+#lplot_sc = (te*Ee/(tp**2))*np.exp(-t*(t+2*te)/(2*tp**2))
 
 plt.plot(
         tplot, lplot_sc, lw=1, ls=':', c='#e55c30', 
@@ -65,5 +65,5 @@ plt.ylim(1E42,1E43)
 plt.xlim(0.5,40)
 plt.legend(loc='upper right',fontsize=12)
 plt.tight_layout()
-#plt.show()
-plt.savefig("bol_lc.png", dpi=300)
+plt.show()
+#plt.savefig("bol_lc.png", dpi=300)

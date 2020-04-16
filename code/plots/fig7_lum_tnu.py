@@ -90,9 +90,9 @@ def density_curves(ax, x, ne):
 
 def lumtnu(ax):
     # SN2020bvc
-    tnu = (24)*(3/5)
+    tnu = (13)*(10/5)
     lpeak = 1.7E27
-    ax.scatter(tnu,lpeak,marker='s',c='k',s=100,label=None)
+    ax.scatter(tnu,lpeak,marker='*',c='k',s=300,label=None)
     ax.arrow(
             tnu, lpeak, -tnu/4, 0, color='k', 
             head_length=tnu/10, head_width=lpeak/8)
@@ -100,9 +100,9 @@ def lumtnu(ax):
             tnu, lpeak, 0, lpeak/4, color='k', 
             head_length=lpeak/7, head_width=tnu/7)
     ax.text(
-            tnu, lpeak/1.2, "SN2020bvc", fontsize=medsize,
+            tnu*1.1, lpeak/1.2, r"\textbf{SN2020bvc}", fontsize=medsize,
             verticalalignment='top',
-            horizontalalignment='center', color='k')
+            horizontalalignment='right', color='k')
 
     # ZTF18aaqjovh
     xmin = 20*(3/5)

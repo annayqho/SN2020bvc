@@ -118,12 +118,15 @@ def sn2017iuk():
     filt = dat['col12'].data
     ax = axarr[0]
     choose = filt == 'B'
+    # correcting for MW extinction on my own
     ax.plot(
-            dt[choose], mag[choose], c='#84206b', ls=':', label="17iuk $B$") 
+            dt[choose], mag[choose]-0.055, 
+            c='#84206b', ls=':', label="17iuk $B$") 
     choose = filt == 'V'
     ax = axarr[1]
     ax.plot(
-            dt[choose], mag[choose], c='#84206b', ls=':', label="17iuk $V$") 
+            dt[choose], mag[choose]-0.042, 
+            c='#84206b', ls=':', label="17iuk $V$") 
     
 
 def sn2010bh():

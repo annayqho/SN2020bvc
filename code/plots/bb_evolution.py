@@ -21,12 +21,12 @@ def llgrbs(ax):
     except for the LC of SN2017iuk which comes from 
     """
     ddir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/bol_lc"
-    dat = np.loadtxt(ddir + "/sn1998bw.dat", delimiter=',')
+    dat = np.loadtxt(ddir + "/sn1998bw_UBVRI_cano2013.dat", delimiter=',')
     dt = dat[:,0]
     lum = dat[:,1]
     ax.plot(dt, lum, c='#e55c30', ls='-', lw=1, alpha=0.5, label="98bw")
 
-    dat = np.loadtxt(ddir + "/sn2010bh.dat", delimiter=',')
+    dat = np.loadtxt(ddir + "/sn2010bh_BVRI_cano2013.dat", delimiter=',')
     dt = dat[:,0]
     lum = dat[:,1]
     ax.scatter(
@@ -110,5 +110,5 @@ axarr[2].tick_params(axis='x', labelsize=16)
 axarr[2].set_xlabel(r'Rest-frame days after first light', fontsize=16)
 
 plt.tight_layout()
-plt.show()
-#plt.savefig("bb_evolution.png", dpi=1000)
+#plt.show()
+plt.savefig("bb_evolution.png", dpi=1000)
