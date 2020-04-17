@@ -16,13 +16,14 @@ from forced_phot.run_forced_phot import get_forced_phot
 
 def plot_2006aj(ax):
     """ Plot SN2006aj early (t < 4 days) light curve """
-    dat = ascii.read("../../data/lc_060218_swift.dat")
-    t = dat['t']
+    dat = ascii.read("../../data/lc_060218_full.txt")
+    t = dat['time']-53784.149
     dm = Planck15.distmod(z=0.033).value
-    mag = dat['mag']
-    emag = dat['emag']
+    mag = dat['magnitude']
+    band = dat['band']
+    choose = np.logical_and(band == 'B', dat['upperlimit']=='F')
     ax.plot(
-        t-0.2, mag-dm, linestyle='-', lw=1, color='grey')
+        t[choose]-0.2, mag[choose]-dm, linestyle='-', lw=1, color='grey')
 
 
 def plot_980425(ax):
@@ -285,13 +286,13 @@ def plot_19ablesob(ax):
     emag = dat['emag']
     jd = dat['JD']
     choose = np.logical_and(filt=='g', mag<99)
-    dt = jd-t0
+    dt = (jd-t0)/(1+z)
     ax.errorbar(
             dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
             c='k', fmt='o', zorder=1)
 
     choose = np.logical_and(filt=='r', mag<99)
-    dt = jd-t0
+    dt = (jd-t0)/(1+z)
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec='red', mfc='white', fmt='s', zorder=0, c='red')

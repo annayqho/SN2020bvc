@@ -39,7 +39,10 @@ def llgrbs(ax):
     dat = np.loadtxt(ddir + "/sn2006aj_UBVRI_cano2013.dat", delimiter=',')
     dt = dat[:,0]
     lum = dat[:,1]
-    ax.plot(dt, lum, c='k', ls='-', lw=1, alpha=1, label='06aj')
+    dt = np.append(dt, 1.4)
+    lum = np.append(lum, 2.6E44)
+    order = np.argsort(dt)
+    ax.plot(dt[order], lum[order], c='k', ls='-', lw=1, alpha=1, label='06aj')
     ax.text(30, 1.1E42, '06aj', fontsize=12)
 
     # 2017iuk
@@ -104,16 +107,13 @@ ax.arrow(
 yvals = 5E14 + 0.04 * (3E10) * xvals * 86400
 ax.plot(xvals, yvals/1E14, ls='--', lw=0.5, c='grey')
 ax.text(4, 18, 'v=0.04c', fontsize=14, rotation=0)
-ax.set_xscale('log')
-ax.set_yscale('log')
-ax.set_ylim(3,30)
-ax.set_xlim(0.4,50)
+ax.set_ylim(0,25)
+ax.set_xlim(-1,31)
 ax.set_ylabel(r'$R_\mathrm{ph}$ ($10^{14}$ cm)', fontsize=16)
-ax.set_xticks([1,10])
-ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-ax.set_yticks([4,10,30])
-ax.yaxis.set_minor_formatter(plt.NullFormatter())
-ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+ax.scatter(1.4, 3.3, marker='x', zorder=5, c='k')
+ax.text(
+        2, 3.3, '06aj', fontsize=12, 
+        verticalalignment='top', horizontalalignment='left')
 ax.tick_params(axis='both', labelsize=16)
 
 # Temperature panel
