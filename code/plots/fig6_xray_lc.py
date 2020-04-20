@@ -21,8 +21,8 @@ dcm = Planck15.luminosity_distance(z=0.02507).cgs.value
 
 def plot_source(ax):
     dt = np.array([3, 13, 25])
-    l = np.array([1.4E41, 1.1E40, 1.1E40])
-    el = np.array([[0.5E41, 3.1E41],[0.4E40, 2.1E40], [0.4E40, 2.1E40]])
+    l = np.array([1.4E41, 1.5E40, 1.5E40])
+    el = np.array([[0.5E41, 3.1E41],[0.7E40, 2.8E40], [0.7E40, 2.8E40]])
 
     for ii,dt_val in enumerate(dt):
         ax.errorbar(dt[ii], l[ii], yerr=[el[ii]], c=dark, marker='s')
@@ -89,8 +89,7 @@ def plot_0316d(ax, background=False):
     ax.plot(t, lum, c=col, label="_nolegend_")
     #ax.scatter(t, lum, c=col, marker='.', label="_nolegend_") 
 
-    if background==False:
-        ax.text(0.1, 0.1, "SN2010bh", fontsize=12, transform=ax.transAxes)
+    ax.text(t[-1], lum[-1], "SN2010bh", fontsize=12, transform=ax.transAxes)
 
 
 def plot_06aj(ax, background=False):
@@ -109,13 +108,9 @@ def plot_06aj(ax, background=False):
     t = dat[:,0] / 86400
     lum = (dat[:,1]) * 4 * np.pi * dcm**2
 
-    if background is False:
-        col = '#e55c30'
+    col = '#e55c30'
     ax.plot(t, lum, c=col, label="_nolegend_")
-    #ax.scatter(t, lum, c=col, marker='.', label="_nolegend_") 
-
-    if background==False:
-        ax.text(0.1, 0.1, "SN2006aj", fontsize=12, transform=ax.transAxes)
+    ax.text(t[-1]*1.05, lum[-1], "SN2006aj", fontsize=12)
 
 
 
@@ -162,39 +157,26 @@ def plot_12ap(ax, background=False):
 
 
 if __name__=="__main__":
-    fig,axarr = plt.subplots(
-            3, 2, figsize=(6,6), sharex=True, sharey=True)
+    fig,ax = plt.subplots(
+            1, 1, figsize=(6,4), sharex=True, sharey=True)
 
-    for ii,ax in enumerate(axarr.reshape(-1)):
-        # LC of ZTF18aaqjovh
-        plot_source(ax)
-        plot_06aj(ax, background=True)
-        plot_0316d(ax, background=True)
-        plot_12ap(ax, background=True)
-        plot_17cw(ax, background=True)
-        plot_98bw(ax, background=True)
-        plot_09bb(ax, background=True)
-        ax.yaxis.set_tick_params(labelsize=12)
-        ax.xaxis.set_tick_params(labelsize=12)
-        ax.set_yscale('log')
-        ax.set_xlim(0, 40)
-        ax.set_ylim(1E38, 1E45)
+    plot_source(ax)
+    plot_06aj(ax, background=False)
+    plot_0316d(ax, background=False)
+    #plot_12ap(ax, background=False)
+    #plot_17cw(ax, background=False)
+    #plot_98bw(ax, background=False)
+    #plot_09bb(ax, background=False)
 
-    plot_06aj(axarr[2,0], background=False)
-    plot_0316d(axarr[1,0], background=False)
-    plot_12ap(axarr[1,1], background=False)
-    plot_17cw(axarr[2,1], background=False)
-    plot_98bw(axarr[0,0], background=False)
-    plot_09bb(axarr[0,1], background=False)
-    axarr[2,0].set_xlabel(r"$\Delta t$ (days)", fontsize=12) 
-    axarr[2,1].set_xlabel(r"$\Delta t$ (days)", fontsize=12) 
-    fig.text(
-            0.04, 0.5, r'0.3--10 keV X-ray Luminosity (erg/s)', 
-            fontsize=12, rotation='vertical', horizontalalignment='center',
-            verticalalignment='center')
-
-    fig.subplots_adjust(wspace=0.1, hspace=0.1)
-
+    ax.yaxis.set_tick_params(labelsize=14)
+    ax.xaxis.set_tick_params(labelsize=14)
+    ax.set_yscale('log')
+    ax.set_xlim(0, 40)
+    ax.set_ylim(1E38, 1E45)
+    ax.set_xlabel(r"$\Delta t$ (days)", fontsize=16) 
+    ax.set_ylabel(
+            r'$L_{0.3\mathrm{-}10\,\mathrm{keV}}$ (erg/s)', fontsize=16)
+    plt.tight_layout()
     plt.show()
     #plt.savefig(
     #   "xray_lc.png", dpi=500, bbox_inches='tight', pad_inches=0.1)
