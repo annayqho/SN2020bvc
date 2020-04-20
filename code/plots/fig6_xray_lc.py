@@ -26,7 +26,7 @@ def plot_source(ax):
 
     for ii,dt_val in enumerate(dt):
         ax.errorbar(dt[ii], l[ii], yerr=[el[ii]], c=dark, marker='s')
-    ax.plot(dt,l,c='k',lw=2)
+    ax.plot(dt,l,c='k',lw=5)
 
 
 def plot_98bw(ax, background=False):
@@ -34,21 +34,21 @@ def plot_98bw(ax, background=False):
     I scraped the data from Alessandra's iPTF17cw figure
     """
     dat = np.loadtxt(ddir + "/sn1998bw.txt", delimiter=',')
-
-    col = 'lightgrey'
-    if background is False:
-        col = dark
-
     t = dat[:,0] 
     lum = dat[:,1]
+    ax.plot(t, lum, c='#e55c30', label="98bw")
 
-    if background is False:
-        col = '#e55c30'
-    ax.plot(t, lum, c=col, label="_nolegend_")
-    #ax.scatter(t, lum, c=col, marker='.', label="_nolegend_") 
 
-    if background==False:
-        ax.text(0.1, 0.1, "SN1998bw", fontsize=12, transform=ax.transAxes)
+def plot_17iuk(ax, background=False):
+    """ Plot SN 2017iuk X-ray light curve
+    I scraped this from  the D'Elia 2018 paper, where values
+    come in mJy at 1 keV"""
+    dcm_17iuk = Planck15.luminosity_distance(z=0.0368).cgs.value
+    dat = np.loadtxt(ddir + "/sn2017iuk.txt", delimiter=',')
+    t = dat[:,0] / 86400
+    lum = dat[:,1] * 1E-3 * 1E-23 * 4 * np.pi * dcm_17iuk**2 * 2.4E17
+    order = np.argsort(t)
+    ax.plot(t[order], lum[order], ls=':', c='#84206b', label="17iuk")
 
 
 def plot_09bb(ax, background=False):
@@ -76,20 +76,10 @@ def plot_0316d(ax, background=False):
     z = 0.0593
     dcm = Planck15.luminosity_distance(z=z).cgs.value
     dat = np.loadtxt(ddir + "/sn2010bh.txt", delimiter=',')
-
-    col = 'lightgrey'
-    if background is False:
-        col = dark
-
     t = dat[:,0] 
     lum = dat[:,1]
-
-    if background is False:
-        col = '#e55c30'
-    ax.plot(t, lum, c=col, label="_nolegend_")
-    #ax.scatter(t, lum, c=col, marker='.', label="_nolegend_") 
-
-    ax.text(t[-1], lum[-1], "SN2010bh", fontsize=12, transform=ax.transAxes)
+    ax.scatter(t, lum, edgecolor='grey', facecolor='white', marker='D',
+            lw=0.5, label="10bh")
 
 
 def plot_06aj(ax, background=False):
@@ -100,18 +90,9 @@ def plot_06aj(ax, background=False):
     z = 0.032
     dcm = Planck15.luminosity_distance(z=z).cgs.value
     dat = np.loadtxt(ddir + "/sn2006aj.txt", delimiter=',')
-
-    col = 'lightgrey'
-    if background is False:
-        col = dark
-
     t = dat[:,0] / 86400
     lum = (dat[:,1]) * 4 * np.pi * dcm**2
-
-    col = '#e55c30'
-    ax.plot(t, lum, c=col, label="_nolegend_")
-    ax.text(t[-1]*1.05, lum[-1], "SN2006aj", fontsize=12)
-
+    ax.plot(t, lum, c='k', label="06aj", linestyle='--')
 
 
 def plot_17cw(ax, background=False):
@@ -165,18 +146,21 @@ if __name__=="__main__":
     plot_0316d(ax, background=False)
     #plot_12ap(ax, background=False)
     #plot_17cw(ax, background=False)
-    #plot_98bw(ax, background=False)
+    plot_98bw(ax, background=False)
     #plot_09bb(ax, background=False)
+    plot_17iuk(ax, background=False)
 
     ax.yaxis.set_tick_params(labelsize=14)
     ax.xaxis.set_tick_params(labelsize=14)
     ax.set_yscale('log')
-    ax.set_xlim(0, 40)
-    ax.set_ylim(1E38, 1E45)
+    ax.set_xscale('log')
+    ax.set_xlim(1E-1, 40)
+    ax.set_ylim(5E39, 1E45)
     ax.set_xlabel(r"$\Delta t$ (days)", fontsize=16) 
     ax.set_ylabel(
             r'$L_{0.3\mathrm{-}10\,\mathrm{keV}}$ (erg/s)', fontsize=16)
+    ax.legend(fontsize=14, loc='upper right')
     plt.tight_layout()
-    plt.show()
-    #plt.savefig(
-    #   "xray_lc.png", dpi=500, bbox_inches='tight', pad_inches=0.1)
+    #plt.show()
+    plt.savefig(
+       "xray_lc_log.png", dpi=500, bbox_inches='tight', pad_inches=0.1)
