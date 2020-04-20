@@ -77,7 +77,7 @@ y = blackbody_nu(x, T)
 plt.plot(x, 4*np.pi**2*R**2*x*y, c='k')
 
 # Plot the inverse Compton spectrum
-gamma_m = 28
+gamma_m = 9.8
 x_ic = x*(4/3)*gamma_m**2
 plt.plot(x_ic, 4*np.pi**2*R**2*x*y/2E4, c='k', ls='--')
 plt.text(6E17, 2E38, '$L_\mathrm{IC}$', fontsize=12)
@@ -146,6 +146,6 @@ plt.yticks(fontsize=bigsize)
 
 plt.tight_layout()
 
-plt.savefig("sed.png", dpi=300)
-#plt.show()
-plt.close()
+#plt.savefig("sed.png", dpi=300)
+plt.show()
+#plt.close()

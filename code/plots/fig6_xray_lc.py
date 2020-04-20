@@ -195,6 +195,6 @@ if __name__=="__main__":
 
     fig.subplots_adjust(wspace=0.1, hspace=0.1)
 
-    #plt.show()
-    plt.savefig(
-       "xray_lc.png", dpi=500, bbox_inches='tight', pad_inches=0.1)
+    plt.show()
+    #plt.savefig(
+    #   "xray_lc.png", dpi=500, bbox_inches='tight', pad_inches=0.1)

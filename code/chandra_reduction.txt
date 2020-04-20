@@ -27,9 +27,9 @@ save as bkg.reg
 
 # do the grouping using specextract
 punlearn specextract
-pset specextract infile="acisf23172_repro_evt2.fits[sky=region(src.reg)]"
-pset specextract outroot=SN2020bvc
-pset specextract bkgfile="acisf23172_repro_evt2.fits[sky=region(bkg.reg)]"
+pset specextract infile="acisf23171_repro_evt2.fits[sky=region(srcbig.reg)]"
+pset specextract outroot=SN2020bvc_bigap
+pset specextract bkgfile="acisf23171_repro_evt2.fits[sky=region(bkg.reg)]"
 pset specextract weight=no correctpsf=yes
 pset specextract grouptype=NUM_CTS binspec=1
 specextract
