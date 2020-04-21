@@ -56,13 +56,14 @@ def sn17iuk(ax):
     # Now plot the earliest spectra of SN2017iuk, from Izzo+2019
     datadir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/spec"
 
-    comp = fits.open(
-            datadir + "/GTC_OSIRIS_GRB171205A/1D_GRB171205A_171206_R1000B.fits")[0].data
-    wl = np.arange(3629.598, 3629.598+len(comp)*2.071432195122, 2.071432195122)
+    dat = np.loadtxt(
+            datadir + "/GTC_OSIRIS_GRB171205A/1D_GRB171205A_171206_R1000B_clipped.ascii")
+    comp = dat[:,1]
+    wl = dat[:,0]
     ax.plot(
-            wl/1.0368, comp/1.1/1E-15, c='#84206b', 
+            wl/1.0368, comp/1.1/1E-15, c='#e55c30', 
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
-    ax.text(wl[-1]/1.03, comp[-1]/2, '17iuk/2 (0.95d)', fontsize=12)
+    ax.text(4000, 1.5E-1, '17iuk/1.1 (0.95d)', fontsize=12)
 
 
 def floyds(ax):
@@ -75,16 +76,16 @@ def floyds(ax):
     ax.plot(
             wl/1.0252, comp*6/1E-15, c='grey', 
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
-    ax.text(7450, 7E-16, '20bvc (x6; FLOYDS 2d)', fontsize=12)
+    ax.text(7450, 7E-1, '20bvc (x6; FLOYDS 2d)', fontsize=12)
     # line IDs: Ca II
     v = 70000
     z = 0.0252
     caii = np.array([8498,8542,8662])*(1+z)*np.sqrt((1-v/3E5)/(1+v/3E5))
-    ax.scatter(caii, np.array([9E-16]*3), marker='|', c='k')
-    ax.text(caii[0]/1.05, 1E-15, 'CaII (70,000 km/s)', fontsize=12,
+    ax.scatter(caii, np.array([9E-1]*3), marker='|', c='k')
+    ax.text(caii[0]/1.05, 1, 'CaII (70,000 km/s)', fontsize=12,
             horizontalalignment='left', verticalalignment='bottom')
     feii = np.array([4924,5018,5169])*(1+z)*np.sqrt((1-v/3E5)/(1+v/3E5))
-    ax.scatter(feii, np.array([2.3E-15]*3), marker='|', c='k')
+    ax.scatter(feii, np.array([2.3]*3), marker='|', c='k')
     ax.text(feii[-1]/1.05, 2.3, 'FeII', fontsize=12,
             horizontalalignment='left', verticalalignment='bottom')
 
@@ -99,8 +100,7 @@ def sn06aj(ax):
     ax.plot(
             wl/1.0335, f_lam/1E-15, c='#f6c746',
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0, label="_none")
-    ax.text(wl[-1]/1.0335, f_lam[-1]/1E-15, '06aj (2.6d)', fontsize=12,
-            verticalalignment='top')
+    ax.text(4200, 4E-1, '06aj (2.6d)', fontsize=12, verticalalignment='bottom')
 
 
 def panel(ax):
@@ -120,8 +120,8 @@ def panel(ax):
 
     # Plot the spectrum
     ax.plot(
-            wl/1.0252, f_lam/1E-15, c='k', drawstyle='steps-mid', 
-            lw=0.5, ls='-', alpha=1)
+            wl/1.0252, f_lam/1E-15, c='#84206b', drawstyle='steps-mid', 
+            lw=1.5, ls='-', alpha=1)
 
     # Fit for bb=20,000K
     xplt, yplt = plot(xvals, yvals, eyvals, 20000) # highest reasonable temperature

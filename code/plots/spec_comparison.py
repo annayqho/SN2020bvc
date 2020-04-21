@@ -25,13 +25,13 @@ ax.tick_params(axis='both', labelsize=16)
 ax.set_ylabel(
     r"Flux ($10^{-15}$ erg\,s$^{-1}$\,cm$^{-2}\,$\AA$^{-1}$)", fontsize=16)
 ax.set_xticks([])
-ax.set_ylim(1E-2, 2)
+ax.set_ylim(4E-2, 1.2)
 ax.text(0.5,0.9,'$\Delta t$=3.7d', fontsize=16, transform=ax.transAxes)
 
 ax = axarr[2]
 plot_peak(ax)
 ax.set_xlabel("Rest Wavelength (\AA)", fontsize=16)
-ax.set_xlim(3300, 9300)
+ax.set_xlim(3300, 9400)
 ax.set_xticks([4000,5000,6000,7000,8000,9000])
 ax.tick_params(axis='both', labelsize=16)
 ax.text(0.5,0.9,'$\Delta t$=12.5d', fontsize=16, transform=ax.transAxes)

@@ -24,8 +24,8 @@ def plot_day4(ax):
     ef_nu = wl * ef_lam / hz
 
     ax.plot(
-            wl/1.0252, f_lam/1E-15, c='k', drawstyle='steps-mid', 
-            lw=0.5, ls='-', alpha=1)
+            wl/1.0252, f_lam/1E-15, c='#84206b', drawstyle='steps-mid', 
+            lw=1.5, ls='-', alpha=1)
 
     # Indicate Ca II at v=60,000 km/s
     v = 60000
@@ -36,26 +36,27 @@ def plot_day4(ax):
 
     # Add a spectrum of 17iuk for comparison
     z = 0.0368
-    comp = fits.open(
-            datadir + "/GTC_OSIRIS_GRB171205A/1D_GRB171205A_171207_R1000B.fits")[0].data
-    wl = np.arange(3629.598, 3629.598+len(comp)*2.071432195122, 2.071432195122)
+    dat = np.loadtxt(
+            datadir + "/GTC_OSIRIS_GRB171205A/1D_GRB171205A_171207_R1000B_clipped.ascii")
+    comp = dat[:,1]
+    wl = dat[:,0]
     ax.plot(
-            wl/1.0368, comp/1E-15, c='#84206b',
+            wl/1.0368, comp*3/1E-15, c='#e55c30',
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
-    ax.text(wl[-1]/1.03, comp[-1]/1E-15, '17iuk (2d)', fontsize=12)
+    ax.text(wl[-1]/1.03, comp[-1]*3/1E-15, '17iuk (2d)', fontsize=12)
 
     # Indicate Si II
     v = 75000
     si = 6355*(1+z)*np.sqrt((1-v/3E5)/(1+v/3E5))
-    ax.scatter(si, 8E-2, marker='|', c='k')
-    ax.text(si/1.05, 8E-2, 'SiII (75,000 km/s)', fontsize=12,
+    ax.scatter(si, 21E-2, marker='|', c='k')
+    ax.text(si/1.05, 21E-2, 'SiII', fontsize=12,
             horizontalalignment='left', verticalalignment='bottom')
 
     # Indicate Ca II at v=65,000 km/s
     v = 105000
     caii = np.array([8498,8542,8662])*(1+z)*np.sqrt((1-v/3E5)/(1+v/3E5))
-    ax.scatter(caii, [5.7E-2]*len(caii), marker='|', c='k')
-    ax.text(caii[0], 5.7E-2, 'CaII (105,000 km/s)', fontsize=12,
+    ax.scatter(caii, [9E-2]*len(caii), marker='|', c='k')
+    ax.text(caii[0], 9E-2, 'CaII', fontsize=12,
             horizontalalignment='left', verticalalignment='bottom')
 
     # Add a 4d spectrum of 06aj for comparison
