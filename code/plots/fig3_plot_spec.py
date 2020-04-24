@@ -191,8 +191,8 @@ def plot_spec(ax, x, y, tel, epoch):
 
 if __name__=="__main__":
     fig,ax = plt.subplots(figsize=(6,10))
-    #files, epochs, tels = get_files(0, 6)
-    files, epochs, tels = get_files(6, 13)
+    files, epochs, tels = get_files(0, 6)
+    #files, epochs, tels = get_files(6, 13)
     nfiles = len(files)
     shift = [1, 1.3, 1.8, 2.3, 2.8, 3.3, 3.6, 4.0, 4.5, 5, 5.5, 6, 6.5]
     #bw_shift = [2.1, 3, 4, 6, 7.1]
@@ -201,6 +201,9 @@ if __name__=="__main__":
         print(tel)
         dt = epochs[ii]
         print(dt)
+        c = 'k'
+        if np.logical_or.reduce((int(dt)==0, int(dt)==4, int(dt)==12)):
+            c = '#e55c30'
         wl, flux, ivar = load_spec(f)
         # Remove tellurics
         if ii >= 3:
@@ -213,7 +216,7 @@ if __name__=="__main__":
         plot_spec(ax, wl[choose], (shifted-shift[ii])[choose], tel, dt)
         plot_smoothed_spec(
                 ax, wl[choose], (shifted-shift[ii])[choose], 
-                ivar[choose], tel, dt, lw=2)
+                ivar[choose], tel, dt, lw=2, c=c)
 #     for ii in np.arange(5):
 #         wcomp,fcomp = get_98bw(ii)
 #         scale = fcomp[wcomp>4100][ii]
@@ -238,5 +241,5 @@ if __name__=="__main__":
     ax.get_yaxis().set_ticks([])
     plt.tight_layout()
     #plt.show()
-    plt.savefig("spec_sequence_second.png", dpi=500, bbox_inches='tight')
-    #plt.savefig("spec_sequence_first.png", dpi=500, bbox_inches='tight')
+    #plt.savefig("spec_sequence_second.png", dpi=500, bbox_inches='tight')
+    plt.savefig("spec_sequence_first.png", dpi=500, bbox_inches='tight')

@@ -61,7 +61,7 @@ def sn17iuk(ax):
     comp = dat[:,1]
     wl = dat[:,0]
     ax.plot(
-            wl/1.0368, comp/1.1/1E-15, c='#e55c30', 
+            wl/1.0368, comp/1.1/1E-15, c='#84206b', 
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
     ax.text(4000, 1.5E-1, '17iuk/1.1 (0.95d)', fontsize=12)
 
@@ -120,7 +120,7 @@ def panel(ax):
 
     # Plot the spectrum
     ax.plot(
-            wl/1.0252, f_lam/1E-15, c='#84206b', drawstyle='steps-mid', 
+            wl/1.0252, f_lam/1E-15, c='#e55c30', drawstyle='steps-mid', 
             lw=1.5, ls='-', alpha=1)
 
     # Fit for bb=20,000K

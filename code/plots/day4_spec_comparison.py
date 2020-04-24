@@ -24,7 +24,7 @@ def plot_day4(ax):
     ef_nu = wl * ef_lam / hz
 
     ax.plot(
-            wl/1.0252, f_lam/1E-15, c='#84206b', drawstyle='steps-mid', 
+            wl/1.0252, f_lam/1E-15, c='#e55c30', drawstyle='steps-mid', 
             lw=1.5, ls='-', alpha=1)
 
     # Indicate Ca II at v=60,000 km/s
@@ -41,7 +41,7 @@ def plot_day4(ax):
     comp = dat[:,1]
     wl = dat[:,0]
     ax.plot(
-            wl/1.0368, comp*3/1E-15, c='#e55c30',
+            wl/1.0368, comp*3/1E-15, c='#84206b',
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
     ax.text(wl[-1]/1.03, comp[-1]*3/1E-15, '17iuk (2d)', fontsize=12)
 

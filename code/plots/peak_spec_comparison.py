@@ -20,7 +20,7 @@ def plot_peak(ax):
     f_nu = wl * f_lam / hz
 
     ax.plot(
-            wl/1.0252, f_lam/1E-15, c='#84206b', 
+            wl/1.0252, f_lam/1E-15, c='#e55c30', 
             drawstyle='steps-mid', lw=1.5, ls='-', alpha=1, zorder=1)
 
 
@@ -58,7 +58,7 @@ def plot_peak(ax):
             datadir + "/GTC_OSIRIS_GRB171205A/1D_GRB171205A_171218_R1000BR2500I.fits")[0].data
     wl = np.arange(3629.598, 3629.598+len(comp)*2.071432195122, 2.071432195122)
     ax.plot(
-            wl/1.0368, 0.4 + comp*5/1E-15, c='#e55c30',
+            wl/1.0368, 0.4 + comp*5/1E-15, c='#84206b',
             drawstyle='steps-mid', lw=0.5, ls='-', zorder=0)
     ax.text(wl[-1]/1.03, 0.45 + comp[-1]*5/1E-15, '17iuk (13d)', fontsize=12,
             verticalalignment='bottom', horizontalalignment='center')

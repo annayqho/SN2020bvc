@@ -7,11 +7,14 @@ import numpy as np
 fig,ax = plt.subplots(1,1,figsize=(7,4))
 
 ax.errorbar(
-        [10, 6, 3], [63, 83, 113], [6, 6, 13], 
+        [10, 6, 3], [63, 83, 111], [6, 6, 10], 
         fmt='s', c='k', label="Feb")
 ax.errorbar(
-        [15, 10, 3, 6], [33, 50, 120, 60], [4, 5, 10, 6], 
+        [15, 10, 3, 6], [33, 50, 106, 60], [4, 5, 10, 6], 
         fmt='D', mec='k', mfc='white', label="March", c='k')
+#ax.errorbar(
+#        [3, 6, 10], [282, 209, 186], [10, 6, 7], 
+#        fmt='o', mec='k', mfc='red', label="April", c='k')
 
 xplot = np.linspace(3,15)
 yplot = 113*(xplot/3)**(-0.75)
@@ -27,5 +30,5 @@ ax.legend(fontsize=12)
 ax.tick_params(axis='both', labelsize=14)
 plt.tight_layout()
 
-#plt.show()
-plt.savefig("radio_sed.png", dpi=300)
+plt.show()
+#plt.savefig("radio_sed.png", dpi=300)

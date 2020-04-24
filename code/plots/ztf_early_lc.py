@@ -341,6 +341,7 @@ ax.set_ylim(-15.5,-17.7)
 ax = axarr[1,1]
 plot_20aaiqiti(ax)
 ax.set_ylim(-14,-16.5)
+ax.set_yticks([-14.5, -15.5, -16.5])
 
 ax = axarr[2,0]
 plot_19abqshry(ax)

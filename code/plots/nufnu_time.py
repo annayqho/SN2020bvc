@@ -492,8 +492,8 @@ def sn2009bb(ax, col, legend):
 def sn2020bvc(ax, col, legend):
     nu = 10E9
     d = Planck15.luminosity_distance(z=0.02507).cgs.value
-    t = np.array([13, 35])
-    flux = np.array([0.066, 0.051])
+    t = np.array([13, 35, 77])
+    flux = np.array([0.066, 0.051, 0.186])
     lum = nu*flux*1E-3*1E-23*4*np.pi*d**2
     print(lum)
     ax.errorbar(t,lum,fmt='*',c=col,ms=10)
