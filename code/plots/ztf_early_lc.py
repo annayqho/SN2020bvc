@@ -321,6 +321,47 @@ def plot_19ablesob(ax):
             head_width=0.2, color='k', head_length=0.15)
 
 
+def plot_20bvc(ax):
+    name = 'ZTF20aalxlis'
+    mw_ext_g = 0.041
+    mw_ext_r = 0.029
+    z = 0.0252
+    dm = Planck15.distmod(z=z).value
+    t0 = 2458883.4
+
+    # ra = 218.487548
+    # dec = 40.243758
+    # zp,filt,jd,flux,eflux,mag,emag = get_forced_phot(name,ra,dec,t0,[5,5])
+    # ascii.write(
+    #         [filt,jd,mag,emag], '%s.txt' %name, 
+    #         names=['filt', 'JD', 'mag', 'emag'], overwrite=True)
+    dat = ascii.read('%s.txt' %name)
+    filt = dat['filt']
+    mag = dat['mag']
+    emag = dat['emag']
+    jd = dat['JD']
+    choose = np.logical_and(filt=='g', mag<99)
+    dt = (jd-t0)/(1+z)
+    ax.errorbar(
+            dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
+            c='k', fmt='o', zorder=1)
+
+    choose = np.logical_and(filt=='r', mag<99)
+    dt = (jd-t0)/(1+z)
+    ax.errorbar(
+            dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
+            mec='red', mfc='white', fmt='s', zorder=0, c='red')
+    ax.text(0.01, 0.9, "%s ($z=0.025$)" %name, transform=ax.transAxes,
+            fontsize=11)
+
+    # the last g-band upper limit
+    x = 2458883.17-t0
+    y = 19.4-mw_ext_r-dm
+    ax.scatter(x, y, marker='o', c='k')
+    ax.arrow(x, y, 0, 0.3, length_includes_head=True, 
+            head_width=0.2, color='k', head_length=0.15)
+
+
 #start, let's make a nice plot of two light curves: SN1998bw and SN2006aj
 fig,axarr = plt.subplots(3,2,figsize=(7,6), sharex=True, sharey=False)
 ax = axarr[0,0]
@@ -330,9 +371,9 @@ ax.set_ylim(-14.5,-18.5)
 plot_2006aj(ax)
 
 ax = axarr[0,1]
-ax.axis('off')
-# plot_19abqwtfu(ax)
-# ax.set_ylim(-15.5,-16.5)
+plot_20bvc(ax)
+ax.set_ylim(-15.5,-19)
+plot_2006aj(ax)
  
 ax = axarr[1,0]
 plot_19abupned(ax)
@@ -359,6 +400,6 @@ fig.text(0.5, 0.04, '$\Delta$ t (days)', ha='center', fontsize=14)
 fig.text(0.04, 0.5, 'Abs Mag', va='center', rotation='vertical', fontsize=14)
 fig.subplots_adjust(
         left=0.16, bottom=0.13, right=None, top=None, wspace=0.3, hspace=0)
-plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
+#plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
 
-#plt.show()
+plt.show()
