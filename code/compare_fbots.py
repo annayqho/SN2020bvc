@@ -22,6 +22,8 @@ def sn20bvc(ax):
     ax.errorbar(
             (t[choose]-t0)/1.0252, mag[choose]-dm, emag[choose], 
             fmt='o', c='Crimson', label='P48 $r$')
+    ax.scatter((t[choose][0]-t0-0.67)/1.0252, 19.4-dm, marker='v', c='Crimson')
+
 
 def drout(ax):
     # Get the Drout14 light curves
@@ -41,29 +43,43 @@ def drout(ax):
             dt[choose]/1.074, mag[choose]-dm, c='mediumAquaMarine', 
             lw=1, ls='--', label='PS1-10ah')
 
-    # 12brf
 
-    # 10bjp
+def ksn2015k(ax):
+    inputf = "/Users/annaho/Dropbox/Projects/Research/ZTF18abukavn/data/lc/ksn2015k.txt"
+    dat = np.loadtxt(inputf)
+    dt = dat[:,0]
+    M = dat[:,1]
+    ax.plot(
+            dt/1.09, M, c='Goldenrod', lw=1, ls='--', label='KSN2015K')
 
-    # 2015K
 
-    # 12bv
-
-    # 04D4ec
-
-    # 18cow
+def at2018cow(ax):
+    inputf = "/Users/annaho/Dropbox/Projects/Research/ZTF18abukavn/data/lc/18cow.txt"
+    dm = Planck15.distmod(z=0.0141).value
+    dat = np.loadtxt(inputf, dtype=str)
+    tmjd = dat[:,0].astype(float)
+    filt = dat[:,2]
+    mag = dat[:,4].astype(float)
+    choose = filt == 'g'
+    ax.plot(tmjd[choose]-tmjd[choose][0], mag[choose]-dm, c='mediumAquaMarine', lw=0.5, label='18cow')
+    # last upper limit, which was also in g-band
+    ax.plot([58284.1300-tmjd[choose][0], 0], [18.90-dm, mag[choose][0]-dm], 
+            c='mediumAquaMarine', lw=0.5, label='_nolabel', ls=':')
 
 
 if __name__=="__main__":
     fig,ax = plt.subplots(1,1, figsize=(5,4))
     sn20bvc(ax)
     drout(ax)
+    ksn2015k(ax)
+    at2018cow(ax)
     ax.invert_yaxis()
     ax.tick_params(axis='both', labelsize=12)
     ax.set_xlabel("Time [days]", fontsize=14)
     ax.set_ylabel("Absolute Mag", fontsize=14)
     ax.set_xlim(-2,30)
-    ax.legend(fontsize=12)
+    ax.legend(fontsize=11, ncol=3)
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig("sn20bvc_fbot_comparison.png", dpi=200)
+    #plt.show()
