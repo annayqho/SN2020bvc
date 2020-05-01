@@ -7,9 +7,11 @@ rc("text", usetex=True)
 import matplotlib.pyplot as plt
 from astropy.time import Time
 from astropy.io import ascii
-import extinction
 from scipy.optimize import curve_fit
 from astropy.cosmology import Planck15
+import sys
+sys.path.append("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/code")
+from get_lc import get_opt_lc, get_uv_lc
 
 t0 = 2458883.17
 
@@ -29,11 +31,6 @@ bands['i'] = 7886.1
 bands['u'] = 3513.7
 bands['z'] = 8972.9
 
-# extinction for each filter
-ext = {}
-for band in bands.keys():
-    ext[band] = extinction.fitzpatrick99(
-        np.array([bands[band]]), 0.034, 3.1)[0]
 
 def toflux(mag,emag):
     f = 1E6 * 10**((mag-8.90)/(-2.5))
@@ -52,22 +49,7 @@ def bb_func(nu,T,R):
     return fnu / 1E-23 / 1E-6
 
 
-dat = ascii.read("../../data/marshal_lc.txt")
-uvdat = ascii.read("../../data/UVOT_hostsub.ascii")
-uvt = uvdat['MJD']+2400000.5
-uvdt = uvt-t0
-uvfilt = uvdat['FILTER']
-uvflux = uvdat['AB_FNU_mJy']
-uveflux = uvdat['AB_FNU_mJy_ERRM']
-
 fig,axarr = plt.subplots(2, 5, figsize=(8,3), sharex=True, sharey=True)
-
-t = dat['jdobs']
-dt = t-t0
-mag = dat['magpsf']
-emag = dat['sigmamagpsf']
-instr = dat['instrument']
-filt = dat['filter']
 
 # To define time bins, use the u-band observations and ignore P60.
 use = np.logical_and(filt=='u', instr!='P60+SEDM')
@@ -97,7 +79,7 @@ for ii,dtbin in enumerate(dtbins):
     choose = np.logical_and(np.abs(dt-dtbin)<0.05, instr=='LT+IOO')
     for jj in np.arange(sum(choose)):
         wl = bands[filt[choose][jj]]
-        f,ef = toflux(mag[choose][jj]-ext[filt[choose][jj]],emag[choose][jj])
+        f,ef = toflux(mag[choose][jj],emag[choose][jj])
         xvals.append(wl)
         yvals.append(f)
         eyvals.append(ef)
@@ -106,7 +88,7 @@ for ii,dtbin in enumerate(dtbins):
     for ztffilt in ['r','g','i']:
         choose = np.logical_and(instr=='P48+ZTF', filt==ztffilt)        
         ztfmag = np.interp(dtbin, dt[choose], mag[choose])
-        f,ef = toflux(ztfmag-ext[ztffilt],emag=0.1) 
+        f,ef = toflux(ztfmag,emag=0.1) 
         xvals.append(bands[ztffilt])
         yvals.append(f)
         eyvals.append(ef)

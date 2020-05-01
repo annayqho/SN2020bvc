@@ -1,46 +1,54 @@
-""" Get the LC from ZUDS """
+""" Return the extinction-subtracted photometry for SN2020bvc """
 
-import penquins
-from penquins import Kowalski
-import sys
-sys.path.append("/Users/annaho/Dropbox/Projects/Research/ZTF_fast_transient_search/code")
-import ForcePhotZTF
-from ForcePhotZTF.phot_class import ZTFphot
-from run_forced_phot import get_forced_phot
+import numpy as np
+import extinction
+from astropy.io import ascii
 
+# a mapping from filter to central wavelength
+bands = {}
+bands['V'] = 5468
+bands['B'] = 4392
+bands['U'] = 3465
+bands['UVW1'] = 2600
+bands['UVM2'] = 2246
+bands['UVW2'] = 1928
+# p48
+bands['g'] = 4722.7
+bands['r'] = 6339.6
+bands['i'] = 7886.1
+# lt: assume everything is the same except
+bands['u'] = 3513.7
+bands['z'] = 8972.9
 
-def logon():
-    """ Log onto Kowalski """
-    username = 'ah'
-    password = 'TetraodonInsists'
-    s = Kowalski(
-        protocol='https', host='kowalski.caltech.edu', port=443,
-        verbose=False, username=username, password=password)
-    return s
-
-# lc doesn't look very good...not using this
-def from_danny():
-    s = logon()
-    q = {"query_type": "find",
-         "query": {
-            "catalog": "ZUDS_alerts_aux",
-            "filter": {'_id': {'$eq': 'ZUDS20eekej'}},
-            "projection": {"light_curve": 1}}} 
-    query_result = s.query(query=q)
-    out = query_result['result_data']['query_result'][0]['light_curve']
-
-    mjd = np.array([point['mjd'] for point in out])
-    filt = np.array([point['filter'] for point in out])
-    flux = np.array([point['flux'] for point in out])
-    fluxerr = np.array([point['fluxerr'] for point in out])
-    zp = np.array([point['zp'] for point in out])
-    mag = -2.5*np.log10(flux)+zp
+# extinction for each filter
+ext = {}
+for band in bands.keys():
+    ext[band] = extinction.fitzpatrick99(
+        np.array([bands[band]]), 0.034, 3.1)[0]
 
 
-# regular forced photometry from Yuhan
-# I'm honestly not sure about this either!
-zp,filt,jd,flux,eflux,mag,emag = get_forced_phot('ZTF20aalxlis', 
-        218.487548, 40.243758, 2458882.0568, [-2, 30])
+def get_opt_lc():
+    dat = ascii.read("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/marshal_lc.txt")
+    t = dat['jdobs']
+    filt = dat['filter']
+    mag = dat['magpsf']
+    emag = dat['sigmamagpsf']
+    inst = dat['instrument']
+    maglim = dat['limmag']
 
-# Maybe I'll just stick with the regular IPAC photometry for now...
-# the alerts, that is.
+    mag_corr = np.zeros(len(mag))
+    for ii,f in enumerate(np.unique(filt)):
+        choose = filt == f
+        mag_corr[choose] = mag[choose]-ext[f]
+
+    return t,mag_corr,emag,maglim,filt,inst
+
+
+def get_uv_lc():
+    # How do I correct these for Galactic extinction?
+    uvdat = ascii.read("../../data/UVOT_hostsub.ascii")
+    uvt = uvdat['MJD']+2400000.5
+    uvdt = uvt-t0
+    uvfilt = uvdat['FILTER']
+    uvflux = uvdat['AB_FNU_mJy']
+    uveflux = uvdat['AB_FNU_mJy_ERRM']

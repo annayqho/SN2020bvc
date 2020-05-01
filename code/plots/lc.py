@@ -8,10 +8,10 @@ rc("text", usetex=True)
 import matplotlib.pyplot as plt
 from astropy.time import Time
 from astropy.cosmology import Planck15
+import sys
+sys.path.append("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/code")
+from get_lc import get_opt_lc
 
-EXT_G = 0.041
-EXT_R = 0.029
-EXT_I = 0.021
 rcol = '#e55c30'
 gcol = '#140b34'
 icol = 'k'
@@ -20,47 +20,43 @@ t0 = 2458883.17
 msize = 6
 
 """ a panel showing the full r, g, and i light curve from the P48 """
+t,mag,emag,maglim,filt,inst = get_opt_lc()
+
 fig,ax = plt.subplots(1,1, figsize=(10,5))
-dat = ascii.read("../../data/marshal_lc.txt")
-dt = (dat['jdobs']-t0)/1.0252
-filt = dat['filter']
-mag = dat['magpsf']
-emag = dat['sigmamagpsf']
-inst = dat['instrument']
-maglim = dat['limmag']
+dt = (t-t0)/1.0252
 
 # r-band light curve
 choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='r', mag < 99))
-ax.errorbar(dt[choose], mag[choose]-EXT_R, emag[choose], ms=msize, fmt='o', 
+ax.errorbar(dt[choose], mag[choose], emag[choose], ms=msize, fmt='o', 
         mfc=rcol, mec=rcol, label='P48 $r$', c=rcol, zorder=1)
 
 # r-band upper limits
 choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='r', mag == 99, dt<5))
 ax.scatter(
-        dt[choose], maglim[choose]-EXT_R, marker='o', 
+        dt[choose], maglim[choose], marker='o', 
         c=rcol, label=None, zorder=1)
 for ii,val in enumerate(dt[choose]):
     ax.arrow(
-            val, maglim[choose][ii]-EXT_R, 0, 0.25, 
+            val, maglim[choose][ii], 0, 0.25, 
             color=rcol, head_length=0.2, head_width=0.3, zorder=1)
 
 # g-band light curve
 choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='g', mag < 99))
-ax.errorbar(dt[choose], mag[choose]-EXT_G, emag[choose], ms=msize, fmt='s', 
+ax.errorbar(dt[choose], mag[choose], emag[choose], ms=msize, fmt='s', 
         mfc=gcol, mec=gcol, label='P48 $g$', c=gcol, zorder=2)
 
 # add the ASAS-SN point
-#ax.scatter(2458884.12-t0, 17-EXT_G, s=msize, marker='s',
+#ax.scatter(2458884.12-t0, 17, s=msize, marker='s',
 #        facecolor='white', edgecolor=gcol, label='ASAS-SN $g$', zorder=2)
 
 # g-band upper limits
 choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='g', mag == 99, dt<5))
 ax.scatter(
-        dt[choose], maglim[choose]-EXT_G, marker='s', c=gcol, 
+        dt[choose], maglim[choose], marker='s', c=gcol, 
         label=None, zorder=2)
 for ii,val in enumerate(dt[choose]):
     ax.arrow(
-            val, maglim[choose][ii]-EXT_G, 0, 0.25, 
+            val, maglim[choose][ii], 0, 0.25, 
             color=gcol, head_length=0.2, head_width=0.3, zorder=2)
 
 
@@ -74,7 +70,7 @@ ax.text(-0.2, 19.4, 'ATLAS $o$', fontsize=10,
         verticalalignment='center', horizontalalignment='right')
 
 choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='i', mag < 99))
-ax.errorbar(dt[choose], mag[choose]-EXT_G, emag[choose], ms=msize, fmt='D', 
+ax.errorbar(dt[choose], mag[choose], emag[choose], ms=msize, fmt='D', 
         mfc='white', mec=icol, label='P48 $i$', c=icol, zorder=0)
 ax.text(val, 20, 'GRB 060218', rotation=270, fontsize=10)
 
@@ -151,5 +147,5 @@ ax.tick_params(labelsize=14)
 ax.set_xlim(-2.5,31)
 ax.set_ylim(21.2,15.7)
 plt.tight_layout()
-plt.savefig("lc.png", dpi=200)
-#plt.show()
+#plt.savefig("lc.png", dpi=200)
+plt.show()

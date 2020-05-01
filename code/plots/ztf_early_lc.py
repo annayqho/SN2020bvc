@@ -400,6 +400,6 @@ fig.text(0.5, 0.04, '$\Delta$ t (days)', ha='center', fontsize=14)
 fig.text(0.04, 0.5, 'Abs Mag', va='center', rotation='vertical', fontsize=14)
 fig.subplots_adjust(
         left=0.16, bottom=0.13, right=None, top=None, wspace=0.3, hspace=0)
-#plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
+plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
 
-plt.show()
+#plt.show()
