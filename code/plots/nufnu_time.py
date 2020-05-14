@@ -111,7 +111,6 @@ def koala(ax, col, legend):
             verticalalignment='bottom')
 
 
-
 def at2018cow(ax, col, legend):
     """ 231.5 GHz light curve and 9 GHz light curve """
     d = Planck15.luminosity_distance(z=0.014).cgs.value

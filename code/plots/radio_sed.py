@@ -12,9 +12,12 @@ ax.errorbar(
 ax.errorbar(
         [15, 10, 3, 6], [33, 50, 106, 60], [4, 5, 10, 6], 
         fmt='D', mec='k', mfc='white', label="March", c='k')
-#ax.errorbar(
-#        [3, 6, 10], [282, 209, 186], [10, 6, 7], 
-#        fmt='o', mec='k', mfc='red', label="April", c='k')
+ax.errorbar(
+        [3, 6, 10], [282, 209, 186], [10, 6, 7], 
+        fmt='o', mec='k', mfc='red', label="April", c='k')
+ax.errorbar(
+        [3, 6, 10], [356, 258, 195], [10, 6, 7], 
+        fmt='s', mec='k', mfc='blue', label="May", c='k')
 
 xplot = np.linspace(3,15)
 yplot = 113*(xplot/3)**(-0.75)

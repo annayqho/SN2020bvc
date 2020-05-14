@@ -139,7 +139,7 @@ def plot_12ap(ax, background=False):
 
 if __name__=="__main__":
     fig,ax = plt.subplots(
-            1, 1, figsize=(6,4), sharex=True, sharey=True)
+            1, 1, figsize=(4,4), sharex=True, sharey=True)
 
     plot_source(ax)
     plot_06aj(ax, background=False)
