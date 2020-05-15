@@ -603,6 +603,43 @@ if __name__=="__main__":
     #at2018cow(ax, 'k', legend=True)
     #koala(ax, 'k', None)
 
+    # Plot model light curves
+    dcm = Planck15.luminosity_distance(z=0.065).cgs.value
+    # dat = np.loadtxt("../../data/offaxis_model_lc_1.57.txt", delimiter=',')
+    # dt = dat[:,0] * 365.25
+    # mjy = dat[:,1] 
+    # lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 8.5E9
+    # ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+
+    dat = np.loadtxt("../../data/offaxis_model_lc_0.8.txt", delimiter=',')
+    dt = dat[:,0] * 365.25
+    mjy = dat[:,1] 
+    lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 5E9
+    ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+
+    dat = np.loadtxt("../../data/offaxis_model_lc_0.4.txt", delimiter=',')
+    dt = dat[:,0] * 365.25
+    mjy= dat[:,1]
+    lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 4.9E9
+    ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+
+    dat = np.loadtxt("../../data/offaxis_model_lc_0.txt", delimiter=',')
+    dt = dat[:,0] * 365.25
+    mjy = dat[:,1] 
+    lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 4.9E9
+    ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+
+    dat = np.loadtxt("../../data/model_cocoon_bottom.txt", delimiter=',')
+    dt = dat[:,0]
+    mjy = dat[:,1] # at 40 Mpc maybe?
+    dcm = Planck15.luminosity_distance(z=0.009).cgs.value
+    lum_bottom = mjy * 1E-3 * 1E-23 * 4 * np.pi * (dcm)**2 * 8.5E9
+
+    dat = np.loadtxt("../../data/model_cocoon_top.txt", delimiter=',')
+    mjy = np.interp(dt, dat[:,0], dat[:,1]) # at 40 Mpc maybe?
+    lum_top = mjy * 1E-3 * 1E-23 * 4 * np.pi * (dcm)**2 * 8.5E9
+    ax.fill_between(dt, y1= lum_bottom, y2=lum_top, color='lightgrey')
+
     ax.set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
             fontsize=16)
@@ -626,5 +663,5 @@ if __name__=="__main__":
 
 
     plt.tight_layout()
-    #plt.show()
-    plt.savefig("lum_evolution.png", dpi=500)
+    plt.show()
+    #plt.savefig("lum_evolution.png", dpi=500)

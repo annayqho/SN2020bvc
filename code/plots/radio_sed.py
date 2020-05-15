@@ -16,7 +16,7 @@ ax.errorbar(
         [3, 6, 10], [282, 209, 186], [10, 6, 7], 
         fmt='o', mec='k', mfc='red', label="April", c='k')
 ax.errorbar(
-        [3, 6, 10], [356, 258, 195], [10, 6, 7], 
+        [3, 6, 10, 15], [356, 258, 195, 124], [10, 6, 7, 15], 
         fmt='s', mec='k', mfc='blue', label="May", c='k')
 
 xplot = np.linspace(3,15)
