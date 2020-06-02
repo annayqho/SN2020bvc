@@ -135,10 +135,6 @@ def panel(ax):
     R = '5.1'
     L = '5.6'
 
-    ax.text(
-        3378, 1E-15, "20bvc (0.7d)", fontsize=14, 
-        horizontalalignment='left', verticalalignment='top')
-
     # Comparison objects
     sn17iuk(ax)
     sn06aj(ax)

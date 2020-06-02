@@ -550,12 +550,15 @@ def sn2017iuk(ax, col, legend):
     """
     d = Planck15.luminosity_distance(z=0.037).cgs.value
     nu = 6E9
-    t = 4.3
-    lum = 3*1E-3*1E-23*4*np.pi*d**2*nu
-    ax.scatter(t, lum, c=col, marker='s', s=6)
-    ax.text(t, lum*1.1, 'SN2017iuk', fontsize=11,
+    t = np.array([4.3, 9, 18, 33, 50])
+    f = np.array([3, 7.36, 10.1, 7.80, 7.89])
+    lum = plot_line(ax, d, t, nu*f, 'SN1998bw', 'Rel. SN', col, legend)
+    #lum = f*1E-3*1E-23*4*np.pi*d**2*nu
+    #print(lum)
+    #ax.scatter(t, lum, c=col, marker='s', s=6)
+    ax.text(t[0], lum[0], 'SN2017iuk', fontsize=11,
             verticalalignment='bottom',
-            horizontalalignment='center')
+            horizontalalignment='right')
 
 
 if __name__=="__main__":
@@ -603,6 +606,8 @@ if __name__=="__main__":
     #at2018cow(ax, 'k', legend=True)
     #koala(ax, 'k', None)
 
+    moddir = "/Users/annaho/Dropbox/Projects/Research/IcBL/data"
+
     # Plot model light curves
     dcm = Planck15.luminosity_distance(z=0.065).cgs.value
     # dat = np.loadtxt("../../data/offaxis_model_lc_1.57.txt", delimiter=',')
@@ -611,34 +616,34 @@ if __name__=="__main__":
     # lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 8.5E9
     # ax.plot(dt,lum,c='k',ls='--', lw=0.5)
 
-    dat = np.loadtxt("../../data/offaxis_model_lc_0.8.txt", delimiter=',')
+    dat = np.loadtxt(moddir + "/offaxis_model_lc_0.8.txt", delimiter=',')
     dt = dat[:,0] * 365.25
     mjy = dat[:,1] 
     lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 5E9
     ax.plot(dt,lum,c='k',ls='--', lw=0.5)
 
-    dat = np.loadtxt("../../data/offaxis_model_lc_0.4.txt", delimiter=',')
+    dat = np.loadtxt(moddir + "/offaxis_model_lc_0.4.txt", delimiter=',')
     dt = dat[:,0] * 365.25
     mjy= dat[:,1]
     lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 4.9E9
     ax.plot(dt,lum,c='k',ls='--', lw=0.5)
 
-    dat = np.loadtxt("../../data/offaxis_model_lc_0.txt", delimiter=',')
+    dat = np.loadtxt(moddir + "/offaxis_model_lc_0.txt", delimiter=',')
     dt = dat[:,0] * 365.25
     mjy = dat[:,1] 
     lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 4.9E9
     ax.plot(dt,lum,c='k',ls='--', lw=0.5)
 
-    dat = np.loadtxt("../../data/model_cocoon_bottom.txt", delimiter=',')
+    dat = np.loadtxt(moddir + "/model_cocoon_bottom.txt", delimiter=',')
     dt = dat[:,0]
     mjy = dat[:,1] # at 40 Mpc maybe?
     dcm = Planck15.luminosity_distance(z=0.009).cgs.value
     lum_bottom = mjy * 1E-3 * 1E-23 * 4 * np.pi * (dcm)**2 * 8.5E9
 
-    dat = np.loadtxt("../../data/model_cocoon_top.txt", delimiter=',')
+    dat = np.loadtxt(moddir + "/model_cocoon_top.txt", delimiter=',')
     mjy = np.interp(dt, dat[:,0], dat[:,1]) # at 40 Mpc maybe?
     lum_top = mjy * 1E-3 * 1E-23 * 4 * np.pi * (dcm)**2 * 8.5E9
-    ax.fill_between(dt, y1= lum_bottom, y2=lum_top, color='lightgrey')
+    ax.fill_between(dt, y1= lum_bottom, y2=lum_top, color='lightgrey', zorder=0)
 
     ax.set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
@@ -663,5 +668,5 @@ if __name__=="__main__":
 
 
     plt.tight_layout()
-    plt.show()
-    #plt.savefig("lum_evolution.png", dpi=500)
+    #plt.show()
+    plt.savefig("lum_evolution.png", dpi=500)
