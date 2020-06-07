@@ -600,7 +600,7 @@ if __name__=="__main__":
 
     sn1998bw(ax, '#bc3754', legend=True)
     sn2006aj(ax, '#bc3754', None)
-    sn2020bvc(ax, 'darkblue', None)
+    #sn2020bvc(ax, 'darkblue', None)
     sn2017iuk(ax, '#bc3754', None)
 
     #at2018cow(ax, 'k', legend=True)
@@ -620,19 +620,19 @@ if __name__=="__main__":
     dt = dat[:,0] * 365.25
     mjy = dat[:,1] 
     lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 5E9
-    ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+    #ax.plot(dt,lum,c='k',ls='--', lw=0.5)
 
     dat = np.loadtxt(moddir + "/offaxis_model_lc_0.4.txt", delimiter=',')
     dt = dat[:,0] * 365.25
     mjy= dat[:,1]
     lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 4.9E9
-    ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+    #ax.plot(dt,lum,c='k',ls='--', lw=0.5)
 
     dat = np.loadtxt(moddir + "/offaxis_model_lc_0.txt", delimiter=',')
     dt = dat[:,0] * 365.25
     mjy = dat[:,1] 
     lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 4.9E9
-    ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+    #ax.plot(dt,lum,c='k',ls='--', lw=0.5)
 
     dat = np.loadtxt(moddir + "/model_cocoon_bottom.txt", delimiter=',')
     dt = dat[:,0]
@@ -643,7 +643,7 @@ if __name__=="__main__":
     dat = np.loadtxt(moddir + "/model_cocoon_top.txt", delimiter=',')
     mjy = np.interp(dt, dat[:,0], dat[:,1]) # at 40 Mpc maybe?
     lum_top = mjy * 1E-3 * 1E-23 * 4 * np.pi * (dcm)**2 * 8.5E9
-    ax.fill_between(dt, y1= lum_bottom, y2=lum_top, color='lightgrey', zorder=0)
+    #ax.fill_between(dt, y1= lum_bottom, y2=lum_top, color='lightgrey', zorder=0)
 
     ax.set_ylabel(
             r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
@@ -654,6 +654,8 @@ if __name__=="__main__":
     ax.set_xscale('log')
     ax.set_yscale('log')
     ax.set_xlabel(r"Time [days; rest frame]", fontsize=16)
+
+    ax.scatter([17,24], [3.552e+37, 6.12e+37], c='k', marker='*', s=300, zorder=10)
 
     #ax.scatter(
     #        0,0,c='k',marker='*',s=100,label="Fast-Lum. Opt. Transient")

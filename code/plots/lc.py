@@ -12,9 +12,9 @@ import sys
 sys.path.append("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/code")
 from get_lc import get_opt_lc
 
-rcol = '#e55c30'
-gcol = '#140b34'
-icol = 'k'
+rcol = 'Crimson'
+gcol = 'Aquamarine'
+icol = 'Goldenrod'
 z = 0.025201
 t0 = 2458883.17
 msize = 6
@@ -147,5 +147,5 @@ ax.tick_params(labelsize=14)
 ax.set_xlim(-2.5,31)
 ax.set_ylim(21.2,15.7)
 plt.tight_layout()
-#plt.savefig("lc.png", dpi=200)
-plt.show()
+plt.savefig("lc.png", dpi=200)
+#plt.show()

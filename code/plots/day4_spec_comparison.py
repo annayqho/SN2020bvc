@@ -30,7 +30,7 @@ def plot_day4(ax):
     # Indicate Ca II at v=60,000 km/s
     v = 60000
     caii = np.array([8498,8542,8662])*(1+z)*np.sqrt((1-v/3E5)/(1+v/3E5))
-    ax.scatter(caii, np.array([0.3]*3), marker='|', c='k')
+    ax.scatter(caii[1], 0.3, marker='|', c='k')
     ax.text(caii[0]/1.05, 0.32, 'CaII (60,000 km/s)', fontsize=12,
             horizontalalignment='left', verticalalignment='bottom')
 
@@ -55,7 +55,7 @@ def plot_day4(ax):
     # Indicate Ca II at v=65,000 km/s
     v = 105000
     caii = np.array([8498,8542,8662])*(1+z)*np.sqrt((1-v/3E5)/(1+v/3E5))
-    ax.scatter(caii, [9E-2]*len(caii), marker='|', c='k')
+    ax.scatter(caii[1], 9E-2, marker='|', c='k')
     ax.text(caii[0], 9E-2, 'CaII', fontsize=12,
             horizontalalignment='left', verticalalignment='bottom')
 

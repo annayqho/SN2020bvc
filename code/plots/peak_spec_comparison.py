@@ -27,7 +27,7 @@ def plot_peak(ax):
     # Indicate Ca II 
     v = 30000
     caii = np.array([8498,8542,8662])*(1-v/3E5)
-    ax.scatter(caii, [0.23]*3, marker='|', c='k')
+    ax.scatter(caii[1], 0.23, marker='|', c='k')
     ax.text(caii[0], 0.25, 'CaII', fontsize=12,
             horizontalalignment='center', verticalalignment='bottom')
 

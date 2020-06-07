@@ -81,11 +81,11 @@ def floyds(ax):
     v = 70000
     z = 0.0252
     caii = np.array([8498,8542,8662])*(1+z)*np.sqrt((1-v/3E5)/(1+v/3E5))
-    ax.scatter(caii, np.array([9E-1]*3), marker='|', c='k')
+    ax.scatter(caii[1], 9E-1, marker='|', c='k')
     ax.text(caii[0]/1.05, 1, 'CaII (70,000 km/s)', fontsize=12,
             horizontalalignment='left', verticalalignment='bottom')
     feii = np.array([4924,5018,5169])*(1+z)*np.sqrt((1-v/3E5)/(1+v/3E5))
-    ax.scatter(feii, np.array([2.3]*3), marker='|', c='k')
+    ax.scatter(feii[1], 2.3, marker='|', c='k')
     ax.text(feii[-1]/1.05, 2.3, 'FeII', fontsize=12,
             horizontalalignment='left', verticalalignment='bottom')
 

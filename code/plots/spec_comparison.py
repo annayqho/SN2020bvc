@@ -38,6 +38,6 @@ ax.text(0.5,0.9,'$\Delta t$=12.5d', fontsize=16, transform=ax.transAxes)
 
 fig.subplots_adjust(hspace=0)
 
-plt.tight_layout()
+#plt.tight_layout()
 #plt.show()
 plt.savefig("full_spec_comparison.png", dpi=300, bbox_inches='tight')

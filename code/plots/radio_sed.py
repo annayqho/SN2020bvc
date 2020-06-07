@@ -33,5 +33,5 @@ ax.legend(fontsize=12)
 ax.tick_params(axis='both', labelsize=14)
 plt.tight_layout()
 
-plt.show()
-#plt.savefig("radio_sed.png", dpi=300)
+#plt.show()
+plt.savefig("radio_sed.png", dpi=300)
