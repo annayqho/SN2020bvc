@@ -57,7 +57,7 @@ def get_uv_lc():
     uveflux = uvdat['AB_FNU_mJy_ERRM']
     uvflux_corr = np.zeros(len(uvflux))
     uveflux_corr = np.zeros(len(uvflux))
-    for f in np.unique(filt):
+    for f in np.unique(uvfilt):
         print(f)
         choose = uvfilt == f
         factor = 10**(ext[f]/2.5)

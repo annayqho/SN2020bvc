@@ -33,19 +33,21 @@ bands['z'] = 8972.9
 
 
 def toflux(mag,emag):
+    """ Convert from magnitude to flux in uJy """
     f = 1E6 * 10**((mag-8.90)/(-2.5))
     ef = f*emag
     return f,ef
 
 
-def bb_func(nu,T,R):
+def bb_func(wl,T,R):
     d = Planck15.luminosity_distance(z=0.02507).cgs.value
-    h = 6.63E-27
+    h = 6.626E-27
     c = 3E10
     k = 1.38E-16
-    Inu = (2*h*nu**3/c**2) * (1/(np.exp(h*nu/(k*T)-1)))
-    fnu = Inu * np.pi * R**2 / d**2
+    Blam = (2*h*c**2/wl**5) * (1/(np.exp(h*c/(wl*k*T)-1)))
+    flam = Blam * np.pi * R**2 / d**2
     # in units of uJy
+    fnu = wl**2 * flam / c
     return fnu / 1E-23 / 1E-6
 
 
@@ -62,10 +64,11 @@ t,mag,emag,maglim,filt,instr = get_opt_lc()
 uvdt,uvfilt,uvflux,uveflux = get_uv_lc()
 dt = t-t0
 
-fig,axarr = plt.subplots(6, 5, figsize=(8,8), sharex=True, sharey=True)
+fig,axarr = plt.subplots(3, 5, figsize=(8,5), sharex=True, sharey=True)
 
 # To define time bins, use the u-band observations and ignore P60.
-use = np.logical_and(filt=='u', instr!='P60+SEDM')
+use = np.logical_and.reduce(
+        (filt=='u', instr!='P60+SEDM', instr!='LCOGT1m+Sinistro'))
 dtbins = dt[use]
 
 # for each bin, plot all photometry within half an hour of that bin
@@ -124,11 +127,11 @@ for ii,dtbin in enumerate(dtbins):
         ysamples[:,jj] = np.random.normal(loc=val,scale=eyvals[jj],size=nsim)
     for jj in np.arange(nsim):
         popt, pcov = curve_fit(
-                bb_func, 3E10/(xvals*1E-8), ysamples[jj], p0=[5000,1E14])
+                bb_func, xvals*1E-8, ysamples[jj], p0=[5000,1E14])
         temps[jj] = popt[0]
         radii[jj] = popt[1]
         xplot = np.linspace(2000,8000)
-        yplot = bb_func(3E10/(xplot*1E-8), popt[0], popt[1])
+        yplot = bb_func(xplot*1E-8, popt[0], popt[1])
         ax.plot(xplot,yplot,lw=0.1,alpha=0.1)
     lums = 4*np.pi*radii**2 * (5.67E-5)*temps**4
     T = np.mean(temps)
@@ -155,6 +158,13 @@ for ii,dtbin in enumerate(dtbins):
     #xplot = np.linspace(2000,8000)
     #yplot = bb_func(3E10/(xplot*1E-8), T, R)
     #ax.plot(xplot,yplot,lw=0.5,alpha=1,c='k')
+
+Lbol = np.array(Lbol)
+eLbol = np.array(eLbol)
+Rph = np.array(Rph)
+eRph = np.array(eRph)
+Teff = np.array(Teff)
+eTeff = np.array(eTeff)
 
 axarr[0,0].set_xlim(1E3, 2E4)
 axarr[0,0].set_ylim(10, 5000)
