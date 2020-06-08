@@ -14,6 +14,10 @@ sys.path.append("/Users/annaho/Dropbox/Projects/Research/ZTF_fast_transient_sear
 from forced_phot.run_forced_phot import get_forced_phot
 
 
+rcol = 'Crimson'
+gcol = 'Aquamarine'
+
+
 def plot_2006aj(ax):
     """ Plot SN2006aj early (t < 4 days) light curve """
     dat = ascii.read("../../data/lc_060218_full.txt")
@@ -41,7 +45,7 @@ def plot_980425(ax):
     mag_err = np.array(
             [float(val.split("$\\pm$")[1]) for val in lc[~bad]])
     t = jd[~bad]
-    ax.plot(t,mag-dm,c='k', linestyle='--')
+    ax.plot(t,mag-dm,c=gcol, linestyle='--')
 
 
 def plot_19aaxfcpq(ax):
@@ -68,12 +72,12 @@ def plot_19aaxfcpq(ax):
     dt = jd-t0
     ax.errorbar(
             dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
-            c='k', fmt='o')
+            c=gcol, fmt='o')
     choose = np.logical_and(filt=='r', mag<99)
     dt = jd-t0
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
-            mec='red', mfc='white', fmt='s', zorder=0)
+            mec=rcol, mfc=rcol, fmt='s', zorder=0)
     ax.text(0.99, 0.01, "ZTF19aaxfcpq ($z=0.038$)", transform=ax.transAxes,
             fontsize=11, horizontalalignment='right')
     ax.text(3.5, -18.1, "S", fontsize=11, horizontalalignment='center')
@@ -82,19 +86,19 @@ def plot_19aaxfcpq(ax):
     lt_t = 2458639.4464-t0
     lt_m = -18.1
     ax.errorbar(
-            lt_t,19.27-mw_ext_g-dm,yerr=0.02, c='k', fmt='o')
+            lt_t,19.27-mw_ext_g-dm,yerr=0.02, c=gcol, fmt='o')
     ax.errorbar(
             lt_t, 19.38-mw_ext_r-dm, yerr=0.02, 
-            mec='red', mfc='white', fmt='s', zorder=0)
+            mec=rcol, mfc=rcol, fmt='s', zorder=0)
     ax.text(lt_t, lt_m, "S", fontsize=11, horizontalalignment='center')
 
     # the last g-band upper limit
     x = 2458637.7621-t0
     y = 20.78-mw_ext_g-dm
     print(y)
-    ax.scatter(x, y, marker='o', c='k')
+    ax.scatter(x, y, marker='o', c=gcol)
     ax.arrow(x, y, 0, 0.5, length_includes_head=True, 
-            head_width=0.2, color='k', head_length=0.2)
+            head_width=0.2, color=gcol, head_length=0.2)
 
 
 def plot_19abqwtfu(ax):
@@ -121,12 +125,12 @@ def plot_19abqwtfu(ax):
     dt = jd-t0
     ax.errorbar(
             dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
-            c='k', fmt='o', zorder=1)
+            c=gcol, fmt='o', zorder=1)
     choose = np.logical_and(filt=='r', mag<99)
     dt = jd-t0
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
-            mec='red', mfc='white', fmt='s', zorder=0)
+            mec=rcol, mfc=rcol, fmt='s', zorder=0)
     ax.text(0.01, 0.9, "ZTF19abqwtfu (r\&g)", transform=ax.transAxes,
             fontsize=11)
 
@@ -134,7 +138,7 @@ def plot_19abqwtfu(ax):
     ax.errorbar(
             np.array([2458717.66, 2458718.96])-t0,
             np.array([18.74, 18.61])-mw_ext_r-dm,
-            [0.17, 0.03], fmt='s', mec='red', mfc='white', zorder=0)
+            [0.17, 0.03], fmt='s', mec=rcol, mfc=rcol, zorder=0)
 
 
 def plot_19abupned(ax):
@@ -160,21 +164,21 @@ def plot_19abupned(ax):
     dt = jd-t0
     ax.errorbar(
             dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
-            c='k', fmt='o', zorder=1)
+            c=gcol, fmt='o', zorder=1)
     choose = np.logical_and(filt=='r', mag<99)
     dt = jd-t0
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
-            mec='red', mfc='white', fmt='s', zorder=0, c='red')
+            mec=rcol, mfc=rcol, fmt='s', zorder=0, c=rcol)
     ax.text(0.01, 0.9, "%s ($z=0.05$)" %name, transform=ax.transAxes,
             fontsize=11)
 
     # the last g-band upper limit
     x = 2458723.9464-t0
     y = 20.99-mw_ext_g-dm
-    ax.scatter(x, y, marker='o', c='k')
+    ax.scatter(x, y, marker='o', c=gcol)
     ax.arrow(x, y, 0, 0.4, length_includes_head=True, 
-            head_width=0.2, color='k', head_length=0.2)
+            head_width=0.2, color=gcol, head_length=0.2)
 
 
 def plot_20aaiqiti(ax):
@@ -200,21 +204,21 @@ def plot_20aaiqiti(ax):
     dt = jd-t0
     ax.errorbar(
             dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
-            c='k', fmt='o', zorder=1)
+            c=gcol, fmt='o', zorder=1)
     choose = np.logical_and(filt=='r', mag<99)
     dt = jd-t0
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
-            mec='red', mfc='white', fmt='s', zorder=0, c='red')
+            mec=rcol, mfc=rcol, fmt='s', zorder=0, c=rcol)
     ax.text(0.01, 0.9, "%s ($z=%s$)" %(name,z), transform=ax.transAxes,
             fontsize=11)
 
     # the last g-band upper limit
     x = 2458872.9224-t0
     y = 20.39-mw_ext_g-dm
-    ax.scatter(x, y, marker='o', c='k')
+    ax.scatter(x, y, marker='o', c=gcol)
     ax.arrow(x, y, 0, 0.5, length_includes_head=True, 
-            head_width=0.2, color='k', head_length=0.2)
+            head_width=0.2, color=gcol, head_length=0.2)
 
 
 def plot_19abqshry(ax):
@@ -240,30 +244,30 @@ def plot_19abqshry(ax):
     dt = jd-t0
     ax.errorbar(
             dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
-            c='k', fmt='o', zorder=1)
+            c=gcol, fmt='o', zorder=1)
     # MSIP point
     ax.errorbar(
             2458715.6635-t0, 20.73-mw_ext_g-dm, 0.22,
-            c='k', fmt='o', zorder=1)
+            c=gcol, fmt='o', zorder=1)
     choose = np.logical_and(filt=='r', mag<99)
     dt = jd-t0
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
-            mec='red', mfc='white', fmt='s', zorder=0, c='red')
+            mec=rcol, mfc=rcol, fmt='s', zorder=0, c=rcol)
     ax.text(0.01, 0.9, "%s ($z=0.031$)" %name, transform=ax.transAxes,
             fontsize=11)
 
     # The P60 points
-    ax.errorbar(2458717.7442-t0, 19.97-dm-mw_ext_g, 0.12, fmt='o', c='k')
+    ax.errorbar(2458717.7442-t0, 19.97-dm-mw_ext_g, 0.12, fmt='o', c=gcol)
     ax.errorbar(2458717.7415-t0, 19.88-dm-mw_ext_r, 0.17, 
-            mec='red', mfc='white', c='red')
+            mec=rcol, mfc=rcol, c=rcol)
 
     # the last g-band upper limit
     x = 2458714.7238-t0
     y = 20.18-mw_ext_g-dm
-    ax.scatter(x, y, marker='o', c='k')
+    ax.scatter(x, y, marker='o', c=gcol)
     ax.arrow(x, y, 0, 0.3, length_includes_head=True, 
-            head_width=0.2, color='k', head_length=0.15)
+            head_width=0.2, color=gcol, head_length=0.15)
 
 
 def plot_19ablesob(ax):
@@ -289,23 +293,23 @@ def plot_19ablesob(ax):
     dt = (jd-t0)/(1+z)
     ax.errorbar(
             dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
-            c='k', fmt='o', zorder=1)
+            c=gcol, fmt='o', zorder=1)
 
     choose = np.logical_and(filt=='r', mag<99)
     dt = (jd-t0)/(1+z)
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
-            mec='red', mfc='white', fmt='s', zorder=0, c='red')
+            mec=rcol, mfc=rcol, fmt='s', zorder=0, c=rcol)
     ax.text(0.01, 0.9, "%s ($z=0.056$)" %name, transform=ax.transAxes,
             fontsize=11)
 
     # MSIP points
     ax.errorbar(
             2458697.98-t0, 19.32-mw_ext_g-dm, 0.22,
-            c='k', fmt='o', zorder=1)
+            c=gcol, fmt='o', zorder=1)
     ax.errorbar(
             2458697.94-t0, 19.37-mw_ext_r-dm, yerr=0.12, 
-            mec='red', mfc='white', fmt='s', zorder=0, c='red')
+            mec=rcol, mfc=rcol, fmt='s', zorder=0, c=rcol)
 
 
     # # The P60 points
@@ -316,9 +320,9 @@ def plot_19ablesob(ax):
     # the last g-band upper limit
     x = 2458694.9546-t0
     y = 21.12-mw_ext_g-dm
-    ax.scatter(x, y, marker='o', c='k')
+    ax.scatter(x, y, marker='o', c=gcol)
     ax.arrow(x, y, 0, 0.3, length_includes_head=True, 
-            head_width=0.2, color='k', head_length=0.15)
+            head_width=0.2, color=gcol, head_length=0.15)
 
 
 def plot_20bvc(ax):
@@ -344,22 +348,22 @@ def plot_20bvc(ax):
     dt = (jd-t0)/(1+z)
     ax.errorbar(
             dt[choose],mag[choose]-mw_ext_g-dm,yerr=emag[choose], 
-            c='k', fmt='o', zorder=1)
+            c=gcol, fmt='o', zorder=1)
 
     choose = np.logical_and(filt=='r', mag<99)
     dt = (jd-t0)/(1+z)
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
-            mec='red', mfc='white', fmt='s', zorder=0, c='red')
+            mec=rcol, mfc=rcol, fmt='s', zorder=0, c=rcol)
     ax.text(0.01, 0.9, "%s ($z=0.025$)" %name, transform=ax.transAxes,
             fontsize=11)
 
     # the last g-band upper limit
     x = 2458883.17-t0
     y = 19.4-mw_ext_r-dm
-    ax.scatter(x, y, marker='o', c='k')
+    ax.scatter(x, y, marker='o', c=gcol)
     ax.arrow(x, y, 0, 0.3, length_includes_head=True, 
-            head_width=0.2, color='k', head_length=0.15)
+            head_width=0.2, color=gcol, head_length=0.15)
 
 
 #start, let's make a nice plot of two light curves: SN1998bw and SN2006aj

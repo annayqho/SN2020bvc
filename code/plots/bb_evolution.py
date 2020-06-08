@@ -25,7 +25,7 @@ def llgrbs(ax):
     dat = np.loadtxt(ddir + "/sn1998bw_UBVRI_cano2013.dat", delimiter=',')
     dt = dat[:,0]
     lum = dat[:,1]
-    ax.plot(dt, lum, c='#e55c30', ls='-', lw=1, alpha=0.5, label="98bw")
+    ax.plot(dt, lum, c='Goldenrod', ls='-', lw=1, alpha=0.5, label="98bw")
     ax.text(30, 4E42, '98bw', fontsize=12)
 
     dat = np.loadtxt(ddir + "/sn2010bh_BVRI_cano2013.dat", delimiter=',')

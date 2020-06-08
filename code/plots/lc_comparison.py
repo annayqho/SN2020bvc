@@ -12,9 +12,9 @@ from astropy.cosmology import Planck15
 EXT_G = 0.041
 EXT_R = 0.029
 EXT_I = 0.021
-rcol = '#e55c30'
-gcol = '#140b34'
-icol = 'k'
+rcol = 'Crimson'
+gcol = 'Aquamarine'
+icol = 'Goldenrod'
 t0 = 2458883.17
 msize = 6
 data_dir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data"
@@ -97,7 +97,7 @@ def sn1998bw():
     rband = dat['Rcmag']
     erband = dat['e_Rcmag']
     # Extinction is 0.127 in R-band in this direction
-    ax.plot(jd-jd[0], rband-dm-0.127, color='#e55c30', lw=1,
+    ax.plot(jd-jd[0], rband-dm-0.127, color='Goldenrod', lw=1,
             label="98bw $Rc$")
 
     # g-band
@@ -105,7 +105,7 @@ def sn1998bw():
     gband = dat['Bmag']
     egband = dat['e_Bmag']
     # Extinction is 0.212 in B-band in this direction
-    ax.plot(jd-jd[0], gband-dm-0.212, color='#e55c30', lw=1, 
+    ax.plot(jd-jd[0], gband-dm-0.212, color='Goldenrod', lw=1, 
             label="98bw $B$")
 
 

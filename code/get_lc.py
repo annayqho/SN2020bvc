@@ -4,6 +4,9 @@ import numpy as np
 import extinction
 from astropy.io import ascii
 
+# estimated time of first light
+t0 = 2458883.17
+
 # a mapping from filter to central wavelength
 bands = {}
 bands['V'] = 5468
@@ -52,3 +55,12 @@ def get_uv_lc():
     uvfilt = uvdat['FILTER']
     uvflux = uvdat['AB_FNU_mJy']
     uveflux = uvdat['AB_FNU_mJy_ERRM']
+    uvflux_corr = np.zeros(len(uvflux))
+    uveflux_corr = np.zeros(len(uvflux))
+    for f in np.unique(filt):
+        print(f)
+        choose = uvfilt == f
+        factor = 10**(ext[f]/2.5)
+        print(factor)
+        uvflux_corr[choose] = uvflux[choose] * factor
+    return uvdt,uvfilt,uvflux,uveflux

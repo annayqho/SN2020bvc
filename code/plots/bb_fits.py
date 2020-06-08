@@ -49,7 +49,20 @@ def bb_func(nu,T,R):
     return fnu / 1E-23 / 1E-6
 
 
-fig,axarr = plt.subplots(2, 5, figsize=(8,3), sharex=True, sharey=True)
+# Ultimately, here are the parameters I will measure
+Lbol = []
+eLbol = []
+Teff = []
+eTeff = []
+Rph = []
+eRph = []
+
+
+t,mag,emag,maglim,filt,instr = get_opt_lc()
+uvdt,uvfilt,uvflux,uveflux = get_uv_lc()
+dt = t-t0
+
+fig,axarr = plt.subplots(6, 5, figsize=(8,8), sharex=True, sharey=True)
 
 # To define time bins, use the u-band observations and ignore P60.
 use = np.logical_and(filt=='u', instr!='P60+SEDM')
@@ -119,11 +132,17 @@ for ii,dtbin in enumerate(dtbins):
         ax.plot(xplot,yplot,lw=0.1,alpha=0.1)
     lums = 4*np.pi*radii**2 * (5.67E-5)*temps**4
     T = np.mean(temps)
+    Teff.append(T)
     eT = np.std(temps)
+    eTeff.append(eT)
     R = np.mean(radii)
+    Rph.append(R)
     eR = np.std(radii)
+    eRph.append(eR)
     L = np.mean(lums)
+    Lbol.append(L)
     eL = np.std(lums)
+    eLbol.append(eL)
 
     print(dtbin)
     print("%s +/- %s" %(T/1E3, eT/1E3))

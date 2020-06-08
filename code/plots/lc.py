@@ -26,12 +26,13 @@ fig,ax = plt.subplots(1,1, figsize=(10,5))
 dt = (t-t0)/1.0252
 
 # r-band light curve
-choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='r', mag < 99))
+choose = np.logical_and.reduce(
+        (inst=='P48+ZTF', filt=='r', mag < 99, emag < 99))
 ax.errorbar(dt[choose], mag[choose], emag[choose], ms=msize, fmt='o', 
         mfc=rcol, mec=rcol, label='P48 $r$', c=rcol, zorder=1)
 
 # r-band upper limits
-choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='r', mag == 99, dt<5))
+choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='r', emag >= 99, dt<5))
 ax.scatter(
         dt[choose], maglim[choose], marker='o', 
         c=rcol, label=None, zorder=1)
@@ -41,7 +42,8 @@ for ii,val in enumerate(dt[choose]):
             color=rcol, head_length=0.2, head_width=0.3, zorder=1)
 
 # g-band light curve
-choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='g', mag < 99))
+choose = np.logical_and.reduce(
+        (inst=='P48+ZTF', filt=='g', mag < 99, emag < 99))
 ax.errorbar(dt[choose], mag[choose], emag[choose], ms=msize, fmt='s', 
         mfc=gcol, mec=gcol, label='P48 $g$', c=gcol, zorder=2)
 
@@ -50,7 +52,7 @@ ax.errorbar(dt[choose], mag[choose], emag[choose], ms=msize, fmt='s',
 #        facecolor='white', edgecolor=gcol, label='ASAS-SN $g$', zorder=2)
 
 # g-band upper limits
-choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='g', mag == 99, dt<5))
+choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='g', emag >= 99, dt<5))
 ax.scatter(
         dt[choose], maglim[choose], marker='s', c=gcol, 
         label=None, zorder=2)
@@ -69,7 +71,8 @@ ax.arrow(
 ax.text(-0.2, 19.4, 'ATLAS $o$', fontsize=10,
         verticalalignment='center', horizontalalignment='right')
 
-choose = np.logical_and.reduce((inst=='P48+ZTF', filt=='i', mag < 99))
+choose = np.logical_and.reduce(
+        (inst=='P48+ZTF', filt=='i', mag < 99, emag < 99))
 ax.errorbar(dt[choose], mag[choose], emag[choose], ms=msize, fmt='D', 
         mfc='white', mec=icol, label='P48 $i$', c=icol, zorder=0)
 ax.text(val, 20, 'GRB 060218', rotation=270, fontsize=10)
@@ -109,14 +112,13 @@ choose = np.logical_and(b_plot == 'B', dat['upperlimit']=='F')
 # B-band extinction: 0.527
 plt.scatter(
         dt_plot[choose][::1]/1.033, m_plot[choose][::1]-dm-0.527, 
-        color='k', s=1, zorder=0, label=None)
+        color=gcol, s=1, zorder=0, label=None)
 plt.plot(
         dt_plot[choose][::1]/1.033, m_plot[choose][::1]-dm-0.527, 
         linestyle='-', lw=0.5, color=gcol, zorder=0, alpha=1, label="2006aj $B$")
 
 
 choose = np.logical_and(b_plot == 'V', dat['upperlimit']=='F')
-print(t_plot[choose].data)
 plt.scatter(
         dt_plot[choose][::1]/1.033, m_plot[choose][::1]-dm-0.399, 
         c=rcol, s=1, zorder=0, label=None)

@@ -120,7 +120,7 @@ def plot_1998bw(ax, background=False):
     evel = dat[:,3][choose].astype(float)
     offset = 2450945.7-2450929.41
     dt = phase+offset
-    ax.plot(dt, vel/1E3, color='#e55c30', lw=1, label="98bw")
+    ax.plot(dt, vel/1E3, color='Goldenrod', lw=1, label="98bw")
 
 
 def plot_2006aj(ax, background=False):
