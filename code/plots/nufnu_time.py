@@ -495,8 +495,8 @@ def sn2020bvc(ax, col, legend):
     flux = np.array([0.066, 0.051, 0.186, 0.195])
     lum = nu*flux*1E-3*1E-23*4*np.pi*d**2
     print(lum)
-    ax.errorbar(t,lum,fmt='*',c=col,ms=10)
-    ax.plot(t,lum,c=col,lw=5)
+    ax.errorbar(t[0:2],lum[0:2],fmt='*',c=col,ms=10)
+    ax.plot(t[0:2],lum[0:2],c=col,lw=5)
     #lum = plot_line(ax, d, t, nu*flux, 'SN2020bvc', 'Rel. SN', col, legend)
     ax.text(t[1]*1.05, lum[1], r'\textbf{2020bvc}', fontsize=16, 
             verticalalignment='bottom',
@@ -541,6 +541,20 @@ def sn2006aj(ax, col, legend):
     ax.text(t[0], lum[0], '2006aj', fontsize=11,
             verticalalignment='bottom',
             horizontalalignment='center')
+
+
+def sn2010bh(ax, col, legend):
+    """ SN 2010bh
+    Margutti 2014
+    """
+    d = Planck15.luminosity_distance(z=0.0593).cgs.value
+    nu = 5.4E9
+    t = np.array([18.93, 29.87, 36.97, 69.87])
+    f = np.array([90, 128, 68, 50])*1E-3
+    lum = plot_line(ax, d, t, nu*f, 'SN2010bh', 'Rel. SN', col, legend)
+    ax.text(t[0], lum[0], '2010bh', fontsize=11,
+            verticalalignment='bottom',
+            horizontalalignment='right')
 
 
 def sn2017iuk(ax, col, legend):
@@ -600,6 +614,7 @@ if __name__=="__main__":
 
     sn1998bw(ax, '#bc3754', legend=True)
     sn2006aj(ax, '#bc3754', None)
+    sn2010bh(ax, '#bc3754', None)
     #sn2020bvc(ax, 'darkblue', None)
     sn2017iuk(ax, '#bc3754', None)
 
@@ -656,6 +671,136 @@ if __name__=="__main__":
     ax.set_xlabel(r"Time [days; rest frame]", fontsize=16)
 
     ax.scatter([17,24], [3.552e+37, 6.12e+37], c='k', marker='*', s=300, zorder=10)
+
+    #ax.scatter(
+    #        0,0,c='k',marker='*',s=100,label="Fast-Lum. Opt. Transient")
+    ax.legend(fontsize=12, loc='upper right', ncol=2, columnspacing=1)
+
+    #ax.axhspan(1E34,1E37,edgecolor='k', fc='white', lw=3)
+    #ax.axhline(y=1E37, c='k', ls='--')
+    #ax.axvspan(1,2000,edgecolor='k', fc='white', lw=3)
+    #ax.text(
+    #        1.1,9E36,"Ordinary SNe", fontstyle='italic', fontsize=12,
+    #        verticalalignment='top')
+
+
+    plt.tight_layout()
+    #plt.show()
+    plt.savefig("lum_evolution.png", dpi=500)
+
+
+def sn2017iuk(ax, col, legend):
+    """ SN 2017iuk
+    from the GCN:
+    https://gcn.gsfc.nasa.gov/gcn/gcn3/22216.gcn3
+    """
+    d = Planck15.luminosity_distance(z=0.037).cgs.value
+    nu = 6E9
+    t = np.array([4.3, 9, 18, 33, 50])
+    f = np.array([3, 7.36, 10.1, 7.80, 7.89])
+    lum = plot_line(ax, d, t, nu*f, 'SN1998bw', 'Rel. SN', col, legend)
+    #lum = f*1E-3*1E-23*4*np.pi*d**2*nu
+    #print(lum)
+    #ax.scatter(t, lum, c=col, marker='s', s=6)
+    ax.text(t[0], lum[0], 'SN2017iuk', fontsize=11,
+            verticalalignment='bottom',
+            horizontalalignment='right')
+
+
+if __name__=="__main__":
+    fig, ax = plt.subplots(1, 1, figsize=(6,6), sharex=True, sharey=True)
+    props = dict(boxstyle='round', facecolor='white')
+
+    # viridis color palette
+    # 440154 dark purple
+    # 21918c dark green/turquoise
+    # 3b528b dark blue
+    # 5ec962 light green
+    # fde725 yellow
+
+    # inferno color palette
+    # 000004 black
+    # 420a68 dark purple
+    # 932667 kind of a purple/red color
+    # dd513a dark orange
+    # fca50a light orange
+    # fcffa4 really light yellow
+    # 57106e purple
+    # bc3754 pink/red
+    # f98e09 orange
+
+    # OK so I want to use four colors. I think it's nice to have two light ones
+    # and two dark ones.
+
+    sn2003L(ax, 'lightblue', legend=True) # Ib
+    sn1979c(ax, 'lightblue', None) # II
+    sn1993J(ax, 'lightblue', None)
+    sn2011dh(ax, 'lightblue', None)
+    sn2007bg(ax, 'darkblue', legend=True)
+    sn2003bg(ax, 'lightblue', None)
+    ptf11qcj(ax, 'darkblue', None)
+    sn2009bb(ax, 'darkblue', None)
+
+    grb030329(ax, '#f98e09', legend=True)
+    grb130427A(ax, '#f98e09', None)
+
+    sn1998bw(ax, '#bc3754', legend=True)
+    sn2006aj(ax, '#bc3754', None)
+    sn2010bh(ax, '#bc3754', None)
+    sn2020bvc(ax, 'darkblue', None)
+    sn2017iuk(ax, '#bc3754', None)
+
+    #at2018cow(ax, 'k', legend=True)
+    #koala(ax, 'k', None)
+
+    moddir = "/Users/annaho/Dropbox/Projects/Research/IcBL/data"
+
+    # Plot model light curves
+    dcm = Planck15.luminosity_distance(z=0.065).cgs.value
+    # dat = np.loadtxt("../../data/offaxis_model_lc_1.57.txt", delimiter=',')
+    # dt = dat[:,0] * 365.25
+    # mjy = dat[:,1] 
+    # lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 8.5E9
+    # ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+
+    dat = np.loadtxt(moddir + "/offaxis_model_lc_0.8.txt", delimiter=',')
+    dt = dat[:,0] * 365.25
+    mjy = dat[:,1] 
+    lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 5E9
+    #ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+
+    dat = np.loadtxt(moddir + "/offaxis_model_lc_0.4.txt", delimiter=',')
+    dt = dat[:,0] * 365.25
+    mjy= dat[:,1]
+    lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 4.9E9
+    #ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+
+    dat = np.loadtxt(moddir + "/offaxis_model_lc_0.txt", delimiter=',')
+    dt = dat[:,0] * 365.25
+    mjy = dat[:,1] 
+    lum = mjy * 1E-3 * 1E-23 * 4 * np.pi * dcm**2 * 4.9E9
+    #ax.plot(dt,lum,c='k',ls='--', lw=0.5)
+
+    dat = np.loadtxt(moddir + "/model_cocoon_bottom.txt", delimiter=',')
+    dt = dat[:,0]
+    mjy = dat[:,1] # at 40 Mpc maybe?
+    dcm = Planck15.luminosity_distance(z=0.009).cgs.value
+    lum_bottom = mjy * 1E-3 * 1E-23 * 4 * np.pi * (dcm)**2 * 8.5E9
+
+    dat = np.loadtxt(moddir + "/model_cocoon_top.txt", delimiter=',')
+    mjy = np.interp(dt, dat[:,0], dat[:,1]) # at 40 Mpc maybe?
+    lum_top = mjy * 1E-3 * 1E-23 * 4 * np.pi * (dcm)**2 * 8.5E9
+    #ax.fill_between(dt, y1= lum_bottom, y2=lum_top, color='lightgrey', zorder=0)
+
+    ax.set_ylabel(
+            r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
+            fontsize=16)
+    ax.tick_params(axis='both', labelsize=14)
+    ax.set_xlim(1, 1000) 
+    ax.set_ylim(1E34, 1E42)
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_xlabel(r"Time [days; rest frame]", fontsize=16)
 
     #ax.scatter(
     #        0,0,c='k',marker='*',s=100,label="Fast-Lum. Opt. Transient")

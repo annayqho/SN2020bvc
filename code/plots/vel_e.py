@@ -140,17 +140,17 @@ def vele(ax):
             verticalalignment='bottom',
             horizontalalignment='center')
 
-
-    # AT2018cow
-    v = 0.126807067696
-    E = 3.68387786116342e+48
+    # SN2020bvc
+    v = 0.28
+    E = 1.3E47
     ax.scatter(
             v, E, 
             marker='*', s=300, facecolors='black', edgecolors='black')
     ax.text(
-            v, E*1.1, "AT2018cow", 
+            v, E*1.1, "SN2020bvc", 
             fontsize=14, 
             verticalalignment='bottom', horizontalalignment='center')
+
 
     ax.set_xscale('log')
     ax.set_yscale('log')
@@ -161,7 +161,7 @@ def vele(ax):
     ax.set_ylabel(
             "Energy (erg) $= U_B/\epsilon_B$, \qquad $\epsilon_e=\epsilon_B=0.33$", 
             fontsize=14)
-    ax.set_ylim(5E47, 1.3E49)
+    ax.set_ylim(1E47, 1.3E49)
     ax.tick_params(axis='both', labelsize=14)
     ax.legend(loc='upper left', fontsize=10)
 
@@ -180,9 +180,10 @@ def vele(ax):
     ax2.set_xlim(4E-3, 8)
     ax.set_xlim(4E-3, 8)
 
-fig,ax = plt.subplots(1,1, figsize=(5,6), dpi=100)
+fig,ax = plt.subplots(1,1, figsize=(5,5), dpi=100)
 vele(ax)
 
-#plt.show()
-plt.savefig("vel_e.eps", format='eps', bbox_inches='tight')
-plt.close()
+plt.tight_layout()
+plt.show()
+#plt.savefig("vel_e.png", format='png', bbox_inches='tight')
+#plt.close()
