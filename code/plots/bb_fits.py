@@ -40,6 +40,15 @@ def toflux(mag,emag):
 
 
 def bb_func(wl,T,R):
+    """
+    Return a blackbody function
+
+    Parameters
+    ----------
+    wl: wavelength in angstroms
+    T: temperature in Kelvin
+    R: radius in cm
+    """
     d = Planck15.luminosity_distance(z=0.02507).cgs.value
     h = 6.626E-27
     c = 3E10
@@ -59,17 +68,21 @@ eTeff = []
 Rph = []
 eRph = []
 
-
 t,mag,emag,maglim,filt,instr = get_opt_lc()
 uvdt,uvfilt,uvflux,uveflux = get_uv_lc()
 dt = t-t0
 
 fig,axarr = plt.subplots(3, 5, figsize=(8,5), sharex=True, sharey=True)
 
-# To define time bins, use the u-band observations and ignore P60.
-use = np.logical_and.reduce(
-        (filt=='u', instr!='P60+SEDM', instr!='LCOGT1m+Sinistro'))
-dtbins = dt[use]
+# Define time bins
+# For dt < 15d, use Swift+UVOT epochs 
+# For dt > 15d, use LT+SPRAT epochs
+# In the paper, we only present photometry up to 30 days
+early_bins = np.logical_and(instr=='Swift+UVOT', dt<15)
+late_bins = np.logical_and(instr=='LT+IOO', dt>15)
+use = np.logical_or(early_bins, late_bins)
+# and round to one decimal place to group observations
+dtbins = np.unique(np.array([np.round(val,1) for val in dt[use]]))
 
 # for each bin, plot all photometry within half an hour of that bin
 # and interpolate the p48 light curves onto that epoch
@@ -104,6 +117,7 @@ for ii,dtbin in enumerate(dtbins):
     for ztffilt in ['r','g','i']:
         choose = np.logical_and(instr=='P48+ZTF', filt==ztffilt)        
         ztfmag = np.interp(dtbin, dt[choose], mag[choose])
+        # THIS ERROR BAR IS TEMPORARY
         f,ef = toflux(ztfmag,emag=0.1) 
         xvals.append(bands[ztffilt])
         yvals.append(f)
@@ -119,7 +133,7 @@ for ii,dtbin in enumerate(dtbins):
             horizontalalignment='right', verticalalignment='top')
 
     # Fit a blackbody 1000 times
-    nsim = 1000
+    nsim = 10
     temps = np.zeros(nsim)
     radii = np.zeros(nsim)
     ysamples = np.zeros((nsim, len(xvals)))

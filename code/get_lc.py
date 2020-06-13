@@ -31,19 +31,21 @@ for band in bands.keys():
 
 
 def get_opt_lc():
-    dat = ascii.read("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/marshal_lc.txt")
-    t = dat['jdobs']
-    filt = dat['filter']
-    mag = dat['magpsf']
-    emag = dat['sigmamagpsf']
+    # Read in the light curve downloaded directly from the GROWTH marshal
+    ddir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/"
+    dat = ascii.read(ddir + "/marshal_lc.txt")
+    t = dat['jdobs'].data
+    filt = dat['filter'].data
+    mag = dat['magpsf'].data
+    emag = dat['sigmamagpsf'].data
     
-    # Correct for instances where the emag is unreasonably small
-    # THIS IS A TEMP FIX, need to hear from Dan & Kirsty
-    emag = dat['sigmamagpsf']
-    emag[emag<0.03] = 0.03
+    # Correct instances where emag on LT observations is unreasonably small
+    # 0.02 is a reasonable estimate of the systematics 
+    emag = dat['sigmamagpsf'].data
+    emag[np.logical_and(emag<0.01, dat['instrument']=='LT+IOO')]=0.02
 
-    inst = dat['instrument']
-    maglim = dat['limmag']
+    inst = dat['instrument'].data
+    maglim = dat['limmag'].data
 
     mag_corr = np.zeros(len(mag))
     for ii,f in enumerate(np.unique(filt)):
