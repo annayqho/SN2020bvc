@@ -60,6 +60,40 @@ def bb_func(wl,T,R):
     return fnu / 1E-23 / 1E-6
 
 
+def get_binned_p48_band(dt,mag,emag,filt,instr,use_filt='r'):
+    p48 = instr == 'P48+ZTF'
+    band = filt==use_filt
+    bins = np.unique(
+            np.array([np.round(val,0) for val in dt[np.logical_and(p48, band)]]))
+    dt_use = []
+    mag_use = []
+    emag_use = []
+
+    for ii,b in enumerate(bins):
+        use = np.logical_and.reduce((p48, band, mag<50, np.abs(dt-b)<0.5))
+        if sum(use) == 1:
+            dt_use.append(dt[use][0])
+            mag_use.append(mag[use][0])
+            emag_use.append(emag[use][0])
+        elif sum(use) > 1:
+            dt_use.append(np.mean(dt[use]))
+            ivar = 1/(emag[use])**2
+            mag_use.append(sum(mag[use]*ivar)/sum(ivar))
+            emag_use.append(1/sqrt(sum(ivar)))
+    dt_use = np.array(dt_use)
+    mag_use = np.array(mag_use)
+    emag_use = np.array(emag_use)
+    return dt_use,mag_use,emag_use
+
+
+def get_binned_p48(dt,mag,emag,filt,instr):
+    # get binned P48 light curves
+    rdt,rmag,remag = get_binned_p48_band(dt,mag,emag,filt,instr,'r')
+    gdt,gmag,gemag = get_binned_p48_band(dt,mag,emag,filt,instr,'g')
+    idt,imag,iemag = get_binned_p48_band(dt,mag,emag,filt,instr,'i')
+    return rdt,rmag,remag,gdt,gmag,gemag,idt,imag,iemag
+
+
 # Ultimately, here are the parameters I will measure
 Lbol = []
 eLbol = []
@@ -75,17 +109,20 @@ dt = t-t0
 fig,axarr = plt.subplots(3, 5, figsize=(8,5), sharex=True, sharey=True)
 
 # Define time bins
-# For dt < 15d, use Swift+UVOT epochs 
-# For dt > 15d, use LT+SPRAT epochs
+# For dt < 11d, use Swift+UVOT epochs 
+# For dt > 11d, use epochs of LT photometry
 # In the paper, we only present photometry up to 30 days
-early_bins = np.logical_and(instr=='Swift+UVOT', dt<15)
-late_bins = np.logical_and(instr=='LT+IOO', dt>15)
+early_bins = np.logical_and(instr=='Swift+UVOT', dt<11)
+late_bins = np.logical_and(instr=='LT+IOO', dt>11)
 use = np.logical_or(early_bins, late_bins)
 # and round to one decimal place to group observations
 dtbins = np.unique(np.array([np.round(val,1) for val in dt[use]]))
 
-# for each bin, plot all photometry within half an hour of that bin
-# and interpolate the p48 light curves onto that epoch
+# for each bin, plot the UVOT and/or LT photometry
+# and interpolate the p48 light curve onto that epoch
+# also round the dts to one decimal place
+uvdt = np.array([np.round(val,1) for val in uvdt])
+dt = np.array([np.round(val,1) for val in dt])
 
 for ii,dtbin in enumerate(dtbins):
     # choose the panel
@@ -94,28 +131,31 @@ for ii,dtbin in enumerate(dtbins):
     yvals = []
     eyvals = []
 
-    #UVOT
-    choose = np.abs(uvdt-dtbin)<0.05
-    for jj in np.arange(sum(choose)):
-        wl = bands[uvfilt[choose][jj]]
-        f = uvflux[choose][jj]*1E3
-        ef = uveflux[choose][jj]*1E3
-        xvals.append(wl)
-        yvals.append(f)
-        eyvals.append(ef)
-     
-    #LT
-    choose = np.logical_and(np.abs(dt-dtbin)<0.05, instr=='LT+IOO')
-    for jj in np.arange(sum(choose)):
-        wl = bands[filt[choose][jj]]
-        f,ef = toflux(mag[choose][jj],emag[choose][jj])
-        xvals.append(wl)
-        yvals.append(f)
-        eyvals.append(ef)
+    if dtbin < 15:
+        #Get UVOT photometry
+        choose = uvdt == dtbin
+        for jj in np.arange(sum(choose)):
+            wl = bands[uvfilt[choose][jj]]
+            f = uvflux[choose][jj]*1E3
+            ef = uveflux[choose][jj]*1E3
+            xvals.append(wl)
+            yvals.append(f)
+            eyvals.append(ef)
+    else:
+        #LT
+        choose = np.logical_and(dt == dtbin, instr=='LT+SPRAT')
+        for jj in np.arange(sum(choose)):
+            wl = bands[filt[choose][jj]]
+            f,ef = toflux(mag[choose][jj],emag[choose][jj])
+            xvals.append(wl)
+            yvals.append(f)
+            eyvals.append(ef)
 
-    #P48
-    for ztffilt in ['r','g','i']:
-        choose = np.logical_and(instr=='P48+ZTF', filt==ztffilt)        
+    #For all dtbins, interpolate P48 photometry
+    p48_rdt,p48_rmag,p48_remag,p48_gdt,p48_gmag,p48_gemag,p48_idt,p48_imag,p48_iemag = \
+            get_binned_p48(dt,mag,emag,filt,instr)
+
+
         ztfmag = np.interp(dtbin, dt[choose], mag[choose])
         # THIS ERROR BAR IS TEMPORARY
         f,ef = toflux(ztfmag,emag=0.1) 
