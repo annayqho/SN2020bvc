@@ -36,6 +36,12 @@ def get_opt_lc():
     filt = dat['filter']
     mag = dat['magpsf']
     emag = dat['sigmamagpsf']
+    
+    # Correct for instances where the emag is unreasonably small
+    # THIS IS A TEMP FIX, need to hear from Dan & Kirsty
+    emag = dat['sigmamagpsf']
+    emag[emag<0.03] = 0.03
+
     inst = dat['instrument']
     maglim = dat['limmag']
 

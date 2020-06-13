@@ -153,6 +153,9 @@ for ii,dtbin in enumerate(dtbins):
     print("%s +/- %s" %(L/1E42, eL/1E42))
 
     # Calculate the chi squared of the final fit
+    chisq = sum((yvals-bb_func(xvals*1E-8, T, R))**2/eyvals**2)
+    dof = len(yvals)-2
+    print(chisq, dof)
 
     # Plot the blackbody
     #xplot = np.linspace(2000,8000)
