@@ -91,7 +91,11 @@ def get_binned_p48(dt,mag,emag,filt,instr):
     rdt,rmag,remag = get_binned_p48_band(dt,mag,emag,filt,instr,'r')
     gdt,gmag,gemag = get_binned_p48_band(dt,mag,emag,filt,instr,'g')
     idt,imag,iemag = get_binned_p48_band(dt,mag,emag,filt,instr,'i')
-    return rdt,rmag,remag,gdt,gmag,gemag,idt,imag,iemag
+    dt_all = np.hstack((rdt, gdt, idt))
+    mag_all = np.hstack((rmag, gmag, imag))
+    emag_all = np.hstack((remag, gemag, iemag))
+    filt_all = np.hstack((['r']*len(rdt), ['g']*len(gdt), ['i']*len(idt)))
+    return dt_all,mag_all,emag_all,filt_all
 
 
 # Ultimately, here are the parameters I will measure
@@ -109,7 +113,7 @@ dt = t-t0
 fig,axarr = plt.subplots(3, 5, figsize=(8,5), sharex=True, sharey=True)
 
 # Define time bins
-dtbins = [0.76]
+dtbins = [0.76, 1.36, 1.8, 2.8]
 
 # for each bin, select photometry within 0.1d
 
@@ -121,7 +125,7 @@ for ii,dtbin in enumerate(dtbins):
     eyvals = []
 
     #Get UVOT photometry
-    choose = uvdt[np.abs(uvdt-dtbin)<0.1]
+    choose = np.abs(uvdt-dtbin)<0.1
     for jj in np.arange(sum(choose)):
         wl = bands[uvfilt[choose][jj]]
         f = uvflux[choose][jj]*1E3
@@ -130,37 +134,41 @@ for ii,dtbin in enumerate(dtbins):
         yvals.append(f)
         eyvals.append(ef)
     #LT
-    choose = np.logical_and(dt == dtbin, instr=='LT+SPRAT')
+    choose = np.logical_and(np.abs(dt-dtbin)<0.1, instr=='LT+SPRAT')
     for jj in np.arange(sum(choose)):
         wl = bands[filt[choose][jj]]
         f,ef = toflux(mag[choose][jj],emag[choose][jj])
         xvals.append(wl)
         yvals.append(f)
         eyvals.append(ef)
-
-    #For all dtbins, interpolate P48 photometry
-    p48_rdt,p48_rmag,p48_remag,p48_gdt,p48_gmag,p48_gemag,p48_idt,p48_imag,p48_iemag = \
-            get_binned_p48(dt,mag,emag,filt,instr)
-
-
-        ztfmag = np.interp(dtbin, dt[choose], mag[choose])
-        # THIS ERROR BAR IS TEMPORARY
-        f,ef = toflux(ztfmag,emag=0.1) 
-        xvals.append(bands[ztffilt])
+    #P48
+    dt_p48,mag_p48,emag_p48,filt_p48 = get_binned_p48(dt,mag,emag,filt,instr)
+    choose = np.abs(dt_p48-dtbin) < 0.1
+    for jj in np.arange(sum(choose)):
+        wl = bands[filt_p48[choose][jj]]
+        f,ef = toflux(mag_p48[choose][jj],emag_p48[choose][jj])
+        xvals.append(wl)
         yvals.append(f)
         eyvals.append(ef)
 
+    # Done loading photometry; now plot and measure bb
     xvals = np.array(xvals)
     yvals = np.array(yvals)
     eyvals = np.array(eyvals)
 
+    # Sort in order of wavelength
+    order = np.argsort(xvals)
+    xvals = xvals[order]
+    yvals = yvals[order]
+    eyvals = eyvals[order]
+
     ax.errorbar(xvals, yvals, yerr=eyvals, c='k', fmt='.')
-    txt = "$\Delta$t=" + str(np.round(dtbin,2))
+    txt = "$\Delta t \\approx $" + str(np.round(dtbin,1))
     ax.text(0.9, 0.9, txt, transform=ax.transAxes,
             horizontalalignment='right', verticalalignment='top')
 
     # Fit a blackbody 1000 times
-    nsim = 10
+    nsim = 600
     temps = np.zeros(nsim)
     radii = np.zeros(nsim)
     ysamples = np.zeros((nsim, len(xvals)))
@@ -197,11 +205,11 @@ for ii,dtbin in enumerate(dtbins):
     chisq = sum((yvals-bb_func(xvals*1E-8, T, R))**2/eyvals**2)
     dof = len(yvals)-2
     print(chisq, dof)
+    print(chisq/dof)
 
-    # Plot the blackbody
-    #xplot = np.linspace(2000,8000)
-    #yplot = bb_func(3E10/(xplot*1E-8), T, R)
-    #ax.plot(xplot,yplot,lw=0.5,alpha=1,c='k')
+    xplot = np.linspace(2000,8000)
+    yplot = bb_func(xplot*1E-8, T, R)
+    ax.plot(xplot,yplot,lw=0.5,alpha=1,c='Crimson')
 
 Lbol = np.array(Lbol)
 eLbol = np.array(eLbol)
