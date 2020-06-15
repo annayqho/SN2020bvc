@@ -79,7 +79,7 @@ def get_binned_p48_band(dt,mag,emag,filt,instr,use_filt='r'):
             dt_use.append(np.mean(dt[use]))
             ivar = 1/(emag[use])**2
             mag_use.append(sum(mag[use]*ivar)/sum(ivar))
-            emag_use.append(1/sqrt(sum(ivar)))
+            emag_use.append(1/np.sqrt(sum(ivar)))
     dt_use = np.array(dt_use)
     mag_use = np.array(mag_use)
     emag_use = np.array(emag_use)
@@ -113,7 +113,8 @@ dt = t-t0
 fig,axarr = plt.subplots(3, 5, figsize=(8,5), sharex=True, sharey=True)
 
 # Define time bins
-dtbins = [0.76, 1.36, 1.8, 2.8]
+dtbins = [0.76, 1.36, 1.8, 2.8, 3.8, 4.74, 5.78]
+bs = 0.15 # bin size
 
 # for each bin, select photometry within 0.1d
 
@@ -125,7 +126,7 @@ for ii,dtbin in enumerate(dtbins):
     eyvals = []
 
     #Get UVOT photometry
-    choose = np.abs(uvdt-dtbin)<0.1
+    choose = np.abs(uvdt-dtbin)<bs
     for jj in np.arange(sum(choose)):
         wl = bands[uvfilt[choose][jj]]
         f = uvflux[choose][jj]*1E3
@@ -134,7 +135,7 @@ for ii,dtbin in enumerate(dtbins):
         yvals.append(f)
         eyvals.append(ef)
     #LT
-    choose = np.logical_and(np.abs(dt-dtbin)<0.1, instr=='LT+SPRAT')
+    choose = np.logical_and(np.abs(dt-dtbin)<bs, instr=='LT+SPRAT')
     for jj in np.arange(sum(choose)):
         wl = bands[filt[choose][jj]]
         f,ef = toflux(mag[choose][jj],emag[choose][jj])
@@ -143,7 +144,7 @@ for ii,dtbin in enumerate(dtbins):
         eyvals.append(ef)
     #P48
     dt_p48,mag_p48,emag_p48,filt_p48 = get_binned_p48(dt,mag,emag,filt,instr)
-    choose = np.abs(dt_p48-dtbin) < 0.1
+    choose = np.abs(dt_p48-dtbin) < 0.5
     for jj in np.arange(sum(choose)):
         wl = bands[filt_p48[choose][jj]]
         f,ef = toflux(mag_p48[choose][jj],emag_p48[choose][jj])
@@ -168,7 +169,7 @@ for ii,dtbin in enumerate(dtbins):
             horizontalalignment='right', verticalalignment='top')
 
     # Fit a blackbody 1000 times
-    nsim = 600
+    nsim = 10
     temps = np.zeros(nsim)
     radii = np.zeros(nsim)
     ysamples = np.zeros((nsim, len(xvals)))
@@ -176,30 +177,37 @@ for ii,dtbin in enumerate(dtbins):
         ysamples[:,jj] = np.random.normal(loc=val,scale=eyvals[jj],size=nsim)
     for jj in np.arange(nsim):
         popt, pcov = curve_fit(
-                bb_func, xvals*1E-8, ysamples[jj], p0=[5000,1E14])
+                bb_func, xvals*1E-8, ysamples[jj], p0=[10000,1E14],
+                bounds=([2000,1E12],[50000, 1E17])) # must be positive
         temps[jj] = popt[0]
         radii[jj] = popt[1]
         xplot = np.linspace(2000,8000)
         yplot = bb_func(xplot*1E-8, popt[0], popt[1])
         ax.plot(xplot,yplot,lw=0.1,alpha=0.1)
     lums = 4*np.pi*radii**2 * (5.67E-5)*temps**4
-    T = np.mean(temps)
-    Teff.append(T)
-    eT = np.std(temps)
-    eTeff.append(eT)
-    R = np.mean(radii)
-    Rph.append(R)
-    eR = np.std(radii)
-    eRph.append(eR)
-    L = np.mean(lums)
-    Lbol.append(L)
-    eL = np.std(lums)
-    eLbol.append(eL)
 
+    # Sort results and calculate 16-to-84 percentile range
     print(dtbin)
-    print("%s +/- %s" %(T/1E3, eT/1E3))
-    print("%s +/- %s" %(R/1E14, eR/1E14))
-    print("%s +/- %s" %(L/1E42, eL/1E42))
+
+    nvals = len(temps)
+    start_ind = int(0.16*nvals)
+    end_ind = int(0.84*nvals)
+    temps = np.sort(temps)
+    T = np.median(temps)
+    low = T-temps[start_ind]
+    hi = temps[end_ind]-T
+    print("%s +%s -%s" %(T/1E3, hi/1E3, low/1E3))
+    radii = np.sort(radii)
+    R = np.median(radii)
+    low = R-radii[start_ind]
+    hi = radii[end_ind]-R
+    print("%s +%s -%s" %(R/1E14, hi/1E14, low/1E14))
+    lums = np.sort(lums)
+    L = np.median(lums)
+    low = L-lums[start_ind]
+    hi = lums[end_ind]-L
+    print("%s +%s -%s" %(L/1E42, hi/1E42, low/1E42))
+
 
     # Calculate the chi squared of the final fit
     chisq = sum((yvals-bb_func(xvals*1E-8, T, R))**2/eyvals**2)
