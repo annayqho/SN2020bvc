@@ -109,20 +109,9 @@ dt = t-t0
 fig,axarr = plt.subplots(3, 5, figsize=(8,5), sharex=True, sharey=True)
 
 # Define time bins
-# For dt < 11d, use Swift+UVOT epochs 
-# For dt > 11d, use epochs of LT photometry
-# In the paper, we only present photometry up to 30 days
-early_bins = np.logical_and(instr=='Swift+UVOT', dt<11)
-late_bins = np.logical_and(instr=='LT+IOO', dt>11)
-use = np.logical_or(early_bins, late_bins)
-# and round to one decimal place to group observations
-dtbins = np.unique(np.array([np.round(val,1) for val in dt[use]]))
+dtbins = [0.76]
 
-# for each bin, plot the UVOT and/or LT photometry
-# and interpolate the p48 light curve onto that epoch
-# also round the dts to one decimal place
-uvdt = np.array([np.round(val,1) for val in uvdt])
-dt = np.array([np.round(val,1) for val in dt])
+# for each bin, select photometry within 0.1d
 
 for ii,dtbin in enumerate(dtbins):
     # choose the panel
@@ -131,25 +120,23 @@ for ii,dtbin in enumerate(dtbins):
     yvals = []
     eyvals = []
 
-    if dtbin < 15:
-        #Get UVOT photometry
-        choose = uvdt == dtbin
-        for jj in np.arange(sum(choose)):
-            wl = bands[uvfilt[choose][jj]]
-            f = uvflux[choose][jj]*1E3
-            ef = uveflux[choose][jj]*1E3
-            xvals.append(wl)
-            yvals.append(f)
-            eyvals.append(ef)
-    else:
-        #LT
-        choose = np.logical_and(dt == dtbin, instr=='LT+SPRAT')
-        for jj in np.arange(sum(choose)):
-            wl = bands[filt[choose][jj]]
-            f,ef = toflux(mag[choose][jj],emag[choose][jj])
-            xvals.append(wl)
-            yvals.append(f)
-            eyvals.append(ef)
+    #Get UVOT photometry
+    choose = uvdt[np.abs(uvdt-dtbin)<0.1]
+    for jj in np.arange(sum(choose)):
+        wl = bands[uvfilt[choose][jj]]
+        f = uvflux[choose][jj]*1E3
+        ef = uveflux[choose][jj]*1E3
+        xvals.append(wl)
+        yvals.append(f)
+        eyvals.append(ef)
+    #LT
+    choose = np.logical_and(dt == dtbin, instr=='LT+SPRAT')
+    for jj in np.arange(sum(choose)):
+        wl = bands[filt[choose][jj]]
+        f,ef = toflux(mag[choose][jj],emag[choose][jj])
+        xvals.append(wl)
+        yvals.append(f)
+        eyvals.append(ef)
 
     #For all dtbins, interpolate P48 photometry
     p48_rdt,p48_rmag,p48_remag,p48_gdt,p48_gmag,p48_gemag,p48_idt,p48_imag,p48_iemag = \
