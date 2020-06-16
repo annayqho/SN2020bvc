@@ -70,11 +70,11 @@ def plot_lc():
 
         # for each panel, show the last non-detection from ATLAS (which was o-band)
         ax.arrow(
-                2458883.17-zp, 19.4, 0, 0.5, length_includes_head=True,
-                head_width=2, head_length=0.2, fc='k', ec='k', zorder=10)
+                2458883.17-zp, 19.4, 0, 1.0, length_includes_head=True,
+                head_width=2, head_length=0.4, fc='k', ec='k', zorder=10)
         # for each panel, show the r-band peak with a cross
         ax.scatter(
-                2458896-zp, 16.3, marker='+', c='r', zorder=10) 
+                2458897-zp, 16.3, marker='+', c='r', zorder=10) 
 
         ax.yaxis.set_tick_params(labelsize=14)
         ax.xaxis.set_tick_params(labelsize=14)
@@ -96,10 +96,10 @@ def plot_lc():
             usecol = 'k'
             wid = 0.5
         ax.text(
-                0.9, 0.9, "$%s$" %use_f, 
+                0.04, 0.04, "$%s$" %use_f, 
                 fontsize=14, transform=ax.transAxes,
-                horizontalalignment='right',
-                verticalalignment='top',
+                horizontalalignment='left',
+                verticalalignment='bottom',
                 bbox=dict(
                     boxstyle="round", fc='white', ec=usecol, 
                     lw=wid, alpha=1.0, pad=0.4))
@@ -108,8 +108,8 @@ def plot_lc():
     # Final reconfiguring
     axarr.reshape(-1)[-1].set_visible(False)
     plt.subplots_adjust(hspace=0, wspace=0)
-    ax.set_xlim(-5, 35)
-    ax.set_ylim(15, 22.5)
+    ax.set_xlim(-2, 32)
+    ax.set_ylim(16, 22.5)
     ax.invert_yaxis()
     fig.text(0.5, 0.04, 
         r"Days since $t_0=$JD 2458370.6473 (UT 2018 Sept 09.15)", 
