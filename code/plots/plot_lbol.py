@@ -1,47 +1,54 @@
 """ Plot the bolometric light curve 
 and show the best-fit explosion parameters """
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rc
 import sys
 rc("font", family="serif")
 rc("text", usetex=True)
-sys.path.append("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/code")
-from arnett import lph,lph_khatami
+sys.path.append("/Users/annaho/Github/Arnett")
+from fit_arnett import *
 
 
+# Load the bolometric light curve
+dat = np.loadtxt("sn20bvc_bol_lc.txt")
+dt = dat[:,0]
+lbol = dat[:,1]
+lbol_hi = dat[:,2]
+lbol_lo = dat[:,3]
+elbol = []
+# Make the uncertainty symmetric for curve_fit
+for ii in np.arange(len(lbol_hi)):
+    elbol.append(max(lbol_hi[ii], np.abs(lbol_lo[ii])))
+elbol = np.array(elbol)
+
+# Fit the nickel-decay model
+popt, pcov = fit(dt, lbol, elbol, plot=True)
+mni = popt[0]
+tdiff = popt[1]
+
+# Plot the light curve
 fig,ax = plt.subplots(1,1,figsize=(6,4))
-dt = np.array(
-        [0.67, 1.36, 2.88, 3.81, 4.61, 6.27, 9.09, 10.86, 15.49, 26.51, 29.48])
-lbol = np.array(
-        [5.6, 4.97, 2.26, 1.98, 2.62, 2.95, 3.50, 3.67, 2.85, 2.19, 1.85])
-elbol = np.array(
-        [0.2, 0.15, 0.12, 0.07, 0.15, 0.15, 0.13, 0.09, 0.08, 0.06, 0.05])
-rph = np.array(
-        [5.1, 4.61, 8.25, 8.60, 9.80, 11.49, 14.18, 12.06, 19.32, 17.67, 17.05])
-plt.errorbar(dt/1.02507, lbol*1E42, yerr=elbol*1E42, c='k', fmt='o',
+plt.errorbar(dt/1.02507, lbol, yerr=[lbol_lo, lbol_hi], c='k', fmt='o',
         mec='k', mfc='grey', ms=10)
 
 # make the first measurement a lower limit
 plt.arrow(
-        0.67/1.02507, 5.6E42, 0, 2E42, 
+        dt[0]/1.02507, 5.6E42, 0, 2E42, 
         length_includes_head=True, head_length=5E41, head_width=0.1, color='k')
 
 # Shock-cooling model
-re = 1E13
-re = 1E14
+Re = 3E12
 ve = 0.1*3E10
-te = re/ve
-tp = 0.6*86400
-Re = 4E12
+te = Re/ve
+tp = 0.3*86400
 Me = 1E-2 * 2E33
 Ee = Me*ve**2
 
 tplot = np.linspace(0.01,40,1000)
 t = tplot*86400
-#lplot_sc = ve*Re*Me/(4*t**2)
-
-lplot_sc = (te*Ee/(tp**2))*np.exp(-t*(t+2*te)/(2*tp**2))
+lplot_sc = ve*Re*Me/(4*t**2)
 
 plt.plot(
         tplot, lplot_sc, lw=1, ls=':', c='#e55c30', 
@@ -49,12 +56,12 @@ plt.plot(
 
 # Radioactive-decay model
 tplot = np.linspace(0.01,40,1000)
-lplot_rd_kh = np.array([lph_khatami(tval) for tval in tplot])
-plt.plot(tplot, lplot_rd_kh, lw=1, ls='--', c='#e55c30',
+lplot_rd = lph(tplot, mni, tdiff)
+plt.plot(tplot, lplot_rd, lw=1, ls='--', c='#e55c30',
         label="Radioactive decay (RD)")
 
 # Sum
-lplot = lplot_sc+lplot_rd_kh
+lplot = lplot_sc+lplot_rd
 plt.plot(tplot, lplot, lw=1, ls='-', c='k', label="SC+RD")
 
 plt.xlabel("Rest-frame days since last non-detection", fontsize=16)

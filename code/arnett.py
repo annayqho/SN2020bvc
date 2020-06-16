@@ -3,20 +3,20 @@ Valenti+ 2008 """
 import numpy as np
 from scipy.integrate import quad
 
-
+# CONSTANTS
 eni = 3.90E10
 eco = 6.78E9
 tni = 8.8
 tco = 113.6
-tm = 8
+tm = 13
 y = tm/(2*tni)
 s = (tm*(tco-tni)/(2*tco*tni))
-mni = 0.11*2E33
+mni = 0.16*2E33
 B = 9/8
 
 
 def a(z):
-    return 2*z*np.exp(-2*z*y+z**2)
+    return 2*z*np.exp(-2*z*y + z**2)
 
 def b(z):
     return 2*z*np.exp(-2*z*y+2*z*s+z**2)
@@ -27,6 +27,7 @@ def lph(t):
 
 def c(z):
     return z*((eni-eco)*np.exp(-z/tni)+eco*np.exp(-z/tco))*np.exp((z/tm)**2)
+
 
 def lph_khatami(t):
     return (2*mni/tm**2)*np.exp(-(t/tm)**2) * \
