@@ -56,7 +56,6 @@ def get_opt_lc():
 
 
 def get_uv_lc():
-    # How do I correct these for Galactic extinction?
     uvdat = ascii.read("../../data/UVOT_hostsub.ascii")
     uvt = uvdat['MJD']+2400000.5
     uvdt = uvt-t0
@@ -71,4 +70,4 @@ def get_uv_lc():
         factor = 10**(ext[f]/2.5)
         print(factor)
         uvflux_corr[choose] = uvflux[choose] * factor
-    return uvdt,uvfilt,uvflux,uveflux
+    return uvdt,uvfilt,uvflux_corr,uveflux_corr

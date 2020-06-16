@@ -63,7 +63,12 @@ def plot_inset():
 def merge_lc():
     # get optical light curves 
     t, mag, emag, maglim, filt, inst = get_opt_lc()
-    dt = jd-zp
+    dt = t-zp
+    choose = emag < 99
+    dt = dt[choose]
+    mag = mag[choose]
+    emag = emag[choose]
+    filt = filt[choose]
 
     # add the UV light curves
     add_dt, add_filt, fnu_mjy, efnu_mjy = get_uv_lc()
@@ -148,8 +153,7 @@ def plot_lc():
     # Final reconfiguring
     axarr.reshape(-1)[-1].set_visible(False)
     plt.subplots_adjust(hspace=0, wspace=0)
-    #ax.set_xlim(1,1)
-    ax.set_xlim(-5, 70)
+    ax.set_xlim(-5, 35)
     ax.set_ylim(15, 21)
     ax.invert_yaxis()
     fig.text(0.5, 0.04, 
@@ -158,8 +162,8 @@ def plot_lc():
     fig.text(0.04, 0.5, 'Apparent Mag (AB)', fontsize=16, rotation='vertical')
     #fig.text(0.9, 0.5, 'Absolute Mag', fontsize=16, rotation=270)
 
-    plt.savefig("lc.eps", format='eps', dpi=1000)
-    #plt.show()
+    #plt.savefig("lc.eps", format='eps', dpi=1000)
+    plt.show()
 
 
 if __name__=="__main__":

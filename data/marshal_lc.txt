@@ -1,0 +1,262 @@
+#date,jdobs,filter,absmag,magpsf,sigmamagpsf,limmag,instrument,programid,reducedby,refsys,issub,isdiffpos
+"2020 Jan 05",2458854.0274,"g", 99.0, 99.0,99.0, 20.76,"P48+ZTF","1","None","None",True,True
+"2020 Jan 05",2458854.0549,"r", 99.0, 99.0,99.0, 20.65,"P48+ZTF","1","None","None",True,True
+"2020 Jan 07",2458855.9083,"i", 99.0, 99.0,99.0, 19.26,"P48+ZTF","2","None","None",True,True
+"2020 Jan 07",2458855.9336,"g", 99.0, 99.0,99.0, 19.40,"P48+ZTF","2","None","None",True,True
+"2020 Jan 07",2458855.9546,"g", 99.0, 99.0,99.0, 19.40,"P48+ZTF","2","None","None",True,True
+"2020 Jan 07",2458856.0455,"r", 99.0, 99.0,99.0, 20.53,"P48+ZTF","2","None","None",True,True
+"2020 Jan 08",2458856.8988,"g", 99.0, 99.0,99.0, 19.31,"P48+ZTF","2","None","None",True,True
+"2020 Jan 08",2458856.9030,"r", 99.0, 99.0,99.0, 19.84,"P48+ZTF","2","None","None",True,True
+"2020 Jan 08",2458857.0576,"g", 99.0, 99.0,99.0, 20.64,"P48+ZTF","1","None","None",True,True
+"2020 Jan 08",2458857.0730,"r", 99.0, 99.0,99.0, 20.29,"P48+ZTF","1","None","None",True,True
+"2020 Jan 08",2458857.0739,"r", 99.0, 99.0,99.0, 20.28,"P48+ZTF","2","None","None",True,True
+"2020 Jan 11",2458859.9680,"r", 99.0, 99.0,99.0, 19.62,"P48+ZTF","1","None","None",True,True
+"2020 Jan 12",2458860.8837,"r", 99.0, 99.0,99.0, 18.91,"P48+ZTF","2","None","None",True,True
+"2020 Jan 13",2458861.9076,"i", 99.0, 99.0,99.0, 19.19,"P48+ZTF","2","None","None",True,True
+"2020 Jan 13",2458861.9309,"i", 99.0, 99.0,99.0, 19.38,"P48+ZTF","2","None","None",True,True
+"2020 Jan 13",2458861.9914,"g", 99.0, 99.0,99.0, 19.23,"P48+ZTF","2","None","None",True,True
+"2020 Jan 13",2458862.0185,"g", 99.0, 99.0,99.0, 19.33,"P48+ZTF","2","None","None",True,True
+"2020 Jan 14",2458862.8883,"r", 99.0, 99.0,99.0, 19.16,"P48+ZTF","2","None","None",True,True
+"2020 Jan 14",2458862.9051,"r", 99.0, 99.0,99.0, 19.15,"P48+ZTF","2","None","None",True,True
+"2020 Jan 14",2458862.9774,"g", 99.0, 99.0,99.0, 19.58,"P48+ZTF","2","None","None",True,True
+"2020 Jan 14",2458862.9950,"g", 99.0, 99.0,99.0, 19.78,"P48+ZTF","2","None","None",True,True
+"2020 Jan 14",2458863.0418,"i", 99.0, 99.0,99.0, 19.97,"P48+ZTF","2","None","None",True,True
+"2020 Jan 14",2458863.0468,"i", 99.0, 99.0,99.0, 20.24,"P48+ZTF","2","None","None",True,True
+"2020 Jan 15",2458863.9264,"g", 99.0, 99.0,99.0, 19.55,"P48+ZTF","2","None","None",True,True
+"2020 Jan 15",2458863.9510,"g", 99.0, 99.0,99.0, 19.59,"P48+ZTF","2","None","None",True,True
+"2020 Jan 15",2458863.9534,"g", 99.0, 99.0,99.0, 19.64,"P48+ZTF","1","None","None",True,True
+"2020 Jan 15",2458863.9883,"i", 99.0, 99.0,99.0, 20.30,"P48+ZTF","2","None","None",True,True
+"2020 Jan 15",2458864.0406,"i", 99.0, 99.0,99.0, 20.42,"P48+ZTF","2","None","None",True,True
+"2020 Jan 16",2458864.9321,"g", 99.0, 99.0,99.0, 19.71,"P48+ZTF","2","None","None",True,True
+"2020 Jan 16",2458864.9703,"g", 99.0, 99.0,99.0, 20.04,"P48+ZTF","2","None","None",True,True
+"2020 Jan 16",2458864.9863,"r", 99.0, 99.0,99.0, 20.26,"P48+ZTF","2","None","None",True,True
+"2020 Jan 16",2458865.0036,"r", 99.0, 99.0,99.0, 19.06,"P48+ZTF","2","None","None",True,True
+"2020 Jan 16",2458865.0613,"i", 99.0, 99.0,99.0, 20.45,"P48+ZTF","2","None","None",True,True
+"2020 Jan 19",2458867.9364,"g", 99.0, 99.0,99.0, 20.22,"P48+ZTF","2","None","None",True,True
+"2020 Jan 19",2458867.9557,"g", 99.0, 99.0,99.0, 20.40,"P48+ZTF","2","None","None",True,True
+"2020 Jan 19",2458867.9870,"r", 99.0, 99.0,99.0, 20.27,"P48+ZTF","2","None","None",True,True
+"2020 Jan 23",2458871.9458,"g", 99.0, 99.0,99.0, 20.33,"P48+ZTF","2","None","None",True,True
+"2020 Jan 23",2458871.9742,"g", 99.0, 99.0,99.0, 20.36,"P48+ZTF","2","None","None",True,True
+"2020 Jan 23",2458872.0194,"r", 99.0, 99.0,99.0, 20.19,"P48+ZTF","2","None","None",True,True
+"2020 Jan 23",2458872.0382,"r", 99.0, 99.0,99.0, 20.16,"P48+ZTF","2","None","None",True,True
+"2020 Jan 23",2458872.0568,"i", 99.0, 99.0,99.0, 19.95,"P48+ZTF","2","None","None",True,True
+"2020 Jan 24",2458872.9351,"g", 99.0, 99.0,99.0, 20.67,"P48+ZTF","2","None","None",True,True
+"2020 Jan 24",2458872.9479,"g", 99.0, 99.0,99.0, 19.99,"P48+ZTF","1","None","None",True,True
+"2020 Jan 24",2458873.0200,"i", 99.0, 99.0,99.0, 19.96,"P48+ZTF","2","None","None",True,True
+"2020 Jan 24",2458873.0259,"i", 99.0, 99.0,99.0, 20.28,"P48+ZTF","2","None","None",True,True
+"2020 Jan 24",2458873.0539,"r", 99.0, 99.0,99.0, 20.42,"P48+ZTF","1","None","None",True,True
+"2020 Jan 24",2458873.0549,"r", 99.0, 99.0,99.0, 20.45,"P48+ZTF","2","None","None",True,True
+"2020 Jan 24",2458873.0709,"r", 99.0, 99.0,99.0, 20.41,"P48+ZTF","2","None","None",True,True
+"2020 Jan 27",2458875.9954,"g", 99.0, 99.0,99.0, 20.66,"P48+ZTF","1","None","None",True,True
+"2020 Jan 27",2458876.0523,"r", 99.0, 99.0,99.0, 20.30,"P48+ZTF","1","None","None",True,True
+"2020 Jan 28",2458876.9449,"i", 99.0, 99.0,99.0, 20.50,"P48+ZTF","2","None","None",True,True
+"2020 Jan 28",2458876.9998,"i", 99.0, 99.0,99.0, 20.61,"P48+ZTF","2","None","None",True,True
+"2020 Jan 28",2458877.0207,"g", 99.0, 99.0,99.0, 20.81,"P48+ZTF","2","None","None",True,True
+"2020 Jan 28",2458877.0246,"g", 99.0, 99.0,99.0, 20.81,"P48+ZTF","2","None","None",True,True
+"2020 Jan 28",2458877.0540,"r", 99.0, 99.0,99.0, 20.76,"P48+ZTF","2","None","None",True,True
+"2020 Jan 28",2458877.0688,"r", 99.0, 99.0,99.0, 20.65,"P48+ZTF","2","None","None",True,True
+"2020 Jan 29",2458877.9446,"i", 99.0, 99.0,99.0, 20.32,"P48+ZTF","2","None","None",True,True
+"2020 Jan 29",2458877.9782,"i", 99.0, 99.0,99.0, 20.66,"P48+ZTF","2","None","None",True,True
+"2020 Jan 29",2458877.9979,"r", 99.0, 99.0,99.0, 20.62,"P48+ZTF","2","None","None",True,True
+"2020 Jan 29",2458878.0130,"r", 99.0, 99.0,99.0, 20.67,"P48+ZTF","2","None","None",True,True
+"2020 Jan 29",2458878.0397,"g", 99.0, 99.0,99.0, 20.43,"P48+ZTF","2","None","None",True,True
+"2020 Jan 29",2458878.0525,"g", 99.0, 99.0,99.0, 20.43,"P48+ZTF","2","None","None",True,True
+"2020 Jan 30",2458878.9470,"i", 99.0, 99.0,99.0, 20.11,"P48+ZTF","2","None","None",True,True
+"2020 Jan 30",2458878.9785,"i", 99.0, 99.0,99.0, 20.16,"P48+ZTF","2","None","None",True,True
+"2020 Jan 30",2458879.0059,"g", 99.0, 99.0,99.0, 20.42,"P48+ZTF","2","None","None",True,True
+"2020 Jan 30",2458879.0268,"g", 99.0, 99.0,99.0, 20.48,"P48+ZTF","2","None","None",True,True
+"2020 Jan 30",2458879.0277,"g", 99.0, 99.0,99.0, 20.46,"P48+ZTF","1","None","None",True,True
+"2020 Jan 30",2458879.0536,"r", 99.0, 99.0,99.0, 20.21,"P48+ZTF","2","None","None",True,True
+"2020 Jan 30",2458879.0545,"r", 99.0, 99.0,99.0, 20.23,"P48+ZTF","1","None","None",True,True
+"2020 Jan 30",2458879.0689,"r", 99.0, 99.0,99.0, 20.17,"P48+ZTF","2","None","None",True,True
+"2020 Jan 31",2458879.9346,"i", 99.0, 99.0,99.0, 20.03,"P48+ZTF","2","None","None",True,True
+"2020 Jan 31",2458879.9452,"i", 99.0, 99.0,99.0, 19.92,"P48+ZTF","2","None","None",True,True
+"2020 Jan 31",2458879.9856,"g", 99.0, 99.0,99.0, 20.38,"P48+ZTF","2","None","None",True,True
+"2020 Jan 31",2458880.0180,"g", 99.0, 99.0,99.0, 20.52,"P48+ZTF","2","None","None",True,True
+"2020 Jan 31",2458880.0354,"r", 99.0, 99.0,99.0, 19.45,"P48+ZTF","2","None","None",True,True
+"2020 Jan 31",2458880.0521,"r", 99.0, 99.0,99.0, 19.60,"P48+ZTF","2","None","None",True,True
+"2020 Feb 01",2458880.9783,"g", 99.0, 99.0,99.0, 20.69,"P48+ZTF","2","None","None",True,True
+"2020 Feb 01",2458880.9976,"g", 99.0, 99.0,99.0, 20.70,"P48+ZTF","2","None","None",True,True
+"2020 Feb 01",2458881.0045,"r", 99.0, 99.0,99.0, 20.57,"P48+ZTF","2","None","None",True,True
+"2020 Feb 01",2458881.0416,"r", 99.0, 99.0,99.0, 20.61,"P48+ZTF","2","None","None",True,True
+"2020 Feb 01",2458881.0680,"i", 99.0, 99.0,99.0, 20.49,"P48+ZTF","2","None","None",True,True
+"2020 Feb 02",2458881.9944,"g", 99.0, 99.0,99.0, 20.77,"P48+ZTF","1","None","None",True,True
+"2020 Feb 02",2458882.0568,"r", 99.0, 99.0,99.0, 20.67,"P48+ZTF","1","None","None",True,True
+"2020 Feb 04",2458883.8406,"i", -17.67, 17.48,0.05, 19.46,"P48+ZTF","2","None","None",True,True
+"2020 Feb 04",2458883.8901,"i", -17.65, 17.50,0.04, 19.84,"P48+ZTF","2","None","None",True,True
+"2020 Feb 04",2458883.9245,"u", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 04",2458883.9763,"g", -18.24, 16.90,0.04, 20.19,"P48+ZTF","2","None","None",True,True
+"2020 Feb 04",2458883.9966,"g", -18.24, 16.91,0.05, 20.33,"P48+ZTF","2","None","None",True,True
+"2020 Feb 04",2458884.0240,"r", -17.91, 17.24,0.04, 20.05,"P48+ZTF","2","None","None",True,True
+"2020 Feb 05",2458884.6362,"g", -17.77, 17.38,0.01, 21.81,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Feb 05",2458884.8601,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 05",2458884.8618,"g", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 05",2458884.8634,"i", -17.61, 17.54,0.03, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 05",2458884.8651,"u", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 05",2458884.8889,"i", -17.45, 17.70,0.05, 19.89,"P48+ZTF","2","None","None",True,True
+"2020 Feb 05",2458884.9109,"i", -17.48, 17.67,0.04, 19.94,"P48+ZTF","2","None","None",True,True
+"2020 Feb 05",2458884.9212,"g", -17.67, 17.48,0.06, 19.58,"P48+ZTF","2","None","None",True,True
+"2020 Feb 05",2458884.9690,"g", -17.69, 17.46,0.05, 20.09,"P48+ZTF","2","None","None",True,True
+"2020 Feb 05",2458884.9754,"g", -17.70, 17.45,0.05, 20.21,"P48+ZTF","1","None","None",True,True
+"2020 Feb 05",2458885.0473,"r", -17.52, 17.63,0.06, 20.04,"P48+ZTF","1","None","None",True,True
+"2020 Feb 05",2458885.0533,"r", -17.53, 17.62,0.04, 20.24,"P48+ZTF","2","None","None",True,True
+"2020 Feb 06",2458885.8363,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 06",2458885.8380,"g", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 06",2458885.8414,"u", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 06",2458885.8431,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 06",2458885.8891,"i", -17.44, 17.71,0.06, 19.40,"P48+ZTF","2","None","None",True,True
+"2020 Feb 06",2458885.9111,"i", -17.46, 17.69,0.04, 19.68,"P48+ZTF","2","None","None",True,True
+"2020 Feb 06",2458885.9290,"g", -17.67, 17.48,0.05, 19.51,"P48+ZTF","2","None","None",True,True
+"2020 Feb 06",2458885.9774,"g", -17.63, 17.52,0.07, 19.81,"P48+ZTF","2","None","None",True,True
+"2020 Feb 06",2458886.0211,"r", -17.59, 17.56,0.04, 20.33,"P48+ZTF","2","None","None",True,True
+"2020 Feb 06",2458886.0380,"r", -17.58, 17.57,0.05, 20.47,"P48+ZTF","2","None","None",True,True
+"2020 Feb 07",2458886.8539,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 07",2458886.8926,"i", -17.59, 17.56,0.04, 20.25,"P48+ZTF","2","None","None",True,True
+"2020 Feb 07",2458886.9112,"i", -17.59, 17.56,0.03, 20.28,"P48+ZTF","2","None","None",True,True
+"2020 Feb 07",2458886.9337,"r", -17.90, 17.25,0.01, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 07",2458886.9354,"g", -17.73, 17.42,0.02, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 07",2458886.9370,"i", -17.64, 17.51,0.01, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 07",2458886.9387,"u", 99.0, 99.0,99.0, 17.90,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 07",2458886.9768,"g", -17.78, 17.37,0.04, 19.95,"P48+ZTF","2","None","None",True,True
+"2020 Feb 07",2458886.9941,"g", -17.77, 17.37,0.05, 20.02,"P48+ZTF","2","None","None",True,True
+"2020 Feb 07",2458887.0229,"r", -17.81, 17.34,0.05, 20.18,"P48+ZTF","2","None","None",True,True
+"2020 Feb 07",2458887.0506,"r", -17.77, 17.38,0.04, 20.24,"P48+ZTF","2","None","None",True,True
+"2020 Feb 08",2458887.8208,"i", -17.78, 17.37,0.05, 19.80,"P48+ZTF","2","None","None",True,True
+"2020 Feb 08",2458887.9290,"g", -18.00, 17.15,0.04, 19.36,"P48+ZTF","2","None","None",True,True
+"2020 Feb 08",2458887.9680,"g", -17.97, 17.18,0.05, 19.68,"P48+ZTF","1","None","None",True,True
+"2020 Feb 08",2458887.9751,"g", -17.96, 17.18,0.05, 19.63,"P48+ZTF","2","None","None",True,True
+"2020 Feb 08",2458888.0039,"r", -18.02, 17.12,0.05, 19.92,"P48+ZTF","2","None","None",True,True
+"2020 Feb 08",2458888.0305,"r", -18.02, 17.13,0.05, 20.02,"P48+ZTF","2","None","None",True,True
+"2020 Feb 08",2458888.0314,"r", -18.05, 17.10,0.04, 20.01,"P48+ZTF","1","None","None",True,True
+"2020 Feb 09",2458888.8553,"r", -18.29, 16.86,0.02, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 09",2458888.8570,"g", -18.09, 17.06,0.03, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 09",2458888.8600,"i", -17.95, 17.20,0.04, 19.71,"P48+ZTF","2","None","None",True,True
+"2020 Feb 09",2458888.8603,"u", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 09",2458888.8620,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 09",2458888.8928,"i", -17.97, 17.18,0.05, 19.68,"P48+ZTF","2","None","None",True,True
+"2020 Feb 09",2458888.9746,"r", -18.22, 16.93,0.04, 19.32,"P48+ZTF","2","None","None",True,True
+"2020 Feb 09",2458888.9892,"r", -18.22, 16.92,0.05, 19.39,"P48+ZTF","2","None","None",True,True
+"2020 Feb 09",2458889.0373,"g", -18.15, 17.00,0.05, 18.80,"P48+ZTF","2","None","None",True,True
+"2020 Feb 11",2458890.8717,"i", -18.18, 16.97,0.03, 19.60,"P48+ZTF","2","None","None",True,True
+"2020 Feb 11",2458890.8941,"i", -18.17, 16.98,0.03, 19.61,"P48+ZTF","2","None","None",True,True
+"2020 Feb 11",2458890.9565,"r", -18.45, 16.70,0.04, 19.06,"P48+ZTF","2","None","None",True,True
+"2020 Feb 11",2458890.9747,"r", -18.48, 16.67,0.06, 19.10,"P48+ZTF","2","None","None",True,True
+"2020 Feb 11",2458890.9756,"r", -18.48, 16.67,0.04, 19.19,"P48+ZTF","1","None","None",True,True
+"2020 Feb 11",2458891.0276,"g", -18.33, 16.82,0.05, 19.08,"P48+ZTF","2","None","None",True,True
+"2020 Feb 11",2458891.0588,"g", -18.32, 16.83,0.05, 19.05,"P48+ZTF","1","None","None",True,True
+"2020 Feb 11",2458891.0597,"g", -18.32, 16.83,0.05, 18.90,"P48+ZTF","2","None","None",True,True
+"2020 Feb 12",2458891.8937,"i", -18.27, 16.88,0.03, 19.70,"P48+ZTF","2","None","None",True,True
+"2020 Feb 12",2458891.9157,"i", -18.23, 16.92,0.03, 19.89,"P48+ZTF","2","None","None",True,True
+"2020 Feb 12",2458891.9552,"g", -18.36, 16.79,0.04, 19.61,"P48+ZTF","2","None","None",True,True
+"2020 Feb 12",2458891.9626,"g", -18.37, 16.78,0.04, 19.67,"P48+ZTF","2","None","None",True,True
+"2020 Feb 13",2458892.8240,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 13",2458892.8651,"g", -18.39, 16.76,0.05, 19.35,"P48+ZTF","2","None","None",True,True
+"2020 Feb 13",2458892.8832,"g", -18.38, 16.77,0.04, 19.67,"P48+ZTF","2","None","None",True,True
+"2020 Feb 13",2458892.9559,"i", -18.28, 16.87,0.03, 20.32,"P48+ZTF","2","None","None",True,True
+"2020 Feb 13",2458893.0181,"r", -18.64, 16.51,0.04, 20.05,"P48+ZTF","2","None","None",True,True
+"2020 Feb 13",2458893.0340,"r", -18.65, 16.50,0.04, 20.05,"P48+ZTF","2","None","None",True,True
+"2020 Feb 14",2458893.9023,"i", -18.31, 16.84,0.03, 20.31,"P48+ZTF","2","None","None",True,True
+"2020 Feb 14",2458893.9715,"g", -18.40, 16.75,0.04, 20.13,"P48+ZTF","2","None","None",True,True
+"2020 Feb 14",2458893.9965,"g", -18.40, 16.75,0.04, 20.04,"P48+ZTF","2","None","None",True,True
+"2020 Feb 14",2458893.9974,"g", -18.39, 16.75,0.04, 20.19,"P48+ZTF","1","None","None",True,True
+"2020 Feb 14",2458894.0210,"r", -18.69, 16.46,0.04, 20.29,"P48+ZTF","2","None","None",True,True
+"2020 Feb 14",2458894.0338,"r", -18.67, 16.48,0.03, 20.30,"P48+ZTF","2","None","None",True,True
+"2020 Feb 15",2458894.8320,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 15",2458894.8388,"g", -18.39, 16.76,0.04, 20.11,"P48+ZTF","2","None","None",True,True
+"2020 Feb 15",2458894.9351,"i", -18.35, 16.79,0.03, 20.50,"P48+ZTF","2","None","None",True,True
+"2020 Feb 15",2458894.9554,"i", -18.37, 16.78,0.03, 20.46,"P48+ZTF","2","None","None",True,True
+"2020 Feb 15",2458895.0153,"r", -18.71, 16.43,0.04, 20.42,"P48+ZTF","2","None","None",True,True
+"2020 Feb 15",2458895.0350,"r", -18.73, 16.42,0.04, 20.38,"P48+ZTF","2","None","None",True,True
+"2020 Feb 15",2458895.0468,"g", -18.37, 16.78,0.03, 20.35,"P48+ZTF","2","None","None",True,True
+"2020 Feb 16",2458895.9968,"r", 99.0, 99.0,99.0, 20.33,"P48+ZTF","2","None","None",True,True
+"2020 Feb 16",2458895.9968,"r", -18.75, 16.40,0.03, 20.33,"P48+ZTF","2","None","None",True,True
+"2020 Feb 16",2458895.9972,"r", -18.77, 16.38,0.04, 20.33,"P48+ZTF","3","None","None",True,True
+"2020 Feb 17",2458896.8318,"i", -18.39, 16.76,0.03, 20.41,"P48+ZTF","2","None","None",True,True
+"2020 Feb 17",2458896.8934,"i", -18.41, 16.74,0.03, 20.41,"P48+ZTF","2","None","None",True,True
+"2020 Feb 19",2458898.6568,"r", -18.78, 16.37,0.00, 22.59,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Feb 19",2458898.6576,"i", -18.35, 16.80,0.00, 22.59,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Feb 19",2458898.6585,"g", -18.32, 16.83,0.00, 22.84,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Feb 19",2458898.6593,"u", -16.38, 18.77,0.04, 21.47,"LT+IOO","None","Taggart Automated Pipeline","SDSS",True,True
+"2020 Feb 19",2458898.9351,"g", 99.0, 99.0,99.0, 20.97,"P48+ZTF","2","None","None",True,True
+"2020 Feb 19",2458898.9450,"g", -18.14, 17.00,0.04, 21.08,"P48+ZTF","2","None","None",True,True
+"2020 Feb 19",2458898.9518,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 19",2458898.9558,"g", -18.17, 16.98,0.03, 21.07,"P48+ZTF","1","None","None",True,True
+"2020 Feb 19",2458898.9955,"r", -18.72, 16.43,0.03, 20.83,"P48+ZTF","2","None","None",True,True
+"2020 Feb 19",2458899.0119,"r", -18.71, 16.44,0.04, 20.83,"P48+ZTF","1","None","None",True,True
+"2020 Feb 19",2458899.0128,"r", -18.75, 16.40,0.04, 20.78,"P48+ZTF","2","None","None",True,True
+"2020 Feb 19",2458899.0335,"r", -18.74, 16.41,0.03, 20.79,"P48+ZTF","2","None","None",True,True
+"2020 Feb 19",2458899.0463,"g", -18.14, 17.01,0.04, 21.02,"P48+ZTF","2","None","None",True,True
+"2020 Feb 20",2458899.9051,"g", -18.15, 17.00,0.04, 20.66,"P48+ZTF","2","None","None",True,True
+"2020 Feb 20",2458899.9351,"g", -18.13, 17.02,0.04, 20.67,"P48+ZTF","2","None","None",True,True
+"2020 Feb 20",2458899.9828,"r", -18.76, 16.39,0.04, 20.49,"P48+ZTF","2","None","None",True,True
+"2020 Feb 20",2458900.0057,"r", -18.74, 16.41,0.03, 20.63,"P48+ZTF","2","None","None",True,True
+"2020 Feb 20",2458900.0302,"g", -18.12, 17.03,0.05, 20.85,"P48+ZTF","2","None","None",True,True
+"2020 Feb 21",2458900.8929,"g", -18.09, 17.06,0.05, 20.56,"P48+ZTF","2","None","None",True,True
+"2020 Feb 21",2458900.9279,"r", 99.0, 99.0,99.0, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 21",2458900.9467,"r", -18.84, 16.31,0.04, 19.01,"P48+ZTF","2","None","None",True,True
+"2020 Feb 21",2458900.9499,"r", -18.72, 16.43,0.01, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 21",2458900.9516,"g", -18.09, 17.06,0.02, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 21",2458900.9532,"i", -18.47, 16.68,0.02, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 21",2458900.9549,"u", 99.0, 99.0,99.0, 19.10,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 21",2458900.9787,"r", -18.74, 16.40,0.03, 20.51,"P48+ZTF","2","None","None",True,True
+"2020 Feb 21",2458900.9938,"r", -18.76, 16.39,0.04, 19.74,"P48+ZTF","2","None","None",True,True
+"2020 Feb 21",2458901.0289,"g", -18.09, 17.06,0.07, 19.70,"P48+ZTF","2","None","None",True,True
+"2020 Feb 22",2458901.9137,"r", -18.72, 16.43,0.03, 20.43,"P48+ZTF","2","None","None",True,True
+"2020 Feb 22",2458901.9335,"r", -18.71, 16.44,0.03, 20.71,"P48+ZTF","2","None","None",True,True
+"2020 Feb 22",2458901.9546,"r", -18.73, 16.42,0.03, 20.38,"P48+ZTF","2","None","None",True,True
+"2020 Feb 22",2458901.9546,"r", -18.73, 16.42,0.03, 20.38,"P48+ZTF","2","None","None",True,True
+"2020 Feb 24",2458903.8600,"g", -17.86, 17.29,0.06, 20.74,"P48+ZTF","2","None","None",True,True
+"2020 Feb 24",2458903.9120,"r", -18.62, 16.53,0.03, 20.79,"P48+ZTF","2","None","None",True,True
+"2020 Feb 24",2458903.9217,"r", -18.65, 16.50,0.03, 20.73,"P48+ZTF","2","None","None",True,True
+"2020 Feb 24",2458903.9571,"r", -18.62, 16.53,0.03, 20.74,"P48+ZTF","2","None","None",True,True
+"2020 Feb 24",2458903.9605,"r", -18.64, 16.51,0.05, 20.77,"P48+ZTF","2","None","None",True,True
+"2020 Feb 24",2458903.9953,"r", -18.63, 16.52,0.03, 20.80,"P48+ZTF","2","None","None",True,True
+"2020 Feb 24",2458903.9962,"r", -18.59, 16.56,0.04, 20.84,"P48+ZTF","1","None","None",True,True
+"2020 Feb 24",2458904.0079,"r", -18.65, 16.50,0.04, 20.74,"P48+ZTF","2","None","None",True,True
+"2020 Feb 24",2458904.0409,"g", -17.85, 17.30,0.05, 20.89,"P48+ZTF","1","None","None",True,True
+"2020 Feb 25",2458904.8954,"i", -18.32, 16.83,0.03, 20.36,"P48+ZTF","2","None","None",True,True
+"2020 Feb 25",2458904.9029,"i", -18.30, 16.85,0.02, 20.36,"P48+ZTF","2","None","None",True,True
+"2020 Feb 25",2458904.9461,"g", -17.79, 17.36,0.05, 20.64,"P48+ZTF","2","None","None",True,True
+"2020 Feb 25",2458904.9890,"r", -18.60, 16.55,0.03, 20.62,"P48+ZTF","2","None","None",True,True
+"2020 Feb 27",2458906.8392,"g", -17.63, 17.52,0.05, 20.37,"P48+ZTF","2","None","None",True,True
+"2020 Feb 27",2458906.9339,"i", -18.22, 16.93,0.02, 20.39,"P48+ZTF","2","None","None",True,True
+"2020 Feb 27",2458906.9868,"r", -18.54, 16.61,0.04, 19.80,"P48+ZTF","1","None","None",True,True
+"2020 Feb 27",2458906.9878,"r", -18.53, 16.62,0.03, 19.75,"P48+ZTF","2","None","None",True,True
+"2020 Feb 27",2458907.0057,"r", -18.53, 16.62,0.03, 19.90,"P48+ZTF","2","None","None",True,True
+"2020 Feb 27",2458907.0381,"g", -17.66, 17.49,0.05, 20.18,"P48+ZTF","1","None","None",True,True
+"2020 Feb 27",2458907.0390,"g", -17.62, 17.53,0.06, 20.06,"P48+ZTF","2","None","None",True,True
+"2020 Feb 27",2458907.0551,"i", -18.23, 16.92,0.04, 19.64,"P48+ZTF","2","None","None",True,True
+"2020 Feb 29",2458908.9122,"i", -18.13, 17.02,0.03, 20.58,"P48+ZTF","2","None","None",True,True
+"2020 Feb 29",2458908.9158,"r", -18.33, 16.82,0.02, 99.00,"P60+SEDM","None","Fremling Automated Pipeline","SDSS",True,True
+"2020 Feb 29",2458908.9258,"i", -18.12, 17.03,0.03, 20.61,"P48+ZTF","2","None","None",True,True
+"2020 Feb 29",2458908.9624,"r", -18.37, 16.78,0.04, 20.82,"P48+ZTF","2","None","None",True,True
+"2020 Feb 29",2458908.9949,"r", -18.34, 16.81,0.04, 20.71,"P48+ZTF","2","None","None",True,True
+"2020 Feb 29",2458909.0315,"g", -17.61, 17.54,0.09, 19.82,"P48+ZTF","2","None","None",True,True
+"2020 Feb 29",2458909.0565,"g", -17.62, 17.53,0.05, 19.67,"P48+ZTF","2","None","None",True,True
+"2020 Mar 01",2458909.6750,"r", -18.35, 16.80,0.00, 22.80,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Mar 01",2458909.6758,"i", -18.08, 17.07,0.00, 22.60,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Mar 01",2458909.6766,"g", -17.53, 17.62,0.00, 23.01,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Mar 01",2458909.6775,"u", -15.06, 20.09,0.07, 22.25,"LT+IOO","None","Taggart Automated Pipeline","SDSS",True,True
+"2020 Mar 01",2458909.6789,"z", -18.46, 16.69,0.01, 21.85,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Mar 03",2458911.7535,"i", -18.04, 17.11,0.05, 19.14,"P48+ZTF","2","None","None",True,True
+"2020 Mar 03",2458911.8516,"i", -17.97, 17.18,0.03, 20.00,"P48+ZTF","2","None","None",True,True
+"2020 Mar 03",2458911.9256,"g", -17.22, 17.93,0.06, 20.43,"P48+ZTF","1","None","None",True,True
+"2020 Mar 03",2458911.9265,"g", -17.18, 17.97,0.07, 20.46,"P48+ZTF","2","None","None",True,True
+"2020 Mar 03",2458911.9766,"r", -18.23, 16.92,0.04, 20.26,"P48+ZTF","2","None","None",True,True
+"2020 Mar 03",2458911.9826,"r", -18.23, 16.92,0.04, 20.23,"P48+ZTF","2","None","None",True,True
+"2020 Mar 03",2458911.9836,"r", -18.25, 16.90,0.04, 20.09,"P48+ZTF","1","None","None",True,True
+"2020 Mar 03",2458912.0510,"g", -17.22, 17.93,0.07, 19.93,"P48+ZTF","2","None","None",True,True
+"2020 Mar 03",2458912.0515,"g", -17.26, 17.89,0.08, 19.97,"P48+ZTF","1","None","None",True,True
+"2020 Mar 03",2458912.0533,"g", -17.34, 17.81,0.07, 19.85,"P48+ZTF","2","None","None",True,True
+"2020 Mar 03",2458912.0538,"g", -17.28, 17.87,0.06, 19.78,"P48+ZTF","3","None","None",True,True
+"2020 Mar 04",2458912.6515,"r", -18.16, 16.99,0.00, 22.96,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Mar 04",2458912.6523,"i", -17.90, 17.25,0.00, 22.53,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Mar 04",2458912.6532,"g", -17.32, 17.83,0.01, 23.22,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Mar 04",2458912.6540,"u", -14.89, 20.26,0.10, 22.06,"LT+IOO","None","Taggart Automated Pipeline","SDSS",True,True
+"2020 Mar 04",2458912.6554,"z", -18.31, 16.84,0.00, 22.10,"LT+IOO","None","Taggart Automated Pipeline","PS1",True,True
+"2020 Mar 04",2458912.8746,"i", -17.92, 17.23,0.03, 20.32,"P48+ZTF","2","None","None",True,True
+"2020 Mar 04",2458912.8792,"i", -17.95, 17.20,0.04, 20.42,"P48+ZTF","2","None","None",True,True
+"2020 Mar 04",2458912.9747,"r", -18.15, 17.00,0.04, 20.63,"P48+ZTF","2","None","None",True,True
+"2020 Mar 04",2458912.9973,"r", -18.14, 17.01,0.04, 20.59,"P48+ZTF","2","None","None",True,True
+"2020 Mar 04",2458913.0209,"g", -17.14, 18.01,0.08, 20.84,"P48+ZTF","2","None","None",True,True
+"2020 Mar 04",2458913.0468,"g", -17.12, 18.02,0.07, 20.58,"P48+ZTF","2","None","None",True,True
