@@ -109,19 +109,19 @@ Lbol_hi = []
 Teff_hi = []
 Rph_hi = []
 
+# Retrieve photometry
 t,mag,emag,maglim,filt,instr = get_opt_lc()
 uvdt,uvfilt,uvflux,uveflux = get_uv_lc()
 dt = t-t0
 
+# Initialize figure
 fig,axarr = plt.subplots(5, 5, figsize=(8,8), sharex=True, sharey=True)
 
-# Define time bins
+# Define time bins manually
 dtbins = np.array([0.76, 1.36, 1.8, 2.8, 3.8, 4.74, 5.78, 6.27, 7.8, 9.1, 9.8, 
         10.75, 11.09, 11.77, 12.47, 15.49, 20, 21.75, 23.77, 25.65, 25.8, 26.5,
         28.73, 29.48, 29.8])
 bs = 0.15 # bin size
-
-# for each bin, select photometry within 0.1d
 
 for ii,dtbin in enumerate(dtbins):
     # choose the panel
