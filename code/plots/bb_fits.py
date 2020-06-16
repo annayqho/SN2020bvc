@@ -174,7 +174,7 @@ for ii,dtbin in enumerate(dtbins):
             horizontalalignment='right', verticalalignment='top')
 
     # Fit a blackbody 1000 times
-    nsim = 10
+    nsim = 100
     temps = np.zeros(nsim)
     radii = np.zeros(nsim)
     ysamples = np.zeros((nsim, len(xvals)))
@@ -183,7 +183,7 @@ for ii,dtbin in enumerate(dtbins):
     for jj in np.arange(nsim):
         popt, pcov = curve_fit(
                 bb_func, xvals*1E-8, ysamples[jj], p0=[10000,1E14],
-                bounds=([2000,1E12],[50000, 1E17])) # must be positive
+                bounds=([2000,1E12],[20000, 2.5E15])) 
         temps[jj] = popt[0]
         radii[jj] = popt[1]
         xplot = np.linspace(1000,20000)
@@ -229,7 +229,7 @@ for ii,dtbin in enumerate(dtbins):
     print(chisq, dof)
     print(chisq/dof)
 
-    xplot = np.linspace(2000,8000)
+    xplot = np.linspace(1000,20000)
     yplot = bb_func(xplot*1E-8, T, R)
     ax.plot(xplot,yplot,lw=0.5,alpha=1,c='Crimson')
 
