@@ -100,20 +100,25 @@ def get_binned_p48(dt,mag,emag,filt,instr):
 
 # Ultimately, here are the parameters I will measure
 Lbol = []
-eLbol = []
 Teff = []
-eTeff = []
 Rph = []
-eRph = []
+Lbol_lo = []
+Teff_lo = []
+Rph_lo = []
+Lbol_hi = []
+Teff_hi = []
+Rph_hi = []
 
 t,mag,emag,maglim,filt,instr = get_opt_lc()
 uvdt,uvfilt,uvflux,uveflux = get_uv_lc()
 dt = t-t0
 
-fig,axarr = plt.subplots(3, 5, figsize=(8,5), sharex=True, sharey=True)
+fig,axarr = plt.subplots(5, 5, figsize=(8,8), sharex=True, sharey=True)
 
 # Define time bins
-dtbins = [0.76, 1.36, 1.8, 2.8, 3.8, 4.74, 5.78]
+dtbins = np.array([0.76, 1.36, 1.8, 2.8, 3.8, 4.74, 5.78, 6.27, 7.8, 9.1, 9.8, 
+        10.75, 11.09, 11.77, 12.47, 15.49, 20, 21.75, 23.77, 25.65, 25.8, 26.5,
+        28.73, 29.48, 29.8])
 bs = 0.15 # bin size
 
 # for each bin, select photometry within 0.1d
@@ -135,7 +140,7 @@ for ii,dtbin in enumerate(dtbins):
         yvals.append(f)
         eyvals.append(ef)
     #LT
-    choose = np.logical_and(np.abs(dt-dtbin)<bs, instr=='LT+SPRAT')
+    choose = np.logical_and(np.abs(dt-dtbin)<bs, instr=='LT+IOO')
     for jj in np.arange(sum(choose)):
         wl = bands[filt[choose][jj]]
         f,ef = toflux(mag[choose][jj],emag[choose][jj])
@@ -144,7 +149,7 @@ for ii,dtbin in enumerate(dtbins):
         eyvals.append(ef)
     #P48
     dt_p48,mag_p48,emag_p48,filt_p48 = get_binned_p48(dt,mag,emag,filt,instr)
-    choose = np.abs(dt_p48-dtbin) < 0.5
+    choose = np.abs(dt_p48-dtbin) < bs
     for jj in np.arange(sum(choose)):
         wl = bands[filt_p48[choose][jj]]
         f,ef = toflux(mag_p48[choose][jj],emag_p48[choose][jj])
@@ -165,7 +170,7 @@ for ii,dtbin in enumerate(dtbins):
 
     ax.errorbar(xvals, yvals, yerr=eyvals, c='k', fmt='.')
     txt = "$\Delta t \\approx $" + str(np.round(dtbin,1))
-    ax.text(0.9, 0.9, txt, transform=ax.transAxes,
+    ax.text(0.95, 0.95, txt, transform=ax.transAxes,
             horizontalalignment='right', verticalalignment='top')
 
     # Fit a blackbody 1000 times
@@ -181,7 +186,7 @@ for ii,dtbin in enumerate(dtbins):
                 bounds=([2000,1E12],[50000, 1E17])) # must be positive
         temps[jj] = popt[0]
         radii[jj] = popt[1]
-        xplot = np.linspace(2000,8000)
+        xplot = np.linspace(1000,20000)
         yplot = bb_func(xplot*1E-8, popt[0], popt[1])
         ax.plot(xplot,yplot,lw=0.1,alpha=0.1)
     lums = 4*np.pi*radii**2 * (5.67E-5)*temps**4
@@ -194,18 +199,27 @@ for ii,dtbin in enumerate(dtbins):
     end_ind = int(0.84*nvals)
     temps = np.sort(temps)
     T = np.median(temps)
+    Teff.append(T)
     low = T-temps[start_ind]
+    Teff_lo.append(low)
     hi = temps[end_ind]-T
+    Teff_hi.append(hi)
     print("%s +%s -%s" %(T/1E3, hi/1E3, low/1E3))
     radii = np.sort(radii)
     R = np.median(radii)
+    Rph.append(R)
     low = R-radii[start_ind]
+    Rph_lo.append(low)
     hi = radii[end_ind]-R
+    Rph_hi.append(hi)
     print("%s +%s -%s" %(R/1E14, hi/1E14, low/1E14))
     lums = np.sort(lums)
     L = np.median(lums)
+    Lbol.append(L)
     low = L-lums[start_ind]
+    Lbol_lo.append(low)
     hi = lums[end_ind]-L
+    Lbol_hi.append(hi)
     print("%s +%s -%s" %(L/1E42, hi/1E42, low/1E42))
 
 
@@ -220,14 +234,11 @@ for ii,dtbin in enumerate(dtbins):
     ax.plot(xplot,yplot,lw=0.5,alpha=1,c='Crimson')
 
 Lbol = np.array(Lbol)
-eLbol = np.array(eLbol)
 Rph = np.array(Rph)
-eRph = np.array(eRph)
 Teff = np.array(Teff)
-eTeff = np.array(eTeff)
 
 axarr[0,0].set_xlim(1E3, 2E4)
-axarr[0,0].set_ylim(10, 5000)
+axarr[0,0].set_ylim(3, 5000)
 axarr[0,0].set_yscale('log')
 axarr[0,0].set_xscale('log')
 plt.subplots_adjust(wspace=0,hspace=0)
