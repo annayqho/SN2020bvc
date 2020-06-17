@@ -56,7 +56,8 @@ def get_opt_lc():
 
 
 def get_uv_lc():
-    uvdat = ascii.read("../../data/UVOT_hostsub.ascii")
+    ddir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/"
+    uvdat = ascii.read(ddir + "/UVOT_hostsub.ascii")
     uvt = uvdat['MJD']+2400000.5
     uvdt = uvt-t0
     uvfilt = uvdat['FILTER']
@@ -65,9 +66,7 @@ def get_uv_lc():
     uvflux_corr = np.zeros(len(uvflux))
     uveflux_corr = np.zeros(len(uvflux))
     for f in np.unique(uvfilt):
-        print(f)
         choose = uvfilt == f
         factor = 10**(ext[f]/2.5)
-        print(factor)
         uvflux_corr[choose] = uvflux[choose] * factor
     return uvdt,uvfilt,uvflux_corr,uveflux_corr
