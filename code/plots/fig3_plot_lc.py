@@ -112,13 +112,12 @@ def plot_lc():
     ax.set_ylim(16, 22.5)
     ax.invert_yaxis()
     fig.text(0.5, 0.04, 
-        r"Days since $t_0=$JD 2458370.6473 (UT 2018 Sept 09.15)", 
+        r"Days since $t_0=$(UT 2020 Feb 03.67)", 
         ha='center', fontsize=16) 
     fig.text(0.04, 0.5, 'Apparent Mag (AB)', fontsize=16, rotation='vertical')
-    #fig.text(0.9, 0.5, 'Absolute Mag', fontsize=16, rotation=270)
 
-    #plt.savefig("lc.eps", format='eps', dpi=1000)
-    plt.show()
+    plt.savefig("full_lc.png", dpi=500, bbox_inches='tight')
+    #plt.show()
 
 
 if __name__=="__main__":
