@@ -98,155 +98,190 @@ def get_binned_p48(dt,mag,emag,filt,instr):
     return dt_all,mag_all,emag_all,filt_all
 
 
-# Ultimately, here are the parameters I will measure
-Lbol = []
-Teff = []
-Rph = []
-Lbol_lo = []
-Teff_lo = []
-Rph_lo = []
-Lbol_hi = []
-Teff_hi = []
-Rph_hi = []
 
-# Retrieve photometry
-t,mag,emag,maglim,filt,instr = get_opt_lc()
-uvdt,uvfilt,uvflux,uveflux = get_uv_lc()
-dt = t-t0
+if __name__=="__main__":
+    # Ultimately, here are the parameters I will measure
+    Lbol = []
+    Teff = []
+    Rph = []
+    Lbol_lo = []
+    Teff_lo = []
+    Rph_lo = []
+    Lbol_hi = []
+    Teff_hi = []
+    Rph_hi = []
+    tot_red_chisq = []
+    tot_chisq = []
+    dof = []
 
-# Initialize figure
-fig,axarr = plt.subplots(5, 5, figsize=(8,8), sharex=True, sharey=True)
+    # Get non-P48 photometry
+    optt,optmag,optemag,optmaglim,optfilt,optinstr = get_opt_lc()
+    optdt = optt-t0
+    choose = np.logical_and(optinstr != 'P48+ZTF', optemag<50) # only dets
+    flux_opt,eflux_opt= toflux(optmag[choose], optemag[choose]) # uJy
 
-# Define time bins manually
-dtbins = np.array([0.76, 1.36, 1.8, 2.8, 3.8, 4.74, 5.78, 6.27, 7.8, 9.1, 9.8, 
-        10.75, 11.09, 11.77, 12.47, 15.49, 20, 21.75, 23.77, 25.65, 25.8, 26.5,
-        28.73, 29.48, 29.8])
-bs = 0.15 # bin size
+    # Get P48 photometry
+    dt_p48,mag_p48,emag_p48,filt_p48 = get_binned_p48(
+            optdt,optmag,optemag,optfilt,optinstr)
+    flux_p48,eflux_p48= toflux(mag_p48, emag_p48) # uJy
 
-for ii,dtbin in enumerate(dtbins):
-    # choose the panel
-    ax = axarr.flatten()[ii]
-    xvals = []
-    yvals = []
-    eyvals = []
+    # Get UVOT photometry
+    uvdt,uvfilt,uvflux,uveflux = get_uv_lc() # mJy
 
-    #Get UVOT photometry
-    choose = np.abs(uvdt-dtbin)<bs
-    for jj in np.arange(sum(choose)):
-        wl = bands[uvfilt[choose][jj]]
-        f = uvflux[choose][jj]*1E3
-        ef = uveflux[choose][jj]*1E3
-        xvals.append(wl)
-        yvals.append(f)
-        eyvals.append(ef)
-    #LT
-    choose = np.logical_and(np.abs(dt-dtbin)<bs, instr=='LT+IOO')
-    for jj in np.arange(sum(choose)):
-        wl = bands[filt[choose][jj]]
-        f,ef = toflux(mag[choose][jj],emag[choose][jj])
-        xvals.append(wl)
-        yvals.append(f)
-        eyvals.append(ef)
-    #P48
-    dt_p48,mag_p48,emag_p48,filt_p48 = get_binned_p48(dt,mag,emag,filt,instr)
-    choose = np.abs(dt_p48-dtbin) < bs
-    for jj in np.arange(sum(choose)):
-        wl = bands[filt_p48[choose][jj]]
-        f,ef = toflux(mag_p48[choose][jj],emag_p48[choose][jj])
-        xvals.append(wl)
-        yvals.append(f)
-        eyvals.append(ef)
+    # Merge 
+    dt = np.hstack((uvdt,dt_p48,optdt[choose]))
+    f = np.hstack((uvflux*1E3,flux_p48,flux_opt))
+    filt = np.hstack((uvfilt,filt_p48,optfilt[choose]))
+    ufilt = np.unique(filt)
 
-    # Done loading photometry; now plot and measure bb
-    xvals = np.array(xvals)
-    yvals = np.array(yvals)
-    eyvals = np.array(eyvals)
+    # Initialize figure
+    fig,axarr = plt.subplots(5, 5, figsize=(8,8), sharex=True, sharey=True)
 
-    # Sort in order of wavelength
-    order = np.argsort(xvals)
-    xvals = xvals[order]
-    yvals = yvals[order]
-    eyvals = eyvals[order]
+    # Define time bins manually
+    dtbins = np.array(
+            [0.9, 1.36, 1.8, 2.8, 3.8, 4.74, 5.78, 6.27, 7.8, 9.1, 9.8, 10.75, 
+             11.09, 11.77, 12.47, 15.49, 20, 21.75, 23.77, 25.65, 26.5, 28.73, 
+             29.48])
 
-    ax.errorbar(xvals, yvals, yerr=eyvals, c='k', fmt='.')
-    txt = "$\Delta t \\approx $" + str(np.round(dtbin,1))
-    ax.text(0.95, 0.95, txt, transform=ax.transAxes,
-            horizontalalignment='right', verticalalignment='top')
+    # Err fac
+    fac = 0.4 # assign systematic uncertainty that is 50% of the flux
 
-    # Fit a blackbody 1000 times
-    nsim = 100
-    temps = np.zeros(nsim)
-    radii = np.zeros(nsim)
-    ysamples = np.zeros((nsim, len(xvals)))
-    for jj,val in enumerate(yvals):
-        ysamples[:,jj] = np.random.normal(loc=val,scale=eyvals[jj],size=nsim)
-    for jj in np.arange(nsim):
-        popt, pcov = curve_fit(
-                bb_func, xvals*1E-8, ysamples[jj], p0=[10000,1E14],
-                bounds=([2000,1E12],[20000, 2.5E15])) 
-        temps[jj] = popt[0]
-        radii[jj] = popt[1]
+    yvals_len = []
+    for ii,dtbin in enumerate(dtbins):
+        # choose the panel
+        ax = axarr.flatten()[ii]
+        xvals = []
+        yvals = []
+
+        # Interpolate each filter
+        for uf in ufilt:
+            choose = filt == uf
+            # Check that interpolation is actually appropriate
+            if np.logical_and(min(dt[choose])<dtbin, max(dt[choose])>dtbin):
+                xvals.append(bands[uf])
+                new_f = np.interp(dtbin, dt[choose], f[choose])
+                yvals.append(new_f)
+
+        # Done loading photometry; now plot and measure bb
+        xvals = np.array(xvals)
+        yvals = np.array(yvals)
+        eyvals = fac*yvals
+
+        # Sort in order of wavelength
+        order = np.argsort(xvals)
+        xvals = xvals[order]
+        yvals = yvals[order]
+        eyvals = eyvals[order]
+        yvals_len.append(len(yvals))
+
+
+        # Ignore UVW2 after 2 days
+        if dtbin > 2:
+            keep = xvals > bands['UVW2']
+            ax.scatter(xvals[~keep], yvals[~keep], c='lightgrey')
+            xvals = xvals[keep]
+            yvals = yvals[keep]
+            eyvals = eyvals[keep]
+
+        ax.errorbar(
+                xvals, yvals, yerr=eyvals, fmt='.', 
+                mfc='lightgrey', mec='k', ecolor='k', elinewidth=0.3, ms=10)
+        txt = "$\Delta t \\approx $" + str(np.round(dtbin,1))
+        ax.text(0.95, 0.95, txt, transform=ax.transAxes,
+                horizontalalignment='right', verticalalignment='top')
+
+        # Fit a blackbody 600 times
+        nsim = 600
+        temps = np.zeros(nsim)
+        radii = np.zeros(nsim)
+        ysamples = np.zeros((nsim, len(xvals)))
+        if dtbin < 1:
+            t0 = 13000
+        else:
+            # initialize temperature guess at wien's value
+            t0 = 0.0029/(xvals[np.argmax(yvals)]*1E-10)
+        # initialize radius guess
+        dcm = Planck15.luminosity_distance(z=0.0252).cgs.value
+        L0 = max(yvals)*1E-6*1E-23*4*np.pi*dcm**2*3E10/(xvals[np.argmax(yvals)]*1E-8)
+        r0 = (L0 / (4 * np.pi * (5.67E-5) * t0**4))**0.5
+        for jj,val in enumerate(yvals):
+            ysamples[:,jj] = np.random.normal(
+                    loc=val,scale=eyvals[jj],size=nsim)
+        for jj in np.arange(nsim):
+            popt, pcov = curve_fit(
+                    bb_func, xvals*1E-8, ysamples[jj], p0=[t0,r0],
+                    bounds=([0,0],[30000, np.inf]),maxfev=100000)
+            temps[jj] = popt[0]
+            radii[jj] = popt[1]
+            xplot = np.linspace(1000,20000)
+            yplot = bb_func(xplot*1E-8, popt[0], popt[1])
+            ax.plot(xplot,yplot,lw=0.5,alpha=0.1,c='lightgrey')
+        lums = 4*np.pi*radii**2 * (5.67E-5)*temps**4
+
+        # Sort results and calculate 16-to-84 percentile range
+        print(dtbin)
+
+        nvals = len(temps)
+        start_ind = int(0.16*nvals)
+        end_ind = int(0.84*nvals)
+        temps = np.sort(temps)
+        radii = np.sort(radii)
+        lums = np.sort(lums)
+        L = np.median(lums)
+        Lbol.append(L)
+        low = L-lums[start_ind]
+        Lbol_lo.append(low)
+        hi = lums[end_ind]-L
+        Lbol_hi.append(hi)
+        print("%s +%s -%s" %(L/1E42, hi/1E42, low/1E42))
+        T = np.median(temps)
+        Teff.append(T)
+        low = T-temps[start_ind]
+        Teff_lo.append(low)
+        hi = temps[end_ind]-T
+        Teff_hi.append(hi)
+        print("%s +%s -%s" %(T/1E3, hi/1E3, low/1E3))
+        R = np.median(radii)
+        Rph.append(R)
+        low = R-radii[start_ind]
+        Rph_lo.append(low)
+        hi = radii[end_ind]-R
+        Rph_hi.append(hi)
+        print("%s +%s -%s" %(R/1E14, hi/1E14, low/1E14))
+
+        # Calculate the chi squared of the final fit
+        chisq = sum((yvals-bb_func(xvals*1E-8, T, R))**2/eyvals**2)
+        tot_chisq.append(chisq)
+        dof_val = len(yvals)-1
+        dof.append(dof_val)
+        red_chisq = chisq/dof_val
+        print(chisq,dof_val)
+        tot_red_chisq.append(red_chisq)
+
         xplot = np.linspace(1000,20000)
-        yplot = bb_func(xplot*1E-8, popt[0], popt[1])
-        ax.plot(xplot,yplot,lw=0.1,alpha=0.1)
-    lums = 4*np.pi*radii**2 * (5.67E-5)*temps**4
+        yplot = bb_func(xplot*1E-8, T, R)
+        ax.plot(xplot,yplot,lw=0.5,alpha=1,c='Crimson')
 
-    # Sort results and calculate 16-to-84 percentile range
-    print(dtbin)
+    Lbol = np.array(Lbol)
+    np.savetxt('lbol.txt', np.array([dtbins,Lbol,Lbol_hi,Lbol_lo]).T)
+    Rph = np.array(Rph)
+    Teff = np.array(Teff)
+    tot_red_chisq = np.array(tot_red_chisq)
+    tot_chisq = np.array(tot_chisq)
+    dof = np.array(dof)
 
-    nvals = len(temps)
-    start_ind = int(0.16*nvals)
-    end_ind = int(0.84*nvals)
-    temps = np.sort(temps)
-    T = np.median(temps)
-    Teff.append(T)
-    low = T-temps[start_ind]
-    Teff_lo.append(low)
-    hi = temps[end_ind]-T
-    Teff_hi.append(hi)
-    print("%s +%s -%s" %(T/1E3, hi/1E3, low/1E3))
-    radii = np.sort(radii)
-    R = np.median(radii)
-    Rph.append(R)
-    low = R-radii[start_ind]
-    Rph_lo.append(low)
-    hi = radii[end_ind]-R
-    Rph_hi.append(hi)
-    print("%s +%s -%s" %(R/1E14, hi/1E14, low/1E14))
-    lums = np.sort(lums)
-    L = np.median(lums)
-    Lbol.append(L)
-    low = L-lums[start_ind]
-    Lbol_lo.append(low)
-    hi = lums[end_ind]-L
-    Lbol_hi.append(hi)
-    print("%s +%s -%s" %(L/1E42, hi/1E42, low/1E42))
+    axarr[0,0].set_xlim(1E3, 2E4)
+    axarr[0,0].set_ylim(3, 5000)
+    axarr[0,0].set_yscale('log')
+    axarr[0,0].set_xscale('log')
+    axarr[4,3].axis('off')
+    axarr[4,4].axis('off')
+    plt.subplots_adjust(wspace=0,hspace=0)
+    #fig.text(0.5,0.04,"Wavelength (AA)", ha='center',fontsize=14)
+    fig.text(0.04,0.5,r'Flux ($\mu$Jy)',fontsize=14,verticalalignment='center',
+            horizontalalignment='center',rotation='vertical')
+    axarr[1,2].set_xlabel(r'Wavelength (\AA)',fontsize=14)
+    #plt.tight_layout()
 
-
-    # Calculate the chi squared of the final fit
-    chisq = sum((yvals-bb_func(xvals*1E-8, T, R))**2/eyvals**2)
-    dof = len(yvals)-2
-    print(chisq, dof)
-    print(chisq/dof)
-
-    xplot = np.linspace(1000,20000)
-    yplot = bb_func(xplot*1E-8, T, R)
-    ax.plot(xplot,yplot,lw=0.5,alpha=1,c='Crimson')
-
-Lbol = np.array(Lbol)
-Rph = np.array(Rph)
-Teff = np.array(Teff)
-
-axarr[0,0].set_xlim(1E3, 2E4)
-axarr[0,0].set_ylim(3, 5000)
-axarr[0,0].set_yscale('log')
-axarr[0,0].set_xscale('log')
-plt.subplots_adjust(wspace=0,hspace=0)
-#fig.text(0.5,0.04,"Wavelength (AA)", ha='center',fontsize=14)
-fig.text(0.04,0.5,r'Flux ($\mu$Jy)',fontsize=14,verticalalignment='center',
-        horizontalalignment='center',rotation='vertical')
-axarr[1,2].set_xlabel(r'Wavelength (\AA)',fontsize=14)
-#plt.tight_layout()
-
-plt.show()
-#plt.savefig("bbfits.png", dpi=300, bbox_inches='tight', pad_inches=0.1)
+    plt.show()
+    #plt.savefig("bbfits.png", dpi=300, bbox_inches='tight', pad_inches=0.1)
