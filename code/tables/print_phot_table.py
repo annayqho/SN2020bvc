@@ -7,6 +7,8 @@ from astropy.cosmology import Planck15
 from astropy.io import ascii
 import sys
 import extinction
+sys.path.append("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/code")
+from get_lc import get_opt_lc,get_uv_lc
 
 # a mapping from filter to central wavelength
 bands = {}
@@ -88,28 +90,28 @@ outputf.write("\startdata \n")
 # time of the last ATLAS non-detection
 t0 = 2458883.17
 
-dat = ascii.read("../../data/marshal_lc.txt")
-uvdat = ascii.read("../../data/UVOT_hostsub.ascii")
-uvmjd = uvdat['MJD']
-uvjd = uvdat['MJD']+2400000.5
-uvdt = uvjd-t0
+# UV 
+uvjd,uvdt,uvfilt,uvflux,uveflux= get_uv_lc()
+uvmjd = uvjd-2400000.5
 choose = uvdt > 0
 uvmjd = uvmjd[choose]
 uvdt = uvdt[choose]
-uvfilt = uvdat['FILTER'][choose]
-uvflux = uvdat['AB_FNU_mJy'][choose]
-uveflux = uvdat['AB_FNU_mJy_ERRM'][choose]
+uvfilt = uvfilt[choose]
+uvflux = uvflux[choose]
+uveflux = uveflux[choose]
 
-# Use only ZTF, LT, and P60 photometry from this file
-instr = dat['instrument']
-choose = np.logical_and(instr!='ASASSN-P+Paczynski', instr!='Swift+UVOT')
-t = dat['jdobs'][choose]
+# optical
+t,mag,emag,maglim,filt,instr = get_opt_lc()
+# only detections
+choose = emag < 90
+t = t[choose]
+mag = mag[choose]
+emag = emag[choose]
+maglim = maglim[choose]
+filt = filt[choose]
+instr = instr[choose]
 mjd = Time(t, format='jd').mjd
 dt = t-t0
-mag = dat['magpsf'][choose]
-emag = dat['sigmamagpsf'][choose]
-filt = dat['filter'][choose]
-instr = instr[choose]
 
 # Add the UVOT data
 mjd = np.append(mjd, uvmjd)

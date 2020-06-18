@@ -12,7 +12,7 @@ from fit_arnett import *
 
 
 # Load the bolometric light curve
-dat = np.loadtxt("sn20bvc_bol_lc.txt")
+dat = np.loadtxt("bol_lc.txt")
 dt = dat[:,0]
 lbol = dat[:,1]
 lbol_hi = dat[:,2]
@@ -32,11 +32,6 @@ tdiff = popt[1]
 fig,ax = plt.subplots(1,1,figsize=(6,4))
 plt.errorbar(dt/1.02507, lbol, yerr=[lbol_lo, lbol_hi], c='k', fmt='o',
         mec='k', mfc='grey', ms=10)
-
-# make the first measurement a lower limit
-plt.arrow(
-        dt[0]/1.02507, 5.6E42, 0, 2E42, 
-        length_includes_head=True, head_length=5E41, head_width=0.1, color='k')
 
 # Shock-cooling model
 Re = 3E12
@@ -73,5 +68,5 @@ plt.ylim(1E42,1E43)
 plt.xlim(0.5,40)
 plt.legend(loc='upper right',fontsize=12)
 plt.tight_layout()
-plt.show()
-#plt.savefig("bol_lc.png", dpi=300)
+#plt.show()
+plt.savefig("bol_lc.png", dpi=300)

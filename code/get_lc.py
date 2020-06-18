@@ -69,4 +69,4 @@ def get_uv_lc():
         choose = uvfilt == f
         factor = 10**(ext[f]/2.5)
         uvflux_corr[choose] = uvflux[choose] * factor
-    return uvdt,uvfilt,uvflux_corr,uveflux_corr
+    return uvt,uvdt,uvfilt,uvflux_corr,uveflux_corr

@@ -58,14 +58,14 @@ def llgrbs(ax):
     dt = [0.003, 0.06, 0.17, 0.55, 1.04, 2.01, 7, 10.952, 14.936]
     lum = [2.1E45, 4.6E42, 3.9E42, 2.7E42, 2.7E42, 1.8E42, 10**9*lsol, 10**9.23*lsol, 10**9.22*lsol]
     ax.plot(dt, lum, c='#84206b', ls=':', lw=1, alpha=1, label='17iuk')
-    ax.text(10, 8E42, '17iuk', fontsize=12)
+    ax.text(10, 7E42, '17iuk', fontsize=12)
 
     #ax.legend(loc='upper right', ncol=2)
 
 
 def plot_lbol(ax):
     """ Plot the bolometric luminosity over time """
-    ax.errorbar(dt/1.02507, lbol, yerr=[lbol_hi,lbol_lo], c='k', 
+    ax.errorbar(dt/1.02507, lbol, yerr=[lbol_lo,lbol_hi], c='k', 
         fmt='o', mec='k', mfc='grey', ms=10)
     ax.set_ylabel(r'$L_\mathrm{bol}$ (erg/s)', fontsize=16)
     ax.set_ylim(1E42, 1E43)
@@ -93,24 +93,24 @@ ax.tick_params(axis='both', labelsize=16)
 # Radius panel
 ax = axarr[2]
 xvals = np.linspace(0.5,20)
-ax.errorbar(dt/1.02507, rph/1E14, yerr=[rph_hi/1E14,rph_lo/1E14], c='k', 
+ax.errorbar(dt/1.02507, rph/1E14, yerr=[rph_lo/1E14,rph_hi/1E14], c='k', 
         fmt='o', mec='k', mfc='grey', ms=10)
-yvals = 5E14 + 0.04 * (3E10) * xvals * 86400
+yvals = 5E14 + 0.06 * (3E10) * xvals * 86400
 ax.plot(xvals, yvals/1E14, ls='--', lw=0.5, c='grey')
-ax.text(4, 18, 'v=0.04c', fontsize=14, rotation=0)
-ax.set_ylim(0,25)
+ax.text(5, 27, '$v=0.06c$', fontsize=14, rotation=0)
+ax.set_ylim(0,32)
 ax.set_xlim(-1,31)
 ax.set_ylabel(r'$R_\mathrm{ph}$ ($10^{14}$ cm)', fontsize=16)
 ax.tick_params(axis='both', labelsize=16)
 
 # Temperature panel
 ax = axarr[3]
-ax.errorbar(dt/1.02507, teff, yerr=[teff_hi,teff_lo], c='k', fmt='o',
+ax.errorbar(dt/1.02507, teff, yerr=[teff_lo,teff_hi], c='k', fmt='o',
         mec='k', mfc='grey', ms=10)
 ax.set_ylabel(r'$T_\mathrm{eff}$ (K)', fontsize=16)
 ax.set_yscale('log')
 ax.set_xscale('log')
-ax.set_ylim(4000, 15000)
+ax.set_ylim(4000, 20000)
 ax.axhline(y=5000, c='grey', ls='--', lw=0.5)
 ax.text(0.5, 5000, "5000 K", fontsize=14, verticalalignment='bottom')
 ax.set_xscale('log')
@@ -121,5 +121,5 @@ ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.tick_params(axis='both', labelsize=16)
 
 plt.tight_layout()
-plt.show()
-#plt.savefig("bb_evolution.png", dpi=300)
+#plt.show()
+plt.savefig("bb_evolution.png", dpi=300)
