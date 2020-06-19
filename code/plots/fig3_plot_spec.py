@@ -138,7 +138,7 @@ def get_files(sind, eind):
     return files_sorted[sind:eind], dt_sorted[sind:eind], tel_sorted[sind:eind]
 
 
-def load_spec(f):
+def load_spec(tel,f):
     lc = np.loadtxt(f)
     obs_wl = lc[:,0]
     # shift to rest wl
@@ -200,7 +200,7 @@ def panel(ax,start,end):
         c = 'k'
         if np.logical_or.reduce((int(dt)==0, int(dt)==4, int(dt)==12)):
             c = '#e55c30'
-        wl, flux, ivar = load_spec(f)
+        wl, flux, ivar = load_spec(tel,f)
         # Remove tellurics
         if ii >= 3:
             # wl 7150 to 7300
