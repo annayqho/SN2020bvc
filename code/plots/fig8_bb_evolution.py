@@ -11,7 +11,7 @@ from astropy.time import Time
 from astropy.cosmology import Planck15
 from astropy.table import Table
 
-fig,axarr = plt.subplots(4,1,figsize=(4,9), sharex=False)
+fig,axarr = plt.subplots(2,2,figsize=(8,6), sharex=False)
 dat = np.loadtxt("bol_lc.txt")
 dt = dat[:,0]
 lbol = dat[:,1]
@@ -34,7 +34,7 @@ def llgrbs(ax):
     dt = dat[:,0]
     lum = dat[:,1]
     ax.plot(dt, lum, c='Goldenrod', ls='-', lw=1, alpha=0.5, label="98bw")
-    ax.text(30, 4E42, '98bw', fontsize=12)
+    ax.text(26, 4E42, '98bw', fontsize=12)
 
     dat = np.loadtxt(ddir + "/sn2010bh_BVRI_cano2013.dat", delimiter=',')
     dt = dat[:,0]
@@ -51,7 +51,7 @@ def llgrbs(ax):
     lum = np.append(lum, 2.6E44)
     order = np.argsort(dt)
     ax.plot(dt[order], lum[order], c='k', ls='-', lw=1, alpha=1, label='06aj')
-    ax.text(30, 1.1E42, '06aj', fontsize=12)
+    ax.text(26, 1.1E42, '06aj', fontsize=12)
 
     # 2017iuk
     lsol = 4E33
@@ -73,15 +73,15 @@ def plot_lbol(ax):
 
 # Luminosity panel
 # linear
-ax = axarr[0]
+ax = axarr[0,0]
 plot_lbol(ax)
 llgrbs(ax)
 ax.set_yscale('log')
-ax.set_xlim(-1, 35)
+ax.set_xlim(-1, 31)
 ax.tick_params(axis='both', labelsize=16)
 
 # Luminosity in log-log space without comparison
-ax = axarr[1]
+ax = axarr[0,1]
 plot_lbol(ax)
 ax.set_yscale('log')
 ax.set_xscale('log')
@@ -91,20 +91,21 @@ ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.tick_params(axis='both', labelsize=16)
 
 # Radius panel
-ax = axarr[2]
+ax = axarr[1,0]
 xvals = np.linspace(0.5,20)
 ax.errorbar(dt/1.02507, rph/1E14, yerr=[rph_lo/1E14,rph_hi/1E14], c='k', 
         fmt='o', mec='k', mfc='grey', ms=10)
 yvals = 5E14 + 0.06 * (3E10) * xvals * 86400
 ax.plot(xvals, yvals/1E14, ls='--', lw=0.5, c='grey')
-ax.text(5, 27, '$v=0.06c$', fontsize=14, rotation=0)
+ax.text(6, 29, '$v=0.06c$', fontsize=14, rotation=0)
 ax.set_ylim(0,32)
 ax.set_xlim(-1,31)
 ax.set_ylabel(r'$R_\mathrm{ph}$ ($10^{14}$ cm)', fontsize=16)
 ax.tick_params(axis='both', labelsize=16)
+ax.set_xlabel(r'Rest-frame days after first light', fontsize=16)
 
 # Temperature panel
-ax = axarr[3]
+ax = axarr[1,1]
 ax.errorbar(dt/1.02507, teff, yerr=[teff_lo,teff_hi], c='k', fmt='o',
         mec='k', mfc='grey', ms=10)
 ax.set_ylabel(r'$T_\mathrm{eff}$ (K)', fontsize=16)
