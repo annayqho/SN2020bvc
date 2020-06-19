@@ -189,18 +189,14 @@ def plot_spec(ax, x, y, tel, epoch):
 #     return wl, flux    
 
 
-if __name__=="__main__":
-    fig,ax = plt.subplots(figsize=(6,10))
-    files, epochs, tels = get_files(0, 6)
-    #files, epochs, tels = get_files(6, 13)
+def panel(ax,start,end):
+    """ Plot an individual panel """
+    files, epochs, tels = get_files(start,end)
     nfiles = len(files)
     shift = [1, 1.3, 1.8, 2.3, 2.8, 3.3, 3.6, 4.0, 4.5, 5, 5.5, 6, 6.5]
-    #bw_shift = [2.1, 3, 4, 6, 7.1]
     for ii,f in enumerate(files):
         tel = tels[ii]
-        print(tel)
         dt = epochs[ii]
-        print(dt)
         c = 'k'
         if np.logical_or.reduce((int(dt)==0, int(dt)==4, int(dt)==12)):
             c = '#e55c30'
@@ -230,15 +226,21 @@ if __name__=="__main__":
 #                     wcomp,shifted,c='k',lw=0.3,
 #                     label='_nolegend_')
 # 
-    plt.tick_params(axis='both', labelsize=14)
-    plt.xlim(3660, 10140)
+
+
+if __name__=="__main__":
+    fig,axarr = plt.subplots(1, 2, figsize=(9,10), sharex=True)
+    panel(axarr[0],0,6)
+    panel(axarr[1],6,13)
+    for ax in axarr:
+        ax.tick_params(axis='both', labelsize=14)
+        ax.set_xlim(3660, 10140)
+        ax.set_xlabel(r"Rest Wavelength (\AA)", fontsize=16)
+        ax.get_yaxis().set_ticks([])
     # for the first set
-    plt.ylim(-6.3 -0.5)
+    ax[0].set_ylim(-6.3 -0.5)
     # for the second set
-    #plt.ylim(-6.5 -0.5)
-    plt.xlabel(r"Rest Wavelength (\AA)", fontsize=16)
-    plt.ylabel(r"Scaled $F_{\lambda}$ + const.", fontsize=16)
-    ax.get_yaxis().set_ticks([])
-    #plt.show()
-    plt.savefig("spec_sequence_second.png", dpi=500, bbox_inches='tight')
-    #plt.savefig("spec_sequence_first.png", dpi=500, bbox_inches='tight')
+    ax[1].set_ylim(-6.5 -0.5)
+    ax[0].ylabel(r"Scaled $F_{\lambda}$ + const.", fontsize=16)
+    plt.show()
+    #plt.savefig("spec_sequence.png", dpi=500, bbox_inches='tight')
