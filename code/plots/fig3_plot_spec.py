@@ -243,4 +243,4 @@ if __name__=="__main__":
     axarr[1].set_ylim(-6.5 -0.5)
     axarr[0].set_ylabel(r"Scaled $F_{\lambda}$ + const.", fontsize=16)
     #plt.show()
-    plt.savefig("spec_sequence.png", dpi=500, bbox_inches='tight')
+    plt.savefig("spec_sequence.eps", dpi=300, bbox_inches='tight')

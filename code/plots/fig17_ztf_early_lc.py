@@ -79,7 +79,8 @@ def plot_19aaxfcpq(ax):
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec=rcol, mfc=rcol, fmt='s', zorder=0)
     ax.text(0.99, 0.01, "ZTF19aaxfcpq ($z=0.038$)", transform=ax.transAxes,
-            fontsize=11, horizontalalignment='right')
+            fontsize=11, horizontalalignment='right',
+            verticalalignment='bottom')
     ax.text(3.5, -18.1, "S", fontsize=11, horizontalalignment='center')
 
     # The LT point
@@ -95,7 +96,6 @@ def plot_19aaxfcpq(ax):
     # the last g-band upper limit
     x = 2458637.7621-t0
     y = 20.78-mw_ext_g-dm
-    print(y)
     ax.scatter(x, y, marker='o', c=gcol)
     ax.arrow(x, y, 0, 0.5, length_includes_head=True, 
             head_width=0.2, color=gcol, head_length=0.2)
@@ -355,8 +355,9 @@ def plot_20bvc(ax):
     ax.errorbar(
             dt[choose], mag[choose]-mw_ext_r-dm, yerr=emag[choose], 
             mec=rcol, mfc=rcol, fmt='s', zorder=0, c=rcol)
-    ax.text(0.01, 0.9, "%s ($z=0.025$)" %name, transform=ax.transAxes,
-            fontsize=11)
+    ax.text(0.98, 0.01, "%s ($z=0.025$)" %name, transform=ax.transAxes,
+            fontsize=11, horizontalalignment='right',
+            verticalalignment='bottom')
 
     # the last g-band upper limit
     x = 2458883.17-t0
@@ -364,6 +365,14 @@ def plot_20bvc(ax):
     ax.scatter(x, y, marker='o', c=gcol)
     ax.arrow(x, y, 0, 0.3, length_includes_head=True, 
             head_width=0.2, color=gcol, head_length=0.15)
+
+    # mark the epoch of spectroscopy
+    ax.text(0.5, -18.9, "S", fontsize=11, horizontalalignment='center',
+            verticalalignment='top')
+    ax.text(1.65, -18.9, "S", fontsize=11, horizontalalignment='center',
+            verticalalignment='top')
+    ax.text(3.4, -18.9, "S", fontsize=11, horizontalalignment='center',
+            verticalalignment='top')
 
 
 #start, let's make a nice plot of two light curves: SN1998bw and SN2006aj
@@ -404,6 +413,6 @@ fig.text(0.5, 0.04, '$\Delta$ t (days)', ha='center', fontsize=14)
 fig.text(0.04, 0.5, 'Abs Mag', va='center', rotation='vertical', fontsize=14)
 fig.subplots_adjust(
         left=0.16, bottom=0.13, right=None, top=None, wspace=0.3, hspace=0)
-plt.savefig("ztf_early_lc_collage.png", dpi=300, bbox_inches='tight')
+plt.savefig("ztf_early_lc_collage.eps", dpi=300, bbox_inches='tight')
 
 #plt.show()

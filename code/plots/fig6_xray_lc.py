@@ -163,4 +163,4 @@ if __name__=="__main__":
     plt.tight_layout()
     #plt.show()
     plt.savefig(
-       "xray_lc_log.png", dpi=500, bbox_inches='tight', pad_inches=0.1)
+       "xray_lc_log.eps", dpi=300, bbox_inches='tight')

@@ -123,4 +123,4 @@ ax.tick_params(axis='both', labelsize=16)
 
 plt.tight_layout()
 #plt.show()
-plt.savefig("bb_evolution.png", dpi=300)
+plt.savefig("bb_evolution.eps", dpi=300)

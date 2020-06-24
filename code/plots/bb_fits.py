@@ -126,7 +126,7 @@ if __name__=="__main__":
     flux_p48,eflux_p48= toflux(mag_p48, emag_p48) # uJy
 
     # Get UVOT photometry
-    uvdt,uvfilt,uvflux,uveflux = get_uv_lc() # mJy
+    uvt,uvdt,uvfilt,uvflux,uveflux = get_uv_lc() # mJy
 
     # Merge 
     dt = np.hstack((uvdt,dt_p48,optdt[choose]))
@@ -280,8 +280,8 @@ if __name__=="__main__":
     #fig.text(0.5,0.04,"Wavelength (AA)", ha='center',fontsize=14)
     fig.text(0.04,0.5,r'Flux ($\mu$Jy)',fontsize=14,verticalalignment='center',
             horizontalalignment='center',rotation='vertical')
-    axarr[1,2].set_xlabel(r'Wavelength (\AA)',fontsize=14)
+    axarr[4,2].set_xlabel(r'Wavelength (\AA)',fontsize=14)
     #plt.tight_layout()
 
-    plt.show()
-    #plt.savefig("bbfits.png", dpi=300, bbox_inches='tight', pad_inches=0.1)
+    #plt.show()
+    plt.savefig("bbfits.eps", dpi=300, bbox_inches='tight')

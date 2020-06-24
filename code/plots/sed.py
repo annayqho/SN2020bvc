@@ -146,6 +146,6 @@ plt.yticks(fontsize=bigsize)
 
 plt.tight_layout()
 
-#plt.savefig("sed.png", dpi=300)
-plt.show()
+plt.savefig("sed.eps", dpi=300, format='eps', bbox_inches='tight')
+#plt.show()
 #plt.close()

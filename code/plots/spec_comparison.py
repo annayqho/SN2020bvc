@@ -40,4 +40,4 @@ fig.subplots_adjust(hspace=0)
 
 #plt.tight_layout()
 #plt.show()
-plt.savefig("full_spec_comparison.png", dpi=300, bbox_inches='tight')
+plt.savefig("full_spec_comparison.eps", dpi=300, bbox_inches='tight')

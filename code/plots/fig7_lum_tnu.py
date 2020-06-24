@@ -107,17 +107,17 @@ def lumtnu(ax):
     # Law transient
     tnu = (83)*(1.4/5)
     lpeak = 2E29
-    ax.scatter(tnu,lpeak,marker='*',c='k',s=300,label=None)
+    #ax.scatter(tnu,lpeak,marker='*',c='k',s=300,label=None)
     #ax.arrow(
     #        tnu, lpeak, -tnu/4, 0, color='k', 
     #        head_length=tnu/10, head_width=lpeak/8)
-    ax.arrow(
-            tnu, lpeak, 0, lpeak/4, color='k', 
-            head_length=lpeak/7, head_width=tnu/7)
-    ax.text(
-            tnu, lpeak/1.2, r"\textbf{J1419}", fontsize=medsize,
-            verticalalignment='top',
-            horizontalalignment='center', color='k')
+    #ax.arrow(
+    #        tnu, lpeak, 0, lpeak/4, color='k', 
+    #        head_length=lpeak/7, head_width=tnu/7)
+    #ax.text(
+    #        tnu, lpeak/1.2, r"\textbf{J1419}", fontsize=medsize,
+    #        verticalalignment='top',
+    #        horizontalalignment='center', color='k')
 
     # ZTF18aaqjovh
     xmin = 20*(3/5)
@@ -321,4 +321,4 @@ plt.tight_layout()
 
 
 #plt.show()
-plt.savefig("lum_tnu.png", dpi=500)
+plt.savefig("lum_tnu.eps", format='eps', dpi=300)

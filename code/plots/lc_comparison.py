@@ -169,5 +169,5 @@ if __name__=="__main__":
         ax.set_ylim(-14,-19.5)
         ax.legend(loc='lower right', fontsize=12, ncol=3)
     plt.tight_layout()
-    plt.savefig("lc_comparison.png", dpi=200)
+    plt.savefig("lc_comparison.eps", dpi=300, bbox_inches='tight')
     #plt.show()

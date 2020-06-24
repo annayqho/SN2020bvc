@@ -30,7 +30,7 @@ def merge_lc():
     filt = filt[choose]
 
     # add the UV light curves
-    add_dt, add_filt, fnu_mjy, efnu_mjy = get_uv_lc()
+    add_t, add_dt, add_filt, fnu_mjy, efnu_mjy = get_uv_lc()
     # convert to AB mag
     add_mag = -2.5 * np.log10(fnu_mjy*1E-3) + 8.90
     add_emag = (efnu_mjy/fnu_mjy) # I think it's just the ratio
@@ -116,7 +116,7 @@ def plot_lc():
         ha='center', fontsize=16) 
     fig.text(0.04, 0.5, 'Apparent Mag (AB)', fontsize=16, rotation='vertical')
 
-    plt.savefig("full_lc.png", dpi=500, bbox_inches='tight')
+    plt.savefig("full_lc.eps", dpi=300, bbox_inches='tight')
     #plt.show()
 
 

@@ -280,4 +280,4 @@ if __name__=="__main__":
 
     #plt.show()
     plt.savefig(
-        "radio_lc.png", dpi=500, bbox_inches='tight', pad_inches=0.1)
+        "radio_lc.eps", dpi=300, bbox_inches='tight')

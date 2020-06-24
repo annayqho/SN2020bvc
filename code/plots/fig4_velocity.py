@@ -366,4 +366,4 @@ if __name__=="__main__":
 
     plt.tight_layout()
     #plt.show()
-    plt.savefig("vel.png", dpi=500)
+    plt.savefig("vel.eps", dpi=300, bbox_inches='tight')

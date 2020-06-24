@@ -50,7 +50,7 @@ def plot_2006aj(ax):
     dm = Planck15.distmod(z=0.033).value
     mag = dat['mag']
     emag = dat['emag']
-    ax.errorbar(t, mag-dm, fmt='o', c='k')
+    ax.errorbar(t, mag-dm, fmt='o', c='k', ms=5)
     ax.plot(
         t, mag-dm, linestyle='--', lw=1, color='k')
     ax.text(
@@ -220,7 +220,7 @@ def top_panel():
     axarr[1].set_xlabel('Days after GRB', fontsize=14)
     axarr[0].set_ylabel('Abs Mag', fontsize=14)
     #plt.tight_layout()
-    plt.savefig("early_lc_collage.png", dpi=300, bbox_inches='tight')
+    plt.savefig("early_lc_collage.eps", format='eps', dpi=300, bbox_inches='tight')
 
 def bottom_panel():
     """ 'ordinary' SNe """
@@ -248,4 +248,5 @@ def bottom_panel():
     #plt.show()
 
 if __name__=="__main__":
-    bottom_panel()
+    top_panel()
+    #bottom_panel()
