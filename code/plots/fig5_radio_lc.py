@@ -278,6 +278,6 @@ if __name__=="__main__":
     ax.plot([1,2],[3,4],c=orag,label="12-18 GHz", lw=2)
     ax.legend(loc='upper center', bbox_to_anchor=(0.0, 1.5), ncol=2)
 
-    #plt.show()
-    plt.savefig(
-        "radio_lc.eps", dpi=300, bbox_inches='tight')
+    plt.show()
+    #plt.savefig(
+    #    "radio_lc.eps", dpi=300, bbox_inches='tight')

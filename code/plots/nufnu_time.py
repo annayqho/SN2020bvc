@@ -5,14 +5,11 @@ Plot of luminosity over time
 
 import matplotlib
 from matplotlib import rc
-rc("font", family="serif")
-rc("text", usetex=True)
-matplotlib.rcParams['text.latex.preamble']=[r"\usepackage{amsmath}"]
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-sys.path.append("/Users/annaho/Dropbox/Projects/Research/AT2018cow/code")
-sys.path.append("/Users/annaho/Dropbox/Projects/Research/IcBL/data/radio_compilations/Zauderer2011")
+sys.path.append("../../../AT2018cow/code")
+sys.path.append("../../../../projects_proto/IcBL/old/data/radio_compilations/Zauderer2011")
 from astropy.cosmology import Planck15
 from astropy.io import ascii
 from get_radio import *
@@ -123,7 +120,7 @@ def at2018cow(ax, col, legend):
 
     # low frequency
     nu = 9E9
-    data_dir = "/Users/annaho/Dropbox/Projects/Research/AT2018cow/data"
+    data_dir = "../../../AT2018cow/data"
     dat = Table.read(
         "%s/radio_lc.dat" %data_dir, delimiter="&",
         format='ascii.no_header')
@@ -491,15 +488,15 @@ def sn2009bb(ax, col, legend):
 def sn2020bvc(ax, col, legend):
     nu = 10E9
     d = Planck15.luminosity_distance(z=0.02507).cgs.value
-    t = np.array([13, 35, 77, 100])
-    flux = np.array([0.066, 0.051, 0.186, 0.195])
+    t = np.array([13, 35, 77, 100, 163])
+    flux = np.array([0.066, 0.051, 0.186, 0.195, 0.048])
     lum = nu*flux*1E-3*1E-23*4*np.pi*d**2
     print(lum)
-    ax.errorbar(t[0:2],lum[0:2],fmt='*',c=col,ms=10)
-    ax.plot(t[0:2],lum[0:2],c=col,lw=5)
-    #lum = plot_line(ax, d, t, nu*flux, 'SN2020bvc', 'Rel. SN', col, legend)
-    ax.text(t[1]*1.2, lum[1]/1.05, r'\textbf{2020bvc}', fontsize=16, 
-            verticalalignment='center', horizontalalignment='left')
+    ax.errorbar(t,lum,fmt='*',c=col,ms=10)
+    ax.plot(t,lum,c=col,lw=2)
+    #lum = plot_line(ax, d, t, nu*flux, 'SN20bvc', 'Rel. SN', col, legend)
+    ax.text(t[-1]*1.1, lum[-1]/1.05, r'SN20bvc', fontsize=11, 
+            verticalalignment='top', horizontalalignment='left')
 
 
 def sn1998bw(ax, col, legend):
@@ -587,6 +584,23 @@ def sn2017iuk(ax, col, legend):
             horizontalalignment='right')
 
 
+def ztf20abzoeiw(ax, col, legend):
+    """ Ho 2020 """
+    d = Planck15.luminosity_distance(z=0.01).cgs.value
+    nu = np.array([10E9, 10E9, 6E9])
+    t = np.array([20,35,110])
+    f = np.array([286,564,95])*1E-3
+    #lum = plot_line(
+    #        ax, d, t, nu*f, 'SN1998bw', 'Ic-BL SN', col, legend, zorder=5)
+    lum = nu*f*1E-3*1E-23*4*np.pi*d**2
+    ax.plot(t, lum, c=col)
+    ax.scatter(t, lum, c=col, s=10)
+    #print(lum)
+    ax.text(t[-1]/1.1, lum[-1], 'ZTF20eiw', fontsize=11,
+            verticalalignment='center',
+            horizontalalignment='right')
+
+
 if __name__=="__main__":
     fig, ax = plt.subplots(1, 1, figsize=(6,6), sharex=True, sharey=True)
     props = dict(boxstyle='round', facecolor='white')
@@ -612,7 +626,7 @@ if __name__=="__main__":
     # OK so I want to use four colors. I think it's nice to have two light ones
     # and two dark ones.
 
-    sn2003L(ax, 'lightblue', legend=True) # Ib
+    #sn2003L(ax, 'lightblue', legend=True) # Ib
     sn1979c(ax, 'lightblue', None) # II
     sn1993J(ax, 'lightblue', None)
     sn2011dh(ax, 'lightblue', None)
@@ -621,6 +635,7 @@ if __name__=="__main__":
     ptf11qcj(ax, 'darkblue', None)
     sn2009bb(ax, 'darkblue', None)
     ztf18aaqjovh(ax, 'darkblue', None)
+    ztf20abzoeiw(ax, 'darkblue', None)
 
     grb030329(ax, '#f98e09', legend=True)
     grb130427A(ax, '#f98e09', None)
@@ -634,7 +649,17 @@ if __name__=="__main__":
     #at2018cow(ax, 'k', legend=True)
     #koala(ax, 'k', None)
 
-    moddir = "/Users/annaho/Dropbox/Projects/Research/IcBL/data"
+    # new object...SN2021aabp
+    x = 10
+    dcm = Planck15.luminosity_distance(z=0.063).cgs.value
+    y = (3.6*3)*1E-6*1E-23*4*np.pi*dcm**2*10E9
+    ax.scatter(x, y, marker='o', c='darkblue', s=50)
+    ax.arrow(x, y, 0, -y/1.8, length_includes_head=True,
+            head_width=1.5, head_length=y/5, color='darkblue',
+            zorder=100)
+    ax.text(x, y/3, 'SN2021aabp', color='k', ha='center', va='top')
+
+    moddir = "../../../../projects_proto/IcBL/old/data"
 
     # Plot model light curves
     dcm = Planck15.luminosity_distance(z=0.065).cgs.value
@@ -674,7 +699,7 @@ if __name__=="__main__":
     #ax.fill_between(dt, y1= lum_bottom, y2=lum_top, color='lightgrey', zorder=0)
 
     ax.set_ylabel(
-            r"Luminosity $\nu L_{\nu}$ [erg\,s$^{-1}$]", 
+            r"Luminosity $\nu L_{\nu}$ [erg s$^{-1}$]", 
             fontsize=16)
     ax.tick_params(axis='both', labelsize=14)
     ax.set_xlim(1, 1000) 
@@ -697,4 +722,5 @@ if __name__=="__main__":
 
     plt.tight_layout()
     #plt.show()
-    plt.savefig("lum_evolution.eps", format='eps', dpi=300)
+    plt.savefig("lum_evolution_with_sn2021aabp.png", format='png', dpi=300)
+    plt.close()

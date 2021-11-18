@@ -4,14 +4,12 @@ for the rate section of the paper
 
 import matplotlib.pyplot as plt
 import numpy as np
-plt.rc("font", family="serif")
-plt.rc("text", usetex=True)
 from astropy.io import ascii
 from astropy.cosmology import Planck15
 from astropy.time import Time
 import sys
 sys.path.append("/Users/annaho/Dropbox/Projects/Research/ZTF_fast_transient_search/code")
-from forced_phot.run_forced_phot import get_forced_phot
+#from forced_phot.run_forced_phot import get_forced_phot
 
 
 rcol = 'Crimson'
@@ -375,7 +373,6 @@ def plot_20bvc(ax):
             verticalalignment='top')
 
 
-#start, let's make a nice plot of two light curves: SN1998bw and SN2006aj
 fig,axarr = plt.subplots(3,2,figsize=(7,6), sharex=True, sharey=False)
 ax = axarr[0,0]
 plot_19aaxfcpq(ax)
@@ -384,9 +381,8 @@ ax.set_ylim(-14.5,-18.5)
 plot_2006aj(ax)
 
 ax = axarr[0,1]
-plot_20bvc(ax)
-ax.set_ylim(-15.5,-19)
-plot_2006aj(ax)
+plot_19abqshry(ax)
+ax.set_ylim(-14.8,-16.5)
  
 ax = axarr[1,0]
 plot_19abupned(ax)
@@ -398,8 +394,9 @@ ax.set_ylim(-14,-16.5)
 ax.set_yticks([-14.5, -15.5, -16.5])
 
 ax = axarr[2,0]
-plot_19abqshry(ax)
-ax.set_ylim(-14.8,-16.5)
+plot_20bvc(ax)
+ax.set_ylim(-15.5,-19)
+plot_2006aj(ax)
 
 ax = axarr[2,1]
 plot_19ablesob(ax)

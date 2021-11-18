@@ -7,7 +7,6 @@ from matplotlib import rc
 import sys
 rc("font", family="serif")
 rc("text", usetex=True)
-sys.path.append("/Users/annaho/Github/Arnett")
 from fit_arnett import *
 
 
