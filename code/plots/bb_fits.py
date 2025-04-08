@@ -53,7 +53,7 @@ def bb_func(wl,T,R):
     h = 6.626E-27
     c = 3E10
     k = 1.38E-16
-    Blam = (2*h*c**2/wl**5) * (1/(np.exp(h*c/(wl*k*T)-1)))
+    Blam = (2*h*c**2/wl**5) * (1/(np.exp(h*c/(wl*k*T))-1))
     flam = Blam * np.pi * R**2 / d**2
     # in units of uJy
     fnu = wl**2 * flam / c
