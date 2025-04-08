@@ -18,7 +18,7 @@ def bb_func(nu,R,T):
     h = 6.63E-27
     c = 3E10
     k = 1.38E-16
-    Inu = (2*h*nu**3/c**2) * (1/(np.exp(h*nu/(k*T)-1)))
+    Inu = (2*h*nu**3/c**2) * (1/(np.exp(h*nu/(k*T))-1))
     fnu = Inu * np.pi * R**2 / d**2
     return fnu 
 
