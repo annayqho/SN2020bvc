@@ -10,7 +10,7 @@ from astropy.io import ascii
 from astropy.cosmology import Planck15
 from astropy.time import Time
 import sys
-sys.path.append("/Users/annaho/Dropbox/Projects/Research/ZTF18abukavn/code")
+sys.path.append("/Users/annaho/Dropbox/astro/papers/papers_complete/ZTF18abukavn/code")
 from load_lc import get_forced_phot, get_lc
 
 
@@ -219,8 +219,9 @@ def top_panel():
 
     axarr[1].set_xlabel('Days after GRB', fontsize=14)
     axarr[0].set_ylabel('Abs Mag', fontsize=14)
-    #plt.tight_layout()
-    plt.savefig("early_lc_collage.eps", format='eps', dpi=300, bbox_inches='tight')
+    plt.tight_layout()
+    plt.show()
+    #plt.savefig("early_lc_collage.eps", format='eps', dpi=300, bbox_inches='tight')
 
 def bottom_panel():
     """ 'ordinary' SNe """
