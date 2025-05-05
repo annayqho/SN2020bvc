@@ -270,6 +270,12 @@ if __name__=="__main__":
     tot_chisq = np.array(tot_chisq)
     dof = np.array(dof)
 
+    # Save the bol_lc.txt file, which includes all of them
+    # dt, L, Lhigh, Llow, T, Thigh, Tlow, R, Rhigh, Rlow
+    np.savetxt('bol_lc.txt', np.array([dtbins,Lbol,Lbol_hi,Lbol_lo,
+                                       Teff, Teff_hi, Teff_lo,
+                                       Rph, Rph_hi, Rph_lo]).T)
+
     axarr[0,0].set_xlim(1E3, 2E4)
     axarr[0,0].set_ylim(3, 5000)
     axarr[0,0].set_yscale('log')
