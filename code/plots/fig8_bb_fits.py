@@ -10,7 +10,7 @@ from astropy.io import ascii
 from scipy.optimize import curve_fit
 from astropy.cosmology import Planck15
 import sys
-sys.path.append("/Users/annaho/Dropbox/Projects/Research/SN2020bvc/code")
+sys.path.append("/Users/annaho/Dropbox/astro/papers/papers_complete/SN2020bvc/code")
 from get_lc import get_opt_lc, get_uv_lc
 
 t0 = 2458883.17
@@ -285,3 +285,4 @@ if __name__=="__main__":
 
     #plt.show()
     plt.savefig("bbfits.eps", dpi=300, bbox_inches='tight')
+    plt.close()

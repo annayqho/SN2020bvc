@@ -4,6 +4,9 @@ import numpy as np
 import extinction
 from astropy.io import ascii
 
+# data directory
+ddir = "/Users/annaho/Dropbox/astro/papers/papers_complete/SN2020bvc/data"
+
 # estimated time of first light
 t0 = 2458883.17
 
@@ -32,7 +35,6 @@ for band in bands.keys():
 
 def get_opt_lc():
     # Read in the light curve downloaded directly from the GROWTH marshal
-    ddir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/"
     dat = ascii.read(ddir + "/marshal_lc.txt")
     t = dat['jdobs'].data
     filt = dat['filter'].data
@@ -56,7 +58,6 @@ def get_opt_lc():
 
 
 def get_uv_lc():
-    ddir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/"
     uvdat = ascii.read(ddir + "/UVOT_hostsub.ascii")
     uvt = uvdat['MJD']+2400000.5
     uvdt = uvt-t0

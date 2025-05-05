@@ -24,12 +24,14 @@ rph = dat[:,7]
 rph_hi = dat[:,8]
 rph_lo = dat[:,9]
 
+# data directory
+ddir = "/Users/annaho/Dropbox/astro/papers/papers_complete/SN2020bvc/data/bol_lc"
+
 def llgrbs(ax):
     """ Plot bolometric LC of LLGRBs
     These all come from Cano et al. 2017 (scraped from Fig 9),
     except for the LC of SN2017iuk which comes from 
     """
-    ddir = "/Users/annaho/Dropbox/Projects/Research/SN2020bvc/data/bol_lc"
     dat = np.loadtxt(ddir + "/sn1998bw_UBVRI_cano2013.dat", delimiter=',')
     dt = dat[:,0]
     lum = dat[:,1]
@@ -122,5 +124,5 @@ ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.tick_params(axis='both', labelsize=16)
 
 plt.tight_layout()
-#plt.show()
-plt.savefig("bb_evolution.eps", dpi=300)
+plt.show()
+#plt.savefig("bb_evolution.eps", dpi=300)
