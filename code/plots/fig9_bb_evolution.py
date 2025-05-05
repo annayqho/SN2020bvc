@@ -70,7 +70,7 @@ def plot_lbol(ax):
     ax.errorbar(dt/1.02507, lbol, yerr=[lbol_lo,lbol_hi], c='k', 
         fmt='o', mec='k', mfc='grey', ms=10)
     ax.set_ylabel(r'$L_\mathrm{bol}$ (erg/s)', fontsize=16)
-    ax.set_ylim(1E42, 1E43)
+    ax.set_ylim(1E42, 1E44)
 
 
 # Luminosity panel
@@ -97,10 +97,10 @@ ax = axarr[1,0]
 xvals = np.linspace(0.5,20)
 ax.errorbar(dt/1.02507, rph/1E14, yerr=[rph_lo/1E14,rph_hi/1E14], c='k', 
         fmt='o', mec='k', mfc='grey', ms=10)
-yvals = 5E14 + 0.06 * (3E10) * xvals * 86400
+yvals = 7E14 + 0.06 * (3E10) * xvals * 86400
 ax.plot(xvals, yvals/1E14, ls='--', lw=0.5, c='grey')
 ax.text(6, 29, '$v=0.06c$', fontsize=14, rotation=0)
-ax.set_ylim(0,32)
+ax.set_ylim(0,40)
 ax.set_xlim(-1,31)
 ax.set_ylabel(r'$R_\mathrm{ph}$ ($10^{14}$ cm)', fontsize=16)
 ax.tick_params(axis='both', labelsize=16)
